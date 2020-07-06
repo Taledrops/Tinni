@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.example.tinni.ui.program.ProgramViewModel" />
+    </data>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/primary_to_primary_light_to_primary">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/defaultMargin"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/good_job"
+                style="@style/Heading" />
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:text="@string/good_job_sub"
+                style="@style/SubHeading" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/questions"
+                android:layout_marginTop="@dimen/bigMargin"
+                android:layout_width="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            <Button
+                android:id="@+id/save"
+                style="@style/Button"
+                android:layout_gravity="bottom|center"
+                android:text="@string/save_selection"
+                android:background="@drawable/rounded_accent"
+                android:layout_margin="@dimen/defaultMargin" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

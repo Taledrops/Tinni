@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Answer Item</h1>
+ * Layout for a Answer object
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 30.06.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Answer" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/smallMargin"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/smallMargin"
+        android:background="@{model.active? @drawable/edittext_accent : @drawable/edittext_primary_dark_transparent_light, default=@drawable/edittext_primary_dark_transparent_light}"
+        android:gravity="center_vertical"
+        android:foreground="?attr/selectableItemBackground">
+        <ImageView
+            android:layout_width="@dimen/playMiniSize"
+            android:layout_height="@dimen/playMiniSize"
+            android:background="@{model.active? @drawable/circle_accent_dark : @drawable/circle_primary, default=@drawable/circle_primary}"
+            android:src="@{model.active? @drawable/check : @drawable/circle_primary_dark, default=@drawable/circle_primary_dark}"
+            android:padding="@dimen/mediumMargin"
+            android:contentDescription="@string/select"
+            android:layout_marginEnd="@dimen/mediumMargin"
+            android:tint="@{model.active? @color/colorLight : @color/colorPrimary, default=@color/colorPrimary}" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.text}"
+            style="@style/RegularText"
+            android:textColor="@{model.active? @color/colorLight : @color/colorLightSecondary, default=@color/colorLightSecondary}"
+            />
+    </LinearLayout>
+</layout>

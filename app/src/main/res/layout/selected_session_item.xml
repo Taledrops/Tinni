@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Selected Session Item</h1>
+ * Layout for the selected sessions in AddProgram
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 04.07.2020
+-->
+
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Session" />
+    </data>
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:background="@drawable/light_ripple_no_padding"
+        android:orientation="vertical">
+        <FrameLayout
+            android:layout_width="@dimen/playSmallSize"
+            android:layout_height="@dimen/playSmallSize">
+            <ImageView
+                android:layout_width="@dimen/playSmallSize"
+                android:layout_height="@dimen/playSmallSize"
+                android:layout_gravity="center_horizontal"
+                android:soundImgRounded="@{model.sound}"
+                android:soundBitmap="@{model.sound}"
+                android:contentDescription="@string/session"
+                android:scaleType="centerCrop"
+                android:background="@drawable/circle_primary_darker"/>
+            <ImageView
+                android:layout_width="@dimen/miniButtonSize"
+                android:layout_height="@dimen/miniButtonSize"
+                android:background="@drawable/circle_accent"
+                android:layout_gravity="top|end"
+                android:src="@drawable/close"
+                android:contentDescription="@string/delete"
+                android:padding="@dimen/tinySmallMargin"
+                android:tint="@color/colorLight" />
+        </FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.sound.title}"
+            android:layout_marginTop="@dimen/smallMargin"
+            android:maxLines="1"
+            android:ellipsize="end"
+            style="@style/SmallHeading" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tinyMargin"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:timeFull="@{model.time}"
+            style="@style/SubHeading" />
+    </LinearLayout>
+</layout>

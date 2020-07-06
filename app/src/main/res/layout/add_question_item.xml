@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Add Question Item</h1>
+ * Layout for an Question object in the add form
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 05.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Question" />
+    </data>
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/answerHeight"
+        android:layout_marginBottom="@dimen/smallMargin"
+        android:background="@drawable/edittext_primary_dark_transparent_light"
+        android:paddingTop="@dimen/smallMargin"
+        android:paddingEnd="@dimen/smallMargin"
+        android:paddingBottom="@dimen/smallMargin"
+        android:paddingStart="@dimen/mediumMargin"
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@{model.text}"
+            android:layout_marginEnd="@dimen/defaultMargin"
+            style="@style/SmallHeading" />
+        <ImageView
+            android:layout_width="@dimen/playMiniSize"
+            android:layout_height="@dimen/playMiniSize"
+            android:layout_weight="0"
+            android:background="@drawable/circle_primary_dark"
+            android:src="@drawable/pen"
+            android:padding="@dimen/mediumMargin"
+            android:contentDescription="@string/edit"
+            android:tint="@color/colorLightSecondary" />
+    </LinearLayout>
+</layout>

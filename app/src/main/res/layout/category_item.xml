@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Category Item</h1>
+ * Layout for a category item
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 20.06.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Category" />
+    </data>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@{model.active? @drawable/rounded_light : @drawable/rounded_transparent_border, default=@drawable/rounded_transparent_border}">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.title}"
+            style="@style/RegularText"
+            android:textColor="@{model.active? @color/colorPrimary : @color/colorLight, default=@color/colorPrimary}"/>
+        <ImageView
+            android:layout_width="@dimen/iconSize"
+            android:layout_height="@dimen/iconSize"
+            android:visibility="@{!model.fav ? View.GONE : View.VISIBLE, default=gone}"
+            android:src="@drawable/heart"
+            android:tint="@color/colorAccent"
+            android:layout_marginStart="@dimen/smallMargin"
+            android:contentDescription="@string/favorites" />
+    </LinearLayout>
+</layout>

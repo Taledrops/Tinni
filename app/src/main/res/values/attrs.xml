@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Attrs</h1>
+ * All attrs of the app
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 25.06.2020
+-->
+
+<resources>
+    <declare-styleable name="AnimatedImageView">
+        <attr name="autoStart" format="boolean" />
+    </declare-styleable>
+</resources>

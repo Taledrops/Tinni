@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Session Item</h1>
+ * Layout for a Session object
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 29.06.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Session" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/defaultMargin"
+        android:clickable="true"
+        android:focusable="true"
+        android:alpha="@{model.active ? 1.0f : 0.3f}"
+        android:gravity="center_vertical"
+        android:foreground="?attr/selectableItemBackground">
+        <ImageView
+            android:id="@+id/soundImg"
+            android:layout_width="@dimen/playMediumSize"
+            android:layout_height="@dimen/playMediumSize"
+            android:layout_weight="0"
+            android:background="@drawable/circle_primary_dark"
+            android:soundImgRounded="@{model.sound}"
+            android:contentDescription="@{model.sound.title}"
+            android:layout_marginEnd="@dimen/defaultMargin" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/defaultMargin"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{model.sound.title}"
+                android:maxLines="1"
+                android:ellipsize="end"
+                style="@style/SmallHeading" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tinyMargin"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:sessionId="@{model.id}"
+                android:sessionTime="@{model.time}"
+                android:sessionDone="@{model.done}"
+                style="@style/SubHeading" />
+        </LinearLayout>
+        <ImageView
+            android:layout_width="@dimen/playMiniSize"
+            android:layout_height="@dimen/playMiniSize"
+            android:background="@drawable/circle_accent_ripple"
+            android:src="@drawable/play"
+            android:layout_weight="0"
+            android:padding="@dimen/mediumMargin"
+            android:contentDescription="@string/play"
+            android:tint="@color/colorLight" />
+    </LinearLayout>
+</layout>

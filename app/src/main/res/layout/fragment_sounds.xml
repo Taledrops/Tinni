@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  * <h1>XML Layout for the sounds fragment</h1>
+  * The main layout is a CoordinatorLayout
+  * It contains an AppBarLayout which contains a heading and categories
+  * The AppBarLayout will collapse on scrolling down (except of the categories)
+  * The AppBarLayout will expand on scrolling up
+  * Upon the first navigation to this page the custom layout "Placeholder" will be shown until the sounds are loaded
+  * The sounds are dynamically added via the ViewModel and shown inside a RecyclerView
+  *
+  * @author Nassim Amar
+  * @version 1.0
+  * @since 18.06.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.example.tinni.ui.sounds.SoundsViewModel" />
+    </data>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/defaultMargin"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/defaultMargin"
+                    android:paddingEnd="@dimen/defaultMargin"
+                    android:text="@string/search_sounds"
+                    style="@style/Heading" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/defaultMargin"
+                    android:paddingEnd="@dimen/defaultMargin"
+                    android:layout_marginTop="@dimen/smallMargin"
+                    android:text="@string/search_sounds_sub"
+                    style="@style/SubHeading" />
+            </LinearLayout>
+            <com.example.tinni.custom.Placeholder
+                android:id="@+id/categoryPlaceholder"
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/defaultMargin"
+                android:paddingBottom="@dimen/defaultMargin"
+                android:placeholderVisibility="@{vm.categoriesLoading}"
+                android:layout_height="match_parent">
+
+                <include layout="@layout/category_placeholder"/>
+                <include layout="@layout/category_placeholder"/>
+                <include layout="@layout/category_placeholder"/>
+                <include layout="@layout/category_placeholder"/>
+
+            </com.example.tinni.custom.Placeholder>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/categories"
+                android:paddingTop="@dimen/defaultMargin"
+                android:paddingBottom="@dimen/defaultMargin"
+                android:visibility="@{vm.categories != null &amp;&amp; vm.categories.size() > 0 &amp;&amp; !vm.categoriesLoading ? View.VISIBLE : View.GONE, default=gone}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.example.tinni.custom.Placeholder
+            android:id="@+id/searchPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/defaultMargin"
+            android:placeholderVisibility="@{vm.loading}"
+            android:layout_marginEnd="@dimen/defaultMargin"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <include layout="@layout/sound_placeholder"/>
+            <include layout="@layout/sound_placeholder"/>
+            <include layout="@layout/sound_placeholder"/>
+            <include layout="@layout/sound_placeholder"/>
+
+        </com.example.tinni.custom.Placeholder>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sounds"
+            android:layout_marginStart="@dimen/defaultMargin"
+            android:layout_marginEnd="@dimen/defaultMargin"
+            android:visibility="@{vm.sounds != null &amp;&amp; vm.sounds.size() > 0 &amp;&amp; !vm.loading ? View.VISIBLE : View.GONE, default=gone}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/defaultMargin"
+            android:layout_marginEnd="@dimen/defaultMargin"
+            android:visibility="@{vm.sounds.size() == 0 &amp;&amp; !vm.loading ? View.VISIBLE : View.GONE, default=gone}"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nothing_in_category"
+                android:gravity="center"
+                style="@style/SmallHeading"
+                android:textColor="@color/colorSecondary"/>
+            <Button
+                android:id="@+id/retryButtonEmpty"
+                style="@style/Button"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:text="@string/show_all_sounds" />
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/defaultMargin"
+            app:rippleColor="@color/colorAccentDark"
+            app:borderWidth="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="@{!vm.loading ? View.VISIBLE : View.GONE, default=gone}"
+            android:backgroundTint="@color/colorAccent"
+            app:maxImageSize="@dimen/iconSize"
+            android:tint="@color/colorLight"
+            android:src="@drawable/plus" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

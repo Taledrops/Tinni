@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Session Empty Placeholder</h1>
+ * Layout for an empty sessions RecyclerView
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 04.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="add"
+            type="com.example.tinni.ui.add.AddProgramViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/emptySessions"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:background="@drawable/primary_dark_ripple_no_padding"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/add"
+            android:layout_width="@dimen/playMediumSize"
+            android:layout_height="@dimen/playMediumSize"
+            android:background="@drawable/circle_accent"
+            android:src="@drawable/plus"
+            android:layout_marginStart="@dimen/defaultMargin"
+            android:contentDescription="@string/add_sessions"
+            android:padding="@dimen/semiBigMargin"
+            android:layout_gravity="start|center_vertical"
+            android:tint="@color/colorLight" />
+        <ImageView
+            android:layout_width="@dimen/playMediumSize"
+            android:layout_height="@dimen/playMediumSize"
+            android:background="@drawable/circle_primary_dark_transparent"
+            android:layout_marginStart="@dimen/defaultMargin"
+            android:contentDescription="@string/session"
+            android:layout_marginEnd="@dimen/defaultMargin" />
+        <ImageView
+            android:layout_width="@dimen/playMediumSize"
+            android:layout_height="@dimen/playMediumSize"
+            android:background="@drawable/circle_primary_dark_transparent"
+            android:contentDescription="@string/session"
+            android:layout_marginEnd="@dimen/defaultMargin" />
+        <ImageView
+            android:layout_width="@dimen/playMediumSize"
+            android:layout_height="@dimen/playMediumSize"
+            android:background="@drawable/circle_primary_dark_transparent"
+            android:contentDescription="@string/session"
+            android:layout_marginEnd="@dimen/defaultMargin" />
+        <ImageView
+            android:layout_width="@dimen/playMediumSize"
+            android:layout_height="@dimen/playMediumSize"
+            android:background="@drawable/circle_primary_dark_transparent"
+            android:contentDescription="@string/session"
+            android:layout_marginEnd="@dimen/defaultMargin" />
+        <ImageView
+            android:layout_width="@dimen/playMediumSize"
+            android:layout_height="@dimen/playMediumSize"
+            android:background="@drawable/circle_primary_dark_transparent"
+            android:contentDescription="@string/session"
+            android:layout_marginEnd="@dimen/defaultMargin" />
+        <ImageView
+            android:layout_width="@dimen/playMediumSize"
+            android:layout_height="@dimen/playMediumSize"
+            android:background="@drawable/circle_primary_dark_transparent"
+            android:contentDescription="@string/session"
+            android:layout_marginEnd="@dimen/defaultMargin" />
+        <ImageView
+            android:layout_width="@dimen/playMediumSize"
+            android:layout_height="@dimen/playMediumSize"
+            android:background="@drawable/circle_primary_dark_transparent"
+            android:contentDescription="@string/session"
+            android:layout_marginEnd="@dimen/defaultMargin" />
+        <ImageView
+            android:layout_width="@dimen/playMediumSize"
+            android:layout_height="@dimen/playMediumSize"
+            android:background="@drawable/circle_primary_dark_transparent"
+            android:contentDescription="@string/session"
+            android:layout_marginEnd="@dimen/defaultMargin"/>
+    </LinearLayout>
+</layout>

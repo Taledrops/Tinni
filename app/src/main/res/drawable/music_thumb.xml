@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Music thumb</h1>
+ * The thumb for the music player in colorAccent
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 21.06.2020
+-->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <gradient
+        android:angle="270"
+        android:endColor="@color/colorAccent"
+        android:startColor="@color/colorAccent" />
+
+    <size
+        android:height="@dimen/seekbarThumb"
+        android:width="@dimen/seekbarThumb" />
+
+</shape>

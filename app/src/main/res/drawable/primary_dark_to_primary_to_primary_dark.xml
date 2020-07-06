@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Primary Dark To Primary To Primary Dark</h1>
+ * Background gradient from colorPrimaryDark to colorPrimary to colorPrimaryDark
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 25.06.2020
+-->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:startColor="@color/colorPrimaryDark"
+        android:centerColor="@color/colorPrimary"
+        android:endColor="@color/colorPrimaryDark"
+        android:angle="90"
+        android:dither="true"
+        />
+</shape>

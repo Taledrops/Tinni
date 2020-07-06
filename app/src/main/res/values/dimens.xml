@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Dimensions</h1>
+ * All dimensions for the app for multiple use
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 18.06.2020
+-->
+
+<resources>
+    <dimen name="mainText">15sp</dimen>
+    <dimen name="bigText">25sp</dimen>
+    <dimen name="mediumText">20sp</dimen>
+    <dimen name="smallText">13sp</dimen>
+    <dimen name="semiSmallText">12sp</dimen>
+    <dimen name="hugeMargin">50dp</dimen>
+    <dimen name="bigMargin">30dp</dimen>
+    <dimen name="semiBigMargin">20dp</dimen>
+    <dimen name="defaultMargin">15dp</dimen>
+    <dimen name="mediumMargin">10dp</dimen>
+    <dimen name="smallMediumMargin">7dp</dimen>
+    <dimen name="smallMargin">5dp</dimen>
+    <dimen name="tinySmallMargin">3dp</dimen>
+    <dimen name="tinyMargin">2dp</dimen>
+    <dimen name="lineHeight">7dp</dimen>
+    <dimen name="lineHeightSmall">2dp</dimen>
+    <dimen name="tagBorder">1dp</dimen>
+    <dimen name="cornerRadius">8dp</dimen>
+    <dimen name="cornerRadiusBig">16dp</dimen>
+    <dimen name="cornerRadiusHuge">32dp</dimen>
+    <dimen name="iconSize">15dp</dimen>
+    <dimen name="iconSizeBig">20dp</dimen>
+    <dimen name="iconSizeHuge">45dp</dimen>
+    <dimen name="iconSizeToolbar">38dp</dimen>
+    <dimen name="iconPadding">10dp</dimen>
+    <dimen name="playSize">80dp</dimen>
+    <dimen name="playMediumSize">60dp</dimen>
+    <dimen name="playSmallSize">40dp</dimen>
+    <dimen name="playMiniSize">30dp</dimen>
+    <dimen name="playMargin">25dp</dimen>
+    <dimen name="progressSize">150dp</dimen>
+    <dimen name="progressThickness">3dp</dimen>
+    <dimen name="smallPlayerMinWidth">45dp</dimen>
+    <dimen name="seekbarHeight">4dp</dimen>
+    <dimen name="seekbarThumb">15dp</dimen>
+    <dimen name="seekbarRadius">30dp</dimen>
+    <dimen name="arrowSize">15dp</dimen>
+    <dimen name="arrowSizeBig">35dp</dimen>
+    <dimen name="clearSize">25dp</dimen>
+    <dimen name="clearPadding">8dp</dimen>
+    <dimen name="clearMarginRight">45dp</dimen>
+    <dimen name="textboxHeight">150dp</dimen>
+    <dimen name="galleryHeight">220dp</dimen>
+    <dimen name="buttonSize">48dp</dimen>
+    <dimen name="buttonIcon">25dp</dimen>
+    <dimen name="buttonPadding">60dp</dimen>
+    <dimen name="playProgressSize">120dp</dimen>
+    <dimen name="playProgressThickness">22dp</dimen>
+    <dimen name="bufferProgressThickness">26dp</dimen>n
+    <dimen name="collapsingTitleMarginBottom">25dp</dimen>
+    <dimen name="fadeBottomSize">100dp</dimen>
+    <dimen name="fadeRightSize">300dp</dimen>
+    <dimen name="placeholderHeight">10dp</dimen>
+    <dimen name="placeholderHeightSmall">8dp</dimen>
+    <dimen name="placeholderWidth">100dp</dimen>
+    <dimen name="placeholderWidthSmall">60dp</dimen>
+    <dimen name="elevation">4dp</dimen>
+    <dimen name="numberInputWidth">70dp</dimen>
+    <dimen name="miniButtonSize">15dp</dimen>
+    <dimen name="answerHeight">40dp</dimen>
+</resources>

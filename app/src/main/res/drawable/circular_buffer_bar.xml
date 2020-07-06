@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Circular Buffer Bar</h1>
+ * A ring with a colorAccent gradient to indicate the buffering of an audio file
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 25.06.2020
+-->
+
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="270"
+    android:toDegrees="270">
+    <shape
+        android:innerRadiusRatio="3.5"
+        android:shape="ring"
+        android:thickness="@dimen/bufferProgressThickness"
+        android:useLevel="true">
+
+        <gradient
+            android:angle="0"
+            android:endColor="@color/colorAccent"
+            android:startColor="@color/colorAccent"
+            android:type="sweep"
+            android:useLevel="false" />
+    </shape>
+</rotate>

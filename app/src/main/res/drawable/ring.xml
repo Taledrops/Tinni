@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Ring</h1>
+ * A ring in colorSecondary
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 21.06.2020
+-->
+
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="ring"
+    android:innerRadiusRatio="2.5"
+    android:thickness="@dimen/progressThickness"
+    android:useLevel="false">
+
+    <solid android:color="@color/colorSecondary" />
+
+</shape>

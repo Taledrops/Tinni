@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Category Placeholder</h1>
+ * Placeholder while categories are loading
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 19.06.2020
+-->
+
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.25"
+    android:text="@string/loading"
+    style="@style/RegularText"
+    android:maxLines="1"
+    android:layout_marginStart="@dimen/defaultMargin"
+    android:background="@drawable/rounded_transparent_border"
+    android:textColor="@android:color/transparent">
+</TextView>

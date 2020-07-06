@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Music Bar</h1>
+ * The bar for the music player in colorAccent and colorSecondary
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 21.06.2020
+-->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@android:id/background">
+        <shape
+            android:shape="rectangle">
+            <solid android:color="@color/colorSecondary"/>
+            <corners android:radius="@dimen/seekbarRadius" />
+        </shape>
+    </item>
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape
+                android:shape="rectangle">
+                <solid android:color="@color/colorAccent"/>
+                <corners android:radius="@dimen/seekbarRadius" />
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>

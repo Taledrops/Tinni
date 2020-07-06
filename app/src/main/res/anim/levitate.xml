@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Levitate</h1>
+ * A levitation animation loop manipulating the y delta anim_length_slow seconds
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 21.06.2020
+-->
+
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/linear_interpolator"
+    android:fromYDelta="0%p"
+    android:toYDelta="3%p"
+    android:duration="@integer/anim_length_slow"
+    android:startOffset="0"
+    android:repeatCount="infinite"
+    android:repeatMode="reverse" />

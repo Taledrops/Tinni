@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Text Placeholder</h1>
+ * Rectangle shape in colorPrimaryDark simulating a text loading
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 29.06.2020
+-->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/colorPrimaryDark"/>
+    <corners android:radius="@dimen/cornerRadiusBig" />
+</shape>

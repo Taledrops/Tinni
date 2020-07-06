@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Bottom Answer</h1>
+ * Layout for adding an answer
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 06.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.example.tinni.ui.add.AddProgramViewModel" />
+    </data>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/primary_to_primary_light_to_primary">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/defaultMargin"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_answer"
+                style="@style/Heading" />
+            <TextView
+                android:id="@+id/head"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:text="@string/add_answer_sub"
+                style="@style/SubHeading" />
+            <TextView
+                android:labelFor="@id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:text="@string/text"
+                style="@style/SmallHeading" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mediumMargin">
+                <EditText
+                    android:id="@+id/text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:popupBackground="@drawable/rounded_primary_dark"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginTop="0dp"
+                    android:text="@={vm.currentAnswer.text}"
+                    android:paddingEnd="@dimen/clearMarginRight"
+                    style="@style/FormText"
+                    android:autofillHints="@string/title"
+                    tools:ignore="RtlSymmetry" />
+                <ImageView
+                    android:id="@+id/clearTitle"
+                    android:layout_width="@dimen/clearSize"
+                    android:layout_height="@dimen/clearSize"
+                    android:clickable="true"
+                    android:visibility="@{vm.currentAnswer.text.length() > 0 ? View.VISIBLE : View.GONE, default=gone}"
+                    android:onClick="@{() -> vm.clearText(vm.currentAnswer.text)}"
+                    android:focusable="true"
+                    android:background="@drawable/circle_primary_dark"
+                    android:padding="@dimen/clearPadding"
+                    android:tint="@color/colorLightSecondary"
+                    android:layout_marginEnd="@dimen/mediumMargin"
+                    android:layout_gravity="end|center_vertical"
+                    android:contentDescription="@string/clear"
+                    android:src="@drawable/close"/>
+            </FrameLayout>
+            <Button
+                android:id="@+id/save"
+                style="@style/Button"
+                android:layout_gravity="bottom|center"
+                android:text="@string/save"
+                android:background="@drawable/rounded_accent"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:layout_marginBottom="@dimen/defaultMargin"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

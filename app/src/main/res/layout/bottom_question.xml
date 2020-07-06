@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Bottom Question</h1>
+ * Layout for adding a question
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 06.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.example.tinni.ui.add.AddProgramViewModel" />
+    </data>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/primary_to_primary_light_to_primary">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/defaultMargin"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_question"
+                style="@style/Heading" />
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:text="@string/add_question_sub"
+                style="@style/SubHeading" />
+            <TextView
+                android:labelFor="@id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:text="@string/title"
+                style="@style/SmallHeading" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mediumMargin">
+                <EditText
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:popupBackground="@drawable/rounded_primary_dark"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginTop="0dp"
+                    android:text="@={vm.currentQuestion.text}"
+                    android:paddingEnd="@dimen/clearMarginRight"
+                    style="@style/FormText"
+                    android:autofillHints="@string/title"
+                    tools:ignore="RtlSymmetry" />
+                <ImageView
+                    android:id="@+id/clearTitle"
+                    android:layout_width="@dimen/clearSize"
+                    android:layout_height="@dimen/clearSize"
+                    android:clickable="true"
+                    android:visibility="@{vm.currentQuestion.text.length() > 0 ? View.VISIBLE : View.GONE, default=gone}"
+                    android:onClick="@{() -> vm.clearText(vm.currentQuestion.text)}"
+                    android:focusable="true"
+                    android:background="@drawable/circle_primary_dark"
+                    android:padding="@dimen/clearPadding"
+                    android:tint="@color/colorLightSecondary"
+                    android:layout_marginEnd="@dimen/mediumMargin"
+                    android:layout_gravity="end|center_vertical"
+                    android:contentDescription="@string/clear"
+                    android:src="@drawable/close"/>
+            </FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:gravity="center_vertical">
+                <TextView
+                    android:labelFor="@id/multiple"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:text="@string/multiple_choice"
+                    android:onClick="@{() -> vm.toggleBool(vm.currentQuestion.multiple)}"
+                    android:layout_marginEnd="@dimen/defaultMargin"
+                    style="@style/SmallHeading" />
+                <Switch
+                    android:id="@+id/multiple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:checked="@={vm.currentQuestion.multiple}" />
+            </LinearLayout>
+            <TextView
+                android:labelFor="@id/answers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:text="@{String.format(@string/answers, vm.currentQuestion.answers.size())}"
+                style="@style/SmallHeading" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tinyMargin"
+                android:visibility="@{vm.currentQuestion.answers != null &amp;&amp; vm.currentQuestion.answers.size() > 0  ? View.VISIBLE : View.GONE, default=gone}"
+                android:text="@string/sessions_help"
+                style="@style/ItalicText" />
+
+            <include android:id="@+id/emptyAnswersContainer"
+                android:visibility="@{vm.currentQuestion.answers == null || vm.currentQuestion.answers.size() == 0  ? View.VISIBLE : View.GONE, default=visible}"
+                layout="@layout/answers_empty_placeholder"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/answers"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:visibility="@{vm.currentQuestion.answers != null &amp;&amp; vm.currentQuestion.answers.size() > 0  ? View.VISIBLE : View.GONE, default=gone}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <FrameLayout
+                android:id="@+id/addAnswer"
+                android:layout_width="match_parent"
+                android:visibility="@{vm.currentQuestion.answers != null &amp;&amp; vm.currentQuestion.answers.size() > 0  ? View.VISIBLE : View.GONE, default=gone}"
+                android:layout_height="@dimen/answerHeight">
+                <ImageView
+                    android:id="@+id/add"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/answerHeight"
+                    android:background="@drawable/edittext_accent"
+                    android:src="@drawable/plus"
+                    android:contentDescription="@string/add_answer"
+                    android:padding="@dimen/semiBigMargin"
+                    android:layout_gravity="start|center_vertical"
+                    android:tint="@color/colorLight" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    style="@style/SmallHeading"
+                    android:text="@string/add_answer" />
+            </FrameLayout>
+            <Button
+                android:id="@+id/save"
+                style="@style/Button"
+                android:layout_gravity="bottom|center"
+                android:text="@string/save"
+                android:background="@drawable/rounded_accent"
+                android:layout_marginTop="@dimen/bigMargin"
+                android:layout_marginBottom="@dimen/defaultMargin"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

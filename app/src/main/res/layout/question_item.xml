@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Question Item</h1>
+ * Layout for a Question object
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 30.06.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Question" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/defaultMargin"
+        android:orientation="vertical"
+        android:foreground="?attr/selectableItemBackground">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.numbered ? String.format(@string/text_with_number, model.id, model.text) : model.text}"
+            style="@style/SmallHeading" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tinyMargin"
+            android:visibility="@{model.multiple ? View.VISIBLE : View.GONE, default=gone}"
+            android:text="@string/multiple_select"
+            style="@style/ItalicText" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/questions"
+            android:layout_marginTop="@dimen/defaultMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:answers="@{model}"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    </LinearLayout>
+</layout>

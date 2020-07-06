@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  * <h1>Sound menu</h1>
+  * The menu for a sound item
+  *
+  * @author Nassim Amar
+  * @version 1.0
+  * @since 03.07.2020
+-->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/stats"
+        android:title="@string/stats"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/delete"
+        android:title="@string/delete"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+</menu>

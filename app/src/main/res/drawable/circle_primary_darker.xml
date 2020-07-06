@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Circle Primary Darker</h1>
+ * Circle with color "colorPrimaryDarker"
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 30.06.2020
+-->
+
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <solid
+        android:color="@color/colorPrimaryDarker"/>
+</shape>

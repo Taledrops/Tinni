@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Circular secondary ripple</h1>
+ * Circular shape in colorSecondary with a colorSecondaryDark ripple
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 21.06.2020
+-->
+
+<ripple
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:color="@color/colorSecondaryDark"
+    tools:targetApi="lollipop">
+
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/colorSecondary"/>
+        </shape>
+    </item>
+
+    <item android:id="@android:id/mask">
+        <shape android:shape="oval">
+            <solid android:color="@color/colorSecondaryDark" />
+        </shape>
+    </item>
+</ripple>

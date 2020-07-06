@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Move In</h1>
+ * Translation from 100% to 0
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 29.06.2020
+-->
+
+<set>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromYDelta="100%"
+    android:toYDelta="0"
+    android:interpolator="@android:anim/decelerate_interpolator"
+    android:duration="@integer/anim_alpha"/>
+</set>

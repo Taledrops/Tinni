@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>EditText Primary Dark Transparent Light</h1>
+ * The background for EditTexts inside a form with a ripple effect
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 21.06.2020
+-->
+
+<ripple
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:color="@color/colorPrimaryDark"
+tools:targetApi="lollipop">
+
+<item>
+    <shape
+        android:shape="rectangle"
+        android:padding="10dp">
+        <solid android:color="@color/colorPrimaryDarkTransparentLight"/>
+        <corners android:radius="@dimen/cornerRadius" />
+    </shape>
+</item>
+
+<item android:id="@android:id/mask">
+    <shape android:shape="rectangle">
+        <solid android:color="@color/colorPrimaryDark" />
+        <corners android:radius="@dimen/cornerRadius" />
+    </shape>
+</item>
+</ripple>

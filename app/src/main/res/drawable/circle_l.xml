@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Circle Left</h1>
+ * A half circle left in color "colorAccent"
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 22.06.2020
+-->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/colorAccent"/>
+    <corners android:topLeftRadius="@dimen/cornerRadiusHuge"
+        android:bottomLeftRadius="@dimen/cornerRadiusHuge"/>
+</shape>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  * <h1>Bottom Sessions</h1>
+  * Layout for showing selected Sessions inside the AddProgram UI
+  *
+  * @author Nassim Amar
+  * @version 1.0
+  * @since 04.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.example.tinni.ui.add.AddProgramViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/primary_to_primary_light_to_primary">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/defaultMargin"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_sessions"
+                    style="@style/Heading" />
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/smallMargin"
+                    android:text="@string/add_sessions_sub"
+                    style="@style/SubHeading" />
+
+                <com.example.tinni.custom.Placeholder
+                    android:id="@+id/placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                    <include layout="@layout/sound_placeholder"/>
+                    <include layout="@layout/sound_placeholder"/>
+                    <include layout="@layout/sound_placeholder"/>
+                    <include layout="@layout/sound_placeholder"/>
+
+                </com.example.tinni.custom.Placeholder>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sounds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="@color/colorPrimaryDark"
+            android:layout_gravity="bottom"
+            android:visibility="@{vm.selectedSessions != null &amp;&amp; vm.selectedSessions.size() > 0  ? View.VISIBLE : View.GONE, default=gone}"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/defaultMargin"
+                android:text="@{String.format(@string/selected_sessions, vm.selectedSessions.size())}"
+                style="@style/SmallHeading" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tinyMargin"
+                android:layout_marginStart="@dimen/defaultMargin"
+                android:layout_marginEnd="@dimen/defaultMargin"
+                android:layout_marginBottom="@dimen/defaultMargin"
+                android:text="@string/sessions_help"
+                style="@style/ItalicText" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/selectedSounds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/save"
+                style="@style/Button"
+                android:text="@string/save_selection"
+                android:layout_gravity="center"
+                android:background="@drawable/rounded_accent"
+                android:layout_margin="@dimen/defaultMargin" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

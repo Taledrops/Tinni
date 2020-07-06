@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Dialog Length</h1>
+ * AlertDialog to set the length of a session
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 04.07.2020
+-->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/semiBigMargin"
+    android:paddingEnd="@dimen/semiBigMargin"
+    android:gravity="center_vertical">
+    <EditText
+        android:id="@+id/minutes"
+        android:layout_width="@dimen/numberInputWidth"
+        android:layout_height="wrap_content"
+        android:popupBackground="@drawable/rounded_primary_dark"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginTop="0dp"
+        android:inputType="number"
+        android:layout_marginEnd="@dimen/defaultMargin"
+        style="@style/FormText"
+        android:autofillHints="@string/title" />
+    <TextView
+        android:labelFor="@id/minutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/minutes"
+        style="@style/RegularText" />
+</LinearLayout>

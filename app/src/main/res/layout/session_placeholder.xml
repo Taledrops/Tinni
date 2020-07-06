@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Session Placeholder</h1>
+ * Layout for a Session placeholder
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 29.06.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Session" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/defaultMargin"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:foreground="?attr/selectableItemBackground">
+        <ImageView
+            android:layout_width="@dimen/playMediumSize"
+            android:layout_height="@dimen/playMediumSize"
+            android:layout_weight="0"
+            android:background="@drawable/circle_primary_dark"
+            android:contentDescription="@{model.sound.title}"
+            android:layout_marginEnd="@dimen/defaultMargin" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/defaultMargin"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:background="@drawable/text_placeholder"
+                android:layout_width="@dimen/placeholderWidth"
+                android:contentDescription="@string/loading"
+                android:layout_height="@dimen/placeholderHeight"/>
+            <ImageView
+                android:background="@drawable/text_placeholder"
+                android:layout_width="@dimen/placeholderWidthSmall"
+                android:contentDescription="@string/loading"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:layout_height="@dimen/placeholderHeightSmall" />
+        </LinearLayout>
+        <ImageView
+            android:layout_width="@dimen/playMiniSize"
+            android:layout_height="@dimen/playMiniSize"
+            android:background="@drawable/circle_primary_dark"
+            android:layout_weight="0"
+            android:layout_marginStart="@dimen/defaultMargin"
+            android:padding="@dimen/defaultMargin"
+            android:contentDescription="@string/play"
+            android:tint="@color/colorLight" />
+    </LinearLayout>
+</layout>

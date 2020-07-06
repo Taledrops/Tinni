@@ -1,11 +1,439 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+<!--
+  * <h1>Main Style</h1>
+  * Main styles
+  *
+  * @author Nassim Amar
+  * @version 1.0
+  * @since 18.06.2020
+-->
+
+    <!--
+    * <h2>App Theme</h2>
+    * General style settings
+    -->
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowBackground">@drawable/primary_to_primary_light_to_primary</item>
+    </style>
+
+    <!--
+    * <h2>Toolbar Theme</h2>
+    * Theme for a toolbar with a back arrow
+    *
+    * Source: https://stackoverflow.com/a/33339119/2700965
+    -->
+
+    <style name="ToolbarTheme" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorLight</item>
+    </style>
+
+    <!--
+    * <h2>Bottom Dialog</h2>
+    * Theme for a bottom dialog
+    *
+    -->
+
+    <style name="BottomDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+    </style>
+
+    <!--
+    * <h2>App Bar Overlay</h2>
+    * Style settings for the App Bar Overlay
+    -->
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!--
+    * <h2>No Action Bar</h2>
+    * Style settings for the the layout without an action bar
+    -->
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!--
+    * <h2>Dialog Theme</h2>
+    * Style settings for dialogs
+    -->
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@drawable/rounded_primary_light</item>
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textColorPrimary">@color/colorLight</item>
+        <item name="colorControlNormal">@color/colorLight</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="buttonTint">@color/colorLight</item>
+        <item name="android:textSize">@dimen/mainText</item>
+        <item name="android:windowTitleStyle">@style/DialogTitle</item>
+        <item name="android:lineSpacingExtra">@dimen/lineHeightSmall</item>
+        <item name="textColorAlertDialogListItem">@color/colorLight</item>
+    </style>
+
+    <style name="DialogTitle" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textSize">@dimen/mediumText</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--
+    * <h2>Popup Theme</h2>
+    * Style settings for popups
+    -->
+
+    <style name="PopupTheme" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:colorBackground">@color/colorPrimaryLight</item>
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textColorPrimary">@color/colorLight</item>i
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+        <item name="android:textSize">@dimen/mainText</item>
+        <item name="android:lineSpacingExtra">@dimen/lineHeightSmall</item>
+        <item name="android:popupElevation">@dimen/elevation</item>
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+        <item name="android:colorControlHighlight">@color/colorPrimaryDark</item>
+    </style>
+
+    <!--
+    * <h2>Bottom Navigation</h2>
+    * Style settings for the bottom navigation
+    -->
+
+    <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+    </style>
+
+    <!--
+    * <h2>Regular Text</h2>
+    * Style settings for regular texts
+    -->
+
+    <style name="RegularText">
+        <item name="android:textColor">@color/colorLightSecondary</item>
+        <item name="android:textSize">@dimen/mainText</item>
+        <item name="android:lineSpacingExtra">@dimen/lineHeightSmall</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+    </style>
+
+    <!--
+    * <h2>Italic Text</h2>
+    * Style settings for italic texts
+    -->
+
+    <style name="ItalicText">
+        <item name="android:textColor">@color/colorLightSecondary</item>
+        <item name="android:textSize">@dimen/smallText</item>
+        <item name="android:lineSpacingExtra">@dimen/lineHeightSmall</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/sourcesanspro_italic</item>
+    </style>
+
+    <!--
+    * <h2>Heading</h2>
+    * Style settings for headings
+    -->
+
+    <style name="Heading">
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textSize">@dimen/bigText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingExtra">@dimen/lineHeight</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+    </style>
+
+    <!--
+    * <h2>Sub heading</h2>
+    * Style settings for sub headings
+    -->
+
+    <style name="SubHeading">
+        <item name="android:textColor">@color/colorLightSecondary</item>
+        <item name="android:textSize">@dimen/smallText</item>
+        <item name="android:lineSpacingExtra">@dimen/lineHeightSmall</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+    </style>
+
+    <!--
+    * <h2>Small heading</h2>
+    * Style settings for small headings
+    -->
+
+    <style name="SmallHeading">
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textSize">@dimen/mainText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingExtra">@dimen/lineHeightSmall</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+    </style>
+
+    <!--
+    * <h2>Medium heading</h2>
+    * Style settings for medium headings
+    -->
+
+    <style name="MediumHeading">
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textSize">@dimen/mediumText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingExtra">@dimen/lineHeightSmall</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+    </style>
+
+    <!--
+   * <h2>Sub Text Wide</h2>
+   * Style settings for small texts
+   -->
+
+    <style name="SmallText">
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textSize">@dimen/semiSmallText</item>
+        <item name="android:lineSpacingExtra">@dimen/lineHeight</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+    </style>
+
+    <!--
+   * <h2>Sub Text Wide</h2>
+   * Style settings for sub texts
+   -->
+
+    <style name="SubTextWide">
+        <item name="android:textColor">@color/colorLightSecondary</item>
+        <item name="android:textSize">@dimen/smallText</item>
+        <item name="android:lineSpacingExtra">@dimen/lineHeight</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+    </style>
+
+    <!--
+    * <h2>Form Text</h2>
+    * Style settings for form texts
+    -->
+
+    <style name="FormText">
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textSize">@dimen/mainText</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+        <item name="android:layout_marginTop">@dimen/mediumMargin</item>
+        <item name="android:inputType">text</item>
+        <item name="android:background">@drawable/edittext_primary_dark_transparent_light</item>
+        <item name="singleLine">true</item>
+        <item name="android:padding">@dimen/defaultMargin</item>
+    </style>
+
+    <!--
+    * <h2>Form Text Multi Line</h2>
+    * Style settings for form texts with multiple lines
+    -->
+
+    <style name="FormTextMultiLine">
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textSize">@dimen/mainText</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+        <item name="android:layout_marginTop">@dimen/mediumMargin</item>
+        <item name="android:inputType">textMultiLine</item>
+        <item name="android:background">@drawable/edittext_primary_dark_transparent_light</item>
+        <item name="android:padding">@dimen/mediumMargin</item>
+        <item name="android:gravity">start</item>
+        <item name="android:minHeight">@dimen/textboxHeight</item>
+    </style>
+
+    <!--
+   * <h2>Transparent Box</h2>
+   * Style settings for transparent boxes
+   -->
+
+    <style name="TransparentBox">
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textSize">@dimen/smallText</item>
+        <item name="android:lineSpacingExtra">@dimen/lineHeightSmall</item>
+        <item name="android:padding">@dimen/smallMargin</item>
+        <item name="android:background">@drawable/rounded_primary_dark_transparent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+    </style>
+
+    <!--
+   * <h2>Secondary Box</h2>
+   * Style settings for boxes in secondary color
+   -->
+
+    <style name="SecondaryBox">
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textSize">@dimen/smallText</item>
+        <item name="android:lineSpacingExtra">@dimen/lineHeightSmall</item>
+        <item name="android:padding">@dimen/smallMargin</item>
+        <item name="android:background">@drawable/rounded_secondary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+    </style>
+
+    <!--
+   * <h2>Scroll arrow</h2>
+   * Style settings for the small down arrows
+   -->
+
+    <style name="ScrollArrow">
+        <item name="android:layout_width">@dimen/arrowSize</item>
+        <item name="android:layout_height">@dimen/arrowSize</item>
+        <item name="android:src">@drawable/arrow_small_d</item>
+        <item name="android:tint">@color/colorLightSecondary</item>
+    </style>
+
+    <!--
+   * <h2>Button</h2>
+   * Style settings for a simple button
+   -->
+
+    <style name="Button">
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textSize">@dimen/mainText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:paddingTop">@dimen/mediumMargin</item>
+        <item name="android:paddingBottom">@dimen/mediumMargin</item>
+        <item name="android:paddingStart">@dimen/hugeMargin</item>
+        <item name="android:paddingEnd">@dimen/hugeMargin</item>
+        <item name="android:background">@drawable/rounded_accent</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <!--
+   * <h2>Half Circle Left</h2>
+   * Style settings for a half circle left
+   -->
+
+    <style name="HalfCircleLeft">
+        <item name="android:layout_width">@dimen/buttonSize</item>
+        <item name="android:layout_height">@dimen/buttonSize</item>
+        <item name="android:background">@drawable/circle_l</item>
+    </style>
+
+    <!--
+   * <h2>Half Circle Right</h2>
+   * Style settings for a half circle right
+   -->
+
+    <style name="HalfCircleRight">
+        <item name="android:layout_width">@dimen/buttonSize</item>
+        <item name="android:layout_height">@dimen/buttonSize</item>
+        <item name="android:background">@drawable/circle_r</item>
+    </style>
+
+    <!--
+   * <h2>Custom Button Bg</h2>
+   * Style settings for the background of the custom button
+   -->
+
+    <style name="CustomButtonBg">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/buttonSize</item>
+        <item name="android:background">@color/colorAccent</item>
+    </style>
+
+    <!--
+   * <h2>Custom Button Text</h2>
+   * Style settings for the text of the custom button
+   -->
+
+    <style name="CustomButtonText">
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textSize">@dimen/mainText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center</item>>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:padding">@dimen/defaultMargin</item>
+        <item name="android:background">@drawable/rounded_accent</item>
+        <item name="android:fontFamily">@font/sourcesanspro</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <!--
+   * <h2>Custom Button Img</h2>
+   * Style settings for the image of the custom button
+   -->
+
+    <style name="CustomButtonImg">
+        <item name="android:layout_width">@dimen/buttonIcon</item>
+        <item name="android:layout_height">@dimen/buttonIcon</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:tint">@color/colorLight</item>
+    </style>
+
+    <!--
+   * <h2>Custom Button Progress</h2>
+   * Style settings for the progress of the custom button
+   -->
+
+    <style name="CustomButtonProgress">
+        <item name="android:layout_width">@dimen/buttonIcon</item>
+        <item name="android:layout_height">@dimen/buttonIcon</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--
+   * <h2>Scroll Arrow Up</h2>
+   * Style settings for an scroll to top arrow
+   -->
+
+    <style name="ScrollArrowUp">
+        <item name="android:layout_width">@dimen/arrowSizeBig</item>
+        <item name="android:layout_height">@dimen/arrowSizeBig</item>
+        <item name="android:src">@drawable/arrow_small_u</item>
+        <item name="android:padding">@dimen/mediumMargin</item>
+        <item name="android:clickable">true</item>
+        <item name="android:selectable">true</item>
+        <item name="android:tint">@color/colorLight</item>
+        <item name="android:layout_marginEnd">@dimen/smallMargin</item>
+        <item name="android:background">@drawable/circle_light_ripple</item>
     </style>
 
 </resources>

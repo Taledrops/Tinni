@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * <h1>Rounded Accent</h1>
+ * Rounded box with accent background and rounded corners
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 22.06.2020
+-->
+
+<ripple
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:color="@color/colorAccentDark"
+    tools:targetApi="lollipop">
+
+    <item>
+        <shape
+            android:shape="rectangle">
+            <solid android:color="@color/colorAccent"/>
+            <corners android:radius="@dimen/cornerRadiusHuge" />
+        </shape>
+    </item>
+
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/colorAccentDark" />
+            <corners android:radius="@dimen/cornerRadiusHuge" />
+        </shape>
+    </item>
+</ripple>

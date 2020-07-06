@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Appear</h1>
+ * Alpha animation from 0 to 1
+ * Translation from translation to 0
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 25.06.2020
+-->
+
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillAfter="true">
+    <alpha
+        android:duration="@integer/anim_alpha"
+        android:fromAlpha="0.0"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:toAlpha="1.0" />
+
+    <translate
+        android:fromYDelta="@integer/translation"
+        android:toYDelta="0"
+        android:duration="@integer/anim_alpha"
+        android:interpolator="@android:anim/decelerate_interpolator"
+        />
+</set>

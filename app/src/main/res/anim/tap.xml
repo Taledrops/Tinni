@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Tap</h1>
+ * A tap animation manipulating the scale
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 21.06.2020
+-->
+
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="@integer/anim_length_fast"
+    android:fromXScale="1"
+    android:fromYScale="1"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:repeatCount="1"
+    android:repeatMode="reverse"
+    android:toXScale="0.9"
+    android:toYScale="0.9" />

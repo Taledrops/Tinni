@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  * <h1>Navigation menu</h1>
+  * The menu for the bottom navigation
+  * Pages:
+  * - Home
+  * - Programs
+  * - Sounds
+  * - Statistics
+  * - Icons source: https://www.iconfinder.com/iconsets/line-free
+  * @author Nassim Amar
+  * @version 1.0
+  * @since 18.06.2020
+-->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:title="@string/home"
+        android:icon="@drawable/home" />
+    <item
+        android:id="@+id/navigation_programs"
+        android:title="@string/programs"
+        android:icon="@drawable/programs" />
+    <item
+        android:id="@+id/navigation_sounds"
+        android:title="@string/sounds"
+        android:icon="@drawable/sounds" />
+    <item
+        android:id="@+id/navigation_stats"
+        android:title="@string/stats"
+        android:icon="@drawable/stats" />
+</menu>

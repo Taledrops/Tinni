@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Ring Buffer</h1>
+ * A ring with a colorAccentTransparent background
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 25.06.2020
+-->
+
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="ring"
+    android:innerRadiusRatio="3.5"
+    android:thickness="@dimen/bufferProgressThickness"
+    android:useLevel="false">
+
+    <solid android:color="@color/colorAccentTransparent" />
+
+</shape>

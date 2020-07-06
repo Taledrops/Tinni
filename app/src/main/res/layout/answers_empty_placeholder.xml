@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Answers Empty Placeholder</h1>
+ * Layout for an empty answers RecyclerView
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 06.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="add"
+            type="com.example.tinni.ui.add.AddProgramViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/emptyAnswers"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:foreground="?attr/selectableItemBackground"
+        android:background="@drawable/primary_dark_ripple_no_padding"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/smallMargin"
+            android:layout_height="@dimen/answerHeight">
+            <ImageView
+                android:id="@+id/add"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/answerHeight"
+                android:background="@drawable/edittext_accent"
+                android:src="@drawable/plus"
+                android:contentDescription="@string/add_answer"
+                android:padding="@dimen/semiBigMargin"
+                android:layout_gravity="start|center_vertical"
+                android:tint="@color/colorLight" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                style="@style/SmallHeading"
+                android:text="@string/add_answer" />
+        </FrameLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/answerHeight"
+            android:background="@drawable/edittext_primary_dark_transparent_light"
+            android:contentDescription="@string/answer"
+            android:layout_marginBottom="@dimen/smallMargin" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/answerHeight"
+            android:background="@drawable/edittext_primary_dark_transparent_light"
+            android:contentDescription="@string/answer" />
+    </LinearLayout>
+</layout>
