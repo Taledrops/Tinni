@@ -64,7 +64,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
 
     /**
      * <h2>Get Item Count</h2>
-     * Returns the item count of the programList
+     * Returns the sound_item_horizontal count of the programList
      */
 
     @Override
@@ -92,7 +92,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
 
     /**
      * <h2>Get Item</h2>
-     * Get item inside the programList by its index
+     * Get sound_item_horizontal inside the programList by its index
      */
 
     public Program getItem(int position)
@@ -131,7 +131,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
 
     /**
      * <h2>Add Item</h2>
-     * Add item to the programList with its new index
+     * Add sound_item_horizontal to the programList with its new index
      */
 
     public void addItem(Program sound)
@@ -145,7 +145,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
 
     /**
      * <h2>Remove Item</h2>
-     * Remove item from the programList
+     * Remove sound_item_horizontal from the programList
      */
 
     public void removeItem(Program program)

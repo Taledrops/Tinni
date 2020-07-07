@@ -25,4 +25,5 @@
     <integer name="default_volume">60</integer>
     <integer name="skip_seconds">10000</integer>
     <integer name="bottom_dialog_delay">500</integer>
+    <integer name="start_delay">500</integer>
 </resources>

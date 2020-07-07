@@ -143,6 +143,8 @@
     <string name="neutral">Neutral</string>
     <string name="less_good">Less good</string>
     <string name="bad">Bad</string>
+    <string name="miserable">Miserable</string>
+    <string name="excellent">Excellent</string>
     <string name="congratulations">Congratulations!</string>
     <string name="congratulations_sub">You have successfully completed the current program. Hopefully it could help to improve your symptoms</string>
     <string name="close">Close</string>
@@ -178,4 +180,9 @@
     <string name="got_it">Got it</string>
     <string name="json_code">JSON code</string>
     <string name="import_text">Paste the JSON code that you have received here. If the code is valid, the program will be added immediately.</string>
+    <string name="welcome">Welcome!</string>
+    <string name="welcome_sub">Nice that you\'re here. Tinnitus can be very exhausting, so how do you cope with your tinnitus today?</string>
+    <string name="sound">Sound</string>
+    <string name="recently_played">Recently played</string>
+    <string name="favorite_sounds">Your favorite sounds</string>
 </resources>

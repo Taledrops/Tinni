@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Sound Item Horizontal Placeholder</h1>
+ * Placeholder for the horizotnal HomeFragment Sound items
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 07.07.2020
+-->
+
+<ImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/itemSize"
+    android:layout_marginStart="@dimen/defaultMargin"
+    android:background="@drawable/rounded_primary_dark"
+    android:layout_marginBottom="@dimen/itemMargin"
+    android:contentDescription="@string/program"
+    android:layout_height="@dimen/itemSize">
+</ImageView>

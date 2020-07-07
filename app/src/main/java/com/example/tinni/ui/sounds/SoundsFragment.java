@@ -261,7 +261,7 @@ public class SoundsFragment extends Fragment
     /**
      * <h2>Scroll To Top</h2>
      * Scrolls the RecyclerView to the top
-     * Triggered by click on the current navigation item
+     * Triggered by click on the current navigation sound_item_horizontal
      */
 
     public void scrollToTop ()

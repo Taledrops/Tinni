@@ -63,7 +63,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     /**
      * <h2>Get Item Count</h2>
-     * Returns the item count of the soundList
+     * Returns the sound_item_horizontal count of the soundList
      */
 
     @Override
@@ -91,7 +91,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     /**
      * <h2>Get Item</h2>
-     * Get item inside the categoryList by its index
+     * Get sound_item_horizontal inside the categoryList by its index
      */
 
     public Category getItem(int position)

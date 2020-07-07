@@ -65,6 +65,11 @@ public class MainActivity extends AppCompatActivity
                     fm.beginTransaction().hide(active).show(fragment1).commit();
                     active = fragment1;
                 }
+                else
+                {
+                    HomeFragment homeFragment = (HomeFragment) fragment1;
+                    homeFragment.scrollToTop();
+                }
                 return true;
             case R.id.navigation_programs:
                 if (active != fragment2)

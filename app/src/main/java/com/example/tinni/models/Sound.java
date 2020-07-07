@@ -69,7 +69,6 @@ public class Sound
     private int length;
     private int img;
     private List<Category> categories;
-    private ObservableInt listened = new ObservableInt(0);
     private String imgUri;
     private String uri;
     private Bitmap bitmap = null;
@@ -83,7 +82,7 @@ public class Sound
      * Constructor for object
      */
 
-    public Sound(int id, boolean custom, String title, String description, int length, int img, List<Category> categories, int listened, String uri, String imgUri)
+    public Sound(int id, boolean custom, String title, String description, int length, int img, List<Category> categories, String uri, String imgUri)
     {
         this.id = id;
         this.custom = custom;
@@ -92,7 +91,6 @@ public class Sound
         this.length = length;
         this.img = img;
         this.categories = categories;
-        this.listened.set(listened);
         this.uri = uri;
         this.imgUri = imgUri;
     }
@@ -130,11 +128,6 @@ public class Sound
     public List<Category> getCategories()
     {
         return categories;
-    }
-
-    public int getListened()
-    {
-        return listened.get();
     }
 
     public String getUri()
@@ -185,11 +178,6 @@ public class Sound
     public void setCategories(List<Category> categories)
     {
         this.categories = categories;
-    }
-
-    public void setListened(int listened)
-    {
-        this.listened.set(listened);
     }
 
     public void setUri(String uri)
@@ -436,6 +424,20 @@ public class Sound
     public static void setCurrentTime(TextView textView, long time)
     {
         textView.setText(func.millisecondsToTimer(time));
+    }
+
+    /**
+     * <h3>Listened</h3>
+     * The number of times the sound has been listened to
+     *
+     * @param id the id of the sound
+     */
+
+    @BindingAdapter("android:listened")
+    public static void setListened(TextView textView, int id)
+    {
+        long number = Constants.getInstance().listened.stream().filter(s -> s.getId() == id).count();
+        textView.setText(String.format(textView.getContext().getResources().getString(R.string.times_listened), number));
     }
 
     /**

@@ -63,7 +63,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 
     /**
      * <h2>Get Item Count</h2>
-     * Returns the item count of the questionList
+     * Returns the sound_item_horizontal count of the questionList
      */
 
     @Override
@@ -91,7 +91,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 
     /**
      * <h2>Get Item</h2>
-     * Get item inside the questionList by its index
+     * Get sound_item_horizontal inside the questionList by its index
      */
 
     public Question getItem(int position)
@@ -120,7 +120,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 
     /**
      * <h2>Add Item</h2>
-     * Add item to the questionList with its new index
+     * Add sound_item_horizontal to the questionList with its new index
      */
 
     public void addItem(Question sound, int position)

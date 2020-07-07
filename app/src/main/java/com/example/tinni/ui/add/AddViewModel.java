@@ -84,7 +84,7 @@ public class AddViewModel extends ViewModel
         protected Boolean doInBackground(Void... voids)
         {
             List<Category> chosenCategories = categories.stream().filter(p -> p.active.get()).collect(Collectors.toList());
-            Sound newSound = new Sound((int)(System.currentTimeMillis()/1000), true, title.get(), description.get(), length.get(), 0, chosenCategories, 0, uri.get(), image.get());
+            Sound newSound = new Sound((int)(System.currentTimeMillis()/1000), true, title.get(), description.get(), length.get(), 0, chosenCategories, uri.get(), image.get());
             Constants.getInstance().addCustomSound(newSound);
             return true;
         }

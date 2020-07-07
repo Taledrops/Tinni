@@ -63,7 +63,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
 
     /**
      * <h2>Get Item Count</h2>
-     * Returns the item count of the answerList
+     * Returns the sound_item_horizontal count of the answerList
      */
 
     @Override
@@ -91,7 +91,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
 
     /**
      * <h2>Get Item</h2>
-     * Get item inside the answerList by its index
+     * Get sound_item_horizontal inside the answerList by its index
      */
 
     public Answer getItem(int position)
@@ -120,7 +120,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
 
     /**
      * <h2>Add Item</h2>
-     * Add item to the answerList with its new index
+     * Add sound_item_horizontal to the answerList with its new index
      */
 
     public void addItem(Answer sound, int position)

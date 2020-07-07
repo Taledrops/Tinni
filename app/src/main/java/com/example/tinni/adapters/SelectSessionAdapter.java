@@ -64,7 +64,7 @@ public class SelectSessionAdapter extends RecyclerView.Adapter<SelectSessionAdap
 
     /**
      * <h2>Get Item Count</h2>
-     * Returns the item count of the sessionList
+     * Returns the sound_item_horizontal count of the sessionList
      */
 
     @Override
@@ -92,7 +92,7 @@ public class SelectSessionAdapter extends RecyclerView.Adapter<SelectSessionAdap
 
     /**
      * <h2>Get Item</h2>
-     * Get item inside the sessionList by its index
+     * Get sound_item_horizontal inside the sessionList by its index
      */
 
     public Session getItem(int position)
@@ -121,7 +121,7 @@ public class SelectSessionAdapter extends RecyclerView.Adapter<SelectSessionAdap
 
     /**
      * <h2>Add Item</h2>
-     * Add item to the sessionList with its new index
+     * Add sound_item_horizontal to the sessionList with its new index
      */
 
     public void addItem(Session sound, int position)

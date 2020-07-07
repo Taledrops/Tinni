@@ -7,13 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tinni.databinding.SoundItemBinding;
+import com.example.tinni.databinding.SoundItemHorizontalBinding;
 import com.example.tinni.models.Sound;
 
 import java.util.List;
 
 /**
- * <h1>Sound Adapter</h1>
- * Adapter for Sound items
+ * <h1>Sound Horizontal Adapter</h1>
+ * Adapter for horizontal Sound items
  *
  * Variables:
  * List<Sound> soundList: A list of Sound objects to display
@@ -23,14 +24,14 @@ import java.util.List;
  *
  * @author Nassim Amar
  * @version 1.0
- * @since   20.06.2020
+ * @since   07.07.2020
  */
 
-public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder>
+public class SoundHorizontalAdapter extends RecyclerView.Adapter<SoundHorizontalAdapter.SoundViewHolder>
 {
     public List<Sound> soundList;
 
-    public SoundAdapter(List<Sound> soundList)
+    public SoundHorizontalAdapter(List<Sound> soundList)
     {
         this.soundList = soundList;
     }
@@ -45,7 +46,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHol
     public SoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        SoundItemBinding itemBinding = SoundItemBinding.inflate(layoutInflater, parent, false);
+        SoundItemHorizontalBinding itemBinding = SoundItemHorizontalBinding.inflate(layoutInflater, parent, false);
         return new SoundViewHolder(itemBinding);
     }
 
@@ -74,9 +75,9 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHol
 
     static class SoundViewHolder extends RecyclerView.ViewHolder
     {
-        private SoundItemBinding binding;
+        private SoundItemHorizontalBinding binding;
 
-        public SoundViewHolder(SoundItemBinding binding)
+        public SoundViewHolder(SoundItemHorizontalBinding binding)
         {
             super(binding.getRoot());
             this.binding = binding;

@@ -89,7 +89,8 @@ public class Sound extends AppCompatActivity
     private int session = 0;
     private int currentTime = 0;
     private LocalDateTime startTime = null;
-    boolean finished = false;
+    private boolean finished = false;
+    private int startDate = (int)(System.currentTimeMillis()) / 1000;
     private NotificationManagerCompat notificationManagerCompat;
     private NotificationCompat.Builder notificationBuilder;
 
@@ -424,7 +425,6 @@ public class Sound extends AppCompatActivity
                 if (!setup)
                 {
                     setup = true;
-                    Constants.getInstance().addToListened(sound);
 
                     notificationManagerCompat = NotificationManagerCompat.from(Sound.this);
 
@@ -857,6 +857,13 @@ public class Sound extends AppCompatActivity
             closing = true;
             stop(true);
             binding.appBar.addOnOffsetChangedListener(null);
+            int now = (int)(System.currentTimeMillis()) / 1000;
+            int timeListened = now - startDate;
+            if (timeListened == 0)
+            {
+                timeListened = 1;
+            }
+            Constants.getInstance().addToListened(sound, timeListened);
             if (animateEnd)
             {
                 binding.appBar.setExpanded(true, true);

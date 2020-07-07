@@ -159,7 +159,7 @@ public class BottomDialogNext extends BottomSheetDialogFragment
                 binding.calendar.setOnClickListener(v ->
                 {
                     Intent intent = new Intent(Intent.ACTION_EDIT);
-                    intent.setType("vnd.android.cursor.item/event");
+                    intent.setType("vnd.android.cursor.sound_item_horizontal/event");
                     String title = viewModel.nextSession.getSound().getTitle();
                     if (viewModel.active.get() != null)
                     {

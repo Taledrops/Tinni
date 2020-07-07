@@ -329,7 +329,6 @@ public class BottomDialogSessions extends BottomSheetDialogFragment
                         }
 
                         selectedSessionAdapter.addItem(s);
-                        binding.selectedSounds.getRecycledViewPool().clear();
                     })
                     .setNegativeButton(getResources().getString(R.string.cancel), null);
             AlertDialog alertDialog = alertDialogBuilder.create();

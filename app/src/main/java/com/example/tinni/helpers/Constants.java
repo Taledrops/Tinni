@@ -14,6 +14,7 @@ import com.example.tinni.models.Question;
 import com.example.tinni.models.SelectedProgram;
 import com.example.tinni.models.Session;
 import com.example.tinni.models.Sound;
+import com.example.tinni.models.SoundStat;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
@@ -67,7 +68,7 @@ public class Constants
     public List<Integer> selectedCategories = new ArrayList<>();
     public List<String> allowedFileTypes = new ArrayList<>();
     public List<SelectedProgram> pastPrograms = new ArrayList<>();
-    public List<Integer> listened = new ArrayList<>();
+    public List<SoundStat> listened = new ArrayList<>();
     public List<Sound> customSounds = new ArrayList<>();
     public List<Program> customPrograms = new ArrayList<>();
     public List<Sound> sounds = new ArrayList<>();
@@ -81,6 +82,7 @@ public class Constants
     public Session updateSession = null;
     public SelectedProgram selectedProgram = null;
     public int changedProgram = 0;
+    public int limit = 10;
     public final Gson gson = new Gson();
     public float volume;
     public static final Constants instance = new Constants();
@@ -128,6 +130,7 @@ public class Constants
             //preferences.edit().clear().apply();
             //preferences.edit().remove("program").apply();
             //preferences.edit().remove("pastprograms").apply();
+            //preferences.edit().remove("listened").apply();
 
             String serializedCustom = preferences.getString("custom", null);
             if (serializedCustom != null)
@@ -141,7 +144,7 @@ public class Constants
             String serializedListened = preferences.getString("listened", null);
             if (serializedListened != null)
             {
-                Type type = new TypeToken<List<Integer>>()
+                Type type = new TypeToken<List<SoundStat>>()
                 {
                 }.getType();
                 listened = gson.fromJson(serializedListened, type);
@@ -211,19 +214,19 @@ public class Constants
             soundCategories.add(categories.get(2));
             soundCategories.add(categories.get(5));
 
-            sounds.add(new Sound(2131755008, false, "Beach Waves", "A beautiful loop of beach waves", 60, R.drawable.beach, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.beachwavesloop, null));
+            sounds.add(new Sound(2131755008, false, "Beach Waves", "A beautiful loop of beach waves", 60, R.drawable.beach, soundCategories, "android.resource://com.example.tinni/" + R.raw.beachwavesloop, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(1));
             soundCategories.add(categories.get(4));
 
-            sounds.add(new Sound(2131755016, false, "Broken Record", "The sound of a broken record", 74, R.drawable.record, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.record, null));
+            sounds.add(new Sound(2131755016, false, "Broken Record", "The sound of a broken record", 74, R.drawable.record, soundCategories, "android.resource://com.example.tinni/" + R.raw.record, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(3));
             soundCategories.add(categories.get(4));
 
-            sounds.add(new Sound(2131755009, false, "Church Bell", "Can you hear the bell ringing?", 60, R.drawable.churchbell, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.churchbellsloop, null));
+            sounds.add(new Sound(2131755009, false, "Church Bell", "Can you hear the bell ringing?", 60, R.drawable.churchbell, soundCategories, "android.resource://com.example.tinni/" + R.raw.churchbellsloop, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(0));
@@ -231,71 +234,71 @@ public class Constants
             soundCategories.add(categories.get(2));
             soundCategories.add(categories.get(5));
 
-            sounds.add(new Sound(2131755010, false, "Cicada", "A hot summer night melody", 60, R.drawable.cicada, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.cicadaloop, null));
+            sounds.add(new Sound(2131755010, false, "Cicada", "A hot summer night melody", 60, R.drawable.cicada, soundCategories, "android.resource://com.example.tinni/" + R.raw.cicadaloop, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(3));
             soundCategories.add(categories.get(4));
             soundCategories.add(categories.get(6));
 
-            sounds.add(new Sound(2131755011, false, "Crowd Babble", "A lot of people talking for you to listen", 60, R.drawable.crowd, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.crowdbabble2loop, null));
+            sounds.add(new Sound(2131755011, false, "Crowd Babble", "A lot of people talking for you to listen", 60, R.drawable.crowd, soundCategories, "android.resource://com.example.tinni/" + R.raw.crowdbabble2loop, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(2));
 
-            sounds.add(new Sound(2131755012, false, "Didgeridoo", "A traditional calming instrument", 60, R.drawable.didgeridoo, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.didgeridooloop, null));
+            sounds.add(new Sound(2131755012, false, "Didgeridoo", "A traditional calming instrument", 60, R.drawable.didgeridoo, soundCategories, "android.resource://com.example.tinni/" + R.raw.didgeridooloop, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(3));
             soundCategories.add(categories.get(4));
             soundCategories.add(categories.get(6));
 
-            sounds.add(new Sound(2131755013, false, "Laughing Kids", "The sound of kids laughing", 60, R.drawable.kidslaughing, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.laughingkidsloop, null));
+            sounds.add(new Sound(2131755013, false, "Laughing Kids", "The sound of kids laughing", 60, R.drawable.kidslaughing, soundCategories, "android.resource://com.example.tinni/" + R.raw.laughingkidsloop, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(3));
             soundCategories.add(categories.get(5));
             soundCategories.add(categories.get(7));
 
-            sounds.add(new Sound(2131755014, false, "Notched Meditation", "A melodic meditation music", 60, R.drawable.notchedmeditation, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.notchedmeditationloop, null));
+            sounds.add(new Sound(2131755014, false, "Notched Meditation", "A melodic meditation music", 60, R.drawable.notchedmeditation, soundCategories, "android.resource://com.example.tinni/" + R.raw.notchedmeditationloop, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(0));
             soundCategories.add(categories.get(2));
             soundCategories.add(categories.get(5));
 
-            sounds.add(new Sound(2131755016, false, "Rainy Mood", "A beautiful rain loop", 60, R.drawable.rain, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.rainloop, null));
+            sounds.add(new Sound(2131755016, false, "Rainy Mood", "A beautiful rain loop", 60, R.drawable.rain, soundCategories, "android.resource://com.example.tinni/" + R.raw.rainloop, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(3));
             soundCategories.add(categories.get(4));
             soundCategories.add(categories.get(6));
 
-            sounds.add(new Sound(2131755017, false, "Screaming Kids", "The sound of kids screaming", 60, R.drawable.screamingkids, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.screamingkidsloop, null));
+            sounds.add(new Sound(2131755017, false, "Screaming Kids", "The sound of kids screaming", 60, R.drawable.screamingkids, soundCategories, "android.resource://com.example.tinni/" + R.raw.screamingkidsloop, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(0));
             soundCategories.add(categories.get(2));
 
-            sounds.add(new Sound(2131755018, false, "Seagulls", "The sound of seagulls by the sea", 60, R.drawable.seagull, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.seagullsloop, null));
+            sounds.add(new Sound(2131755018, false, "Seagulls", "The sound of seagulls by the sea", 60, R.drawable.seagull, soundCategories, "android.resource://com.example.tinni/" + R.raw.seagullsloop, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(2));
             soundCategories.add(categories.get(5));
 
-            sounds.add(new Sound(2131755019, false, "Hot Shower", "The sound of a hot and cozy shower", 60, R.drawable.shower, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.showerloop, null));
+            sounds.add(new Sound(2131755019, false, "Hot Shower", "The sound of a hot and cozy shower", 60, R.drawable.shower, soundCategories, "android.resource://com.example.tinni/" + R.raw.showerloop, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(0));
             soundCategories.add(categories.get(2));
 
-            sounds.add(new Sound(2131755020, false, "Sparrows", "The sound of sparrows in the woods", 60, R.drawable.sparrows, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.sparrowsloop, null));
+            sounds.add(new Sound(2131755020, false, "Sparrows", "The sound of sparrows in the woods", 60, R.drawable.sparrows, soundCategories, "android.resource://com.example.tinni/" + R.raw.sparrowsloop, null));
 
             soundCategories = new ArrayList<>();
             soundCategories.add(categories.get(0));
             soundCategories.add(categories.get(2));
 
-            sounds.add(new Sound(2131755021, false, "Waterfall", "The sound of a waterfall in the mountains", 60, R.drawable.waterfall, soundCategories, 0, "android.resource://com.example.tinni/" + R.raw.waterfallloop, null));
+            sounds.add(new Sound(2131755021, false, "Waterfall", "The sound of a waterfall in the mountains", 60, R.drawable.waterfall, soundCategories, "android.resource://com.example.tinni/" + R.raw.waterfallloop, null));
 
             Collections.sort(sounds, (obj1, obj2) -> obj1.getTitle().compareToIgnoreCase(obj2.getTitle()));
 
@@ -557,9 +560,9 @@ public class Constants
      * @param sound The sound to add
      */
 
-    public void addToListened (Sound sound)
+    public void addToListened (Sound sound, int time)
     {
-        listened.add(sound.getId());
+        listened.add(0, new SoundStat(sound.getId(), time, System.currentTimeMillis()));
         SharedPreferences.Editor editor = preferences.edit();
         String json = gson.toJson(listened);
         editor.putString("listened", json);

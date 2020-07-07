@@ -142,6 +142,7 @@
     <string name="neutral">Neutral</string>
     <string name="less_good">Weniger gut</string>
     <string name="bad">Schlecht</string>
+    <string name="miserable">Miserabel</string>
     <string name="congratulations">Herzlichen Glückwunsch!</string>
     <string name="congratulations_sub">Du hast das aktuelle Programm erfolgreich absolviert. Hoffentlich konnte es dir helfen, deine Symptome zu verbessern</string>
     <string name="close">Schließen</string>
@@ -177,4 +178,9 @@
     <string name="got_it">Verstanden</string>
     <string name="json_code">JSON Code</string>
     <string name="import_text">Füge hier den JSON Code ein, den du zugesendet bekommen hast. Sofern der Code gültig ist, wird das Programm umgehend hinzugefügt und ist absolvierbar.</string>
+    <string name="welcome">Willkommen!</string>
+    <string name="welcome_sub">Schön, dass du da bist. Bitte gebe an, wie du mit deinem Tinnitus am heutigen Tag klarkommst</string>
+    <string name="sound">Sound</string>
+    <string name="recently_played">Zuletzt gehört</string>
+    <string name="favorite_sounds">Deine Lieblingssounds</string>
 </resources>

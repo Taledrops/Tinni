@@ -1,20 +1,35 @@
 package com.example.tinni.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.tinni.R;
+import com.example.tinni.adapters.SoundHorizontalAdapter;
 import com.example.tinni.databinding.FragmentHomeBinding;
+import com.example.tinni.helpers.Constants;
+import com.example.tinni.helpers.Functions;
+import com.example.tinni.helpers.ItemClickSupport;
+import com.example.tinni.helpers.MarginDecorator;
+import com.example.tinni.models.Program;
+import com.example.tinni.models.Sound;
 
 import java.lang.reflect.Field;
+import java.util.stream.Collectors;
 
 /**
  * <h1>Home Fragment</h1>
@@ -33,6 +48,11 @@ public class HomeFragment extends Fragment
 {
     private FragmentHomeBinding binding = null;
     private HomeViewModel viewModel;
+    private boolean lastLoaded = false;
+    private boolean favoritesLoaded = false;
+    private SoundHorizontalAdapter lastAdapter;
+    private SoundHorizontalAdapter favoritesAdapter;
+    private static final Functions func = new Functions();
 
     /**
      * <h2>On Create View</h2>
@@ -46,8 +66,138 @@ public class HomeFragment extends Fragment
         binding.setLifecycleOwner(this);
         binding.setVm(viewModel);
 
-        System.out.println("##### BUILD ME HOME");
+        viewModel.getLast().observe(getViewLifecycleOwner(), l ->
+        {
+            if (l != null && l.size() > 0 && getContext() != null)
+            {
+                if (!lastLoaded)
+                {
+                    lastLoaded = true;
+                    binding.last.setItemViewCacheSize(20);
+                    binding.last.setDrawingCacheEnabled(true);
+                    binding.last.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+                    binding.last.addItemDecoration(new MarginDecorator("LeftLastRight", func.pxFromDp(getContext(), getResources().getInteger(R.integer.default_margin))));
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                    binding.last.setLayoutManager(layoutManager);
+                }
+
+                lastAdapter = new SoundHorizontalAdapter(l);
+                binding.last.setAdapter(lastAdapter);
+            }
+        });
+
+        viewModel.getFavorites().observe(getViewLifecycleOwner(), l ->
+        {
+            if (l != null && l.size() > 0 && getContext() != null)
+            {
+                if (!favoritesLoaded)
+                {
+                    favoritesLoaded = true;
+                    binding.favorites.setItemViewCacheSize(20);
+                    binding.favorites.setDrawingCacheEnabled(true);
+                    binding.favorites.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+                    binding.favorites.addItemDecoration(new MarginDecorator("LeftLastRight", func.pxFromDp(getContext(), getResources().getInteger(R.integer.default_margin))));
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                    binding.favorites.setLayoutManager(layoutManager);
+                }
+
+                favoritesAdapter = new SoundHorizontalAdapter(l);
+                binding.favorites.setAdapter(favoritesAdapter);
+            }
+        });
+
+        ItemClickSupport.addTo(binding.last)
+                .setOnItemClickListener((recyclerView, position, v) ->
+                {
+                    if (lastAdapter != null)
+                    {
+                        Sound s = lastAdapter.getItem(position);
+                        if (s != null)
+                        {
+                            openSound(s, v);
+                        }
+                    }
+                });
+
+        ItemClickSupport.addTo(binding.favorites)
+                .setOnItemClickListener((recyclerView, position, v) ->
+                {
+                    if (favoritesAdapter != null)
+                    {
+                        Sound s = favoritesAdapter.getItem(position);
+                        if (s != null)
+                        {
+                            openSound(s, v);
+                        }
+                    }
+                });
 
         return binding.getRoot();
+    }
+
+    /**
+     * <h2>Open Sound</h2>
+     * Opens the selected sound in the Sound Activity
+     *
+     * @param s the selected sound
+     * @param v the selected view
+     *
+     */
+
+    private void openSound (Sound s, View v)
+    {
+        Intent intent = new Intent(getActivity(), com.example.tinni.ui.sound.Sound.class);
+        intent.putExtra("sound", s.getId());
+        ImageView iv = v.findViewById(R.id.soundImg);
+        if (iv != null)
+        {
+            iv.setTransitionName("sound" + s.getId());
+            if (s.getBitmap() != null && getActivity() != null)
+            {
+                intent.putExtra("sound_transition_name", iv.getTransitionName());
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), iv, iv.getTransitionName());
+                startActivity(intent, options.toBundle());
+            }
+            else
+            {
+                startActivity(intent);
+            }
+        }
+        else
+        {
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * <h2>Scroll To Top</h2>
+     * Scrolls the NestedScrollView to the top
+     * Triggered by click on the current navigation sound_item_horizontal
+     */
+
+    public void scrollToTop ()
+    {
+        NestedScrollView nestedScrollView = binding.scroll;
+        nestedScrollView.scrollTo(0, 0);
+    }
+
+    /**
+     * <h2>On Resume</h2>
+     * Called when activity becomes visible
+     * Sets the current program in the viewModel
+     * Using a handler to give it room to breathe on startup
+     *
+     */
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Handler handler = new Handler();
+        handler.postDelayed(() ->
+        {
+            viewModel.prepare();
+            handler.removeCallbacksAndMessages(null);
+        }, getResources().getInteger(R.integer.start_delay));
     }
 }
