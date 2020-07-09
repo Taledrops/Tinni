@@ -183,4 +183,7 @@
     <string name="sound">Sound</string>
     <string name="recently_played">Zuletzt gehört</string>
     <string name="favorite_sounds">Deine Lieblingssounds</string>
+    <string name="how_do_you_feel">Wie fühlst du dich heute?</string>
+    <string name="how_do_you_feel_sub">Um deinen Krankheitsverlauf besser protokollieren zu können, kannst du in einer persönlichen Notiz angeben, wie sich dein Tinnitus für dich heute anfühlt</string>
+    <string name="rating_saved">Deine Bewertung wurde gespeichert</string>
 </resources>

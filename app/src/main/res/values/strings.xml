@@ -185,4 +185,7 @@
     <string name="sound">Sound</string>
     <string name="recently_played">Recently played</string>
     <string name="favorite_sounds">Your favorite sounds</string>
+    <string name="how_do_you_feel">How do you feel today?</string>
+    <string name="how_do_you_feel_sub">In order to be able to better record your course of the tinnitus, you can indicate in a personal note how feel today</string>
+    <string name="rating_saved">Your rating has been saved</string>
 </resources>

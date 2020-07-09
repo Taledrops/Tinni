@@ -175,7 +175,7 @@ public class ProgramsFragment extends Fragment
 
     /**
      * <h2>Open Program</h2>
-     * Opens the selected program in the Progream Activity
+     * Opens the selected program in the Program Activity
      *
      * @param p the selected program
      * @param v the selected view
@@ -184,26 +184,29 @@ public class ProgramsFragment extends Fragment
 
     private void openProgram (Program p, View v)
     {
-        Intent intent = new Intent(getActivity(), com.example.tinni.ui.program.Program.class);
-        intent.putExtra("program", p.getId());
-        ImageView iv = v.findViewById(R.id.programImg);
-        if (iv != null)
+        if (getActivity() != null)
         {
-            iv.setTransitionName("program" + p.getId());
-            if (p.getBitmap() != null && getActivity() != null)
+            Intent intent = new Intent(getActivity(), com.example.tinni.ui.program.Program.class);
+            intent.putExtra("program", p.getId());
+            ImageView iv = v.findViewById(R.id.programImg);
+            if (iv != null)
             {
-                intent.putExtra("program_transition_name", iv.getTransitionName());
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), iv, iv.getTransitionName());
-                startActivity(intent, options.toBundle());
+                iv.setTransitionName("program" + p.getId());
+                if (p.getBitmap() != null)
+                {
+                    intent.putExtra("program_transition_name", iv.getTransitionName());
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), iv, iv.getTransitionName());
+                    startActivity(intent, options.toBundle());
+                }
+                else
+                {
+                    startActivity(intent);
+                }
             }
             else
             {
                 startActivity(intent);
             }
-        }
-        else
-        {
-            startActivity(intent);
         }
     }
 

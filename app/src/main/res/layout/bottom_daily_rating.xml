@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Bottom Daily Rating</h1>
+ * Layout for entering a text for the daily rating
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 08.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.example.tinni.ui.home.HomeViewModel" />
+    </data>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/primary_to_primary_light_to_primary">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/defaultMargin"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/how_do_you_feel"
+                style="@style/Heading" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mediumMargin"
+                android:text="@string/how_do_you_feel_sub"
+                style="@style/SubHeading" />
+            <EditText
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="@string/description"
+                android:layout_marginTop="@dimen/mediumMargin"
+                android:hint="@null"
+                style="@style/FormTextMultiLine" />
+            <Button
+                android:id="@+id/save"
+                style="@style/Button"
+                android:layout_gravity="bottom|center"
+                android:text="@string/save"
+                android:background="@drawable/rounded_accent"
+                android:layout_margin="@dimen/defaultMargin" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

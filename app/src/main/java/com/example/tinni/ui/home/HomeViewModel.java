@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.tinni.helpers.Constants;
 import com.example.tinni.models.Program;
+import com.example.tinni.models.Rating;
 import com.example.tinni.models.Sound;
 import com.example.tinni.models.SoundStat;
 
@@ -21,7 +22,7 @@ public class HomeViewModel extends ViewModel
     public ObservableBoolean loading = new ObservableBoolean(true);
     public MutableLiveData<List<Sound>> last = new MutableLiveData<>();
     public MutableLiveData<List<Sound>> favorites = new MutableLiveData<>();
-    public ObservableInt rating = new ObservableInt();
+    public ObservableInt rating = new ObservableInt(0);
 
     public MutableLiveData<List<Sound>> getLast()
     {
@@ -99,6 +100,23 @@ public class HomeViewModel extends ViewModel
             }
         }
 
+        if (rating.get() == 0)
+        {
+            for (Rating r : Constants.getInstance().ratings)
+            {
+                System.out.println("#### HABE: " + r.getRating() + " --- " + r.getDate() + " --- " + r.getText());
+            }
+            Rating lastRating = Constants.getInstance().wasLastRatingToday();
+            if (lastRating != null)
+            {
+                rating.set(lastRating.getRating());
+            }
+            else
+            {
+                rating.set(0);
+            }
+        }
+
         loading.set(false);
     }
 
@@ -107,11 +125,13 @@ public class HomeViewModel extends ViewModel
      * Clears the given Observable String
      *
      * @param val The rating value
+     * @param text The text to the rating
 
      */
 
-    public void setRating (int val)
+    public void setRating (int val, String text)
     {
         rating.set(val);
+        Constants.getInstance().addRating(val, text);
     }
 }

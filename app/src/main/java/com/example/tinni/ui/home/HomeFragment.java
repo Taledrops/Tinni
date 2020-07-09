@@ -15,11 +15,14 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.tinni.R;
 import com.example.tinni.adapters.SoundHorizontalAdapter;
+import com.example.tinni.custom.BottomDialogDailyRating;
+import com.example.tinni.custom.BottomDialogQuestion;
 import com.example.tinni.databinding.FragmentHomeBinding;
 import com.example.tinni.helpers.Constants;
 import com.example.tinni.helpers.Functions;
@@ -29,6 +32,7 @@ import com.example.tinni.models.Program;
 import com.example.tinni.models.Sound;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -52,6 +56,7 @@ public class HomeFragment extends Fragment
     private boolean favoritesLoaded = false;
     private SoundHorizontalAdapter lastAdapter;
     private SoundHorizontalAdapter favoritesAdapter;
+    private static FragmentManager fragmentManager;
     private static final Functions func = new Functions();
 
     /**
@@ -65,6 +70,11 @@ public class HomeFragment extends Fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         binding.setLifecycleOwner(this);
         binding.setVm(viewModel);
+
+        if (getActivity() != null)
+        {
+            fragmentManager = getActivity().getSupportFragmentManager();
+        }
 
         viewModel.getLast().observe(getViewLifecycleOwner(), l ->
         {
@@ -106,6 +116,21 @@ public class HomeFragment extends Fragment
             }
         });
 
+        binding.ratingOne.setOnClickListener(v -> makeRating(1));
+        binding.ratingTwo.setOnClickListener(v -> makeRating(2));
+        binding.ratingThree.setOnClickListener(v -> makeRating(3));
+        binding.ratingFour.setOnClickListener(v -> makeRating(4));
+        binding.ratingFive.setOnClickListener(v -> makeRating(5));
+
+        binding.currentProgram.setOnClickListener(v ->
+        {
+            if (viewModel.currentProgram.get() != null)
+            {
+                openProgram(Objects.requireNonNull(viewModel.currentProgram.get()));
+            }
+        });
+
+
         ItemClickSupport.addTo(binding.last)
                 .setOnItemClickListener((recyclerView, position, v) ->
                 {
@@ -133,6 +158,57 @@ public class HomeFragment extends Fragment
                 });
 
         return binding.getRoot();
+    }
+
+    /**
+     * <h2>Open Program</h2>
+     * Opens the selected program in the Program Activity
+     *
+     * @param p the selected program
+     *
+     */
+
+    private void openProgram (Program p)
+    {
+        if (getActivity() != null)
+        {
+            Intent intent = new Intent(getActivity(), com.example.tinni.ui.program.Program.class);
+            intent.putExtra("program", p.getId());
+            ImageView iv = binding.programImg;
+
+            iv.setTransitionName("program" + p.getId());
+            if (p.getBitmap() != null)
+            {
+                Constants.getInstance().programs.stream().filter(x -> x.getId() == p.getId()).findFirst().ifPresent(existingProgram -> existingProgram.setBitmap(p.getBitmap()));
+                Toast.makeText(getContext(), "OBEN", Toast.LENGTH_SHORT).show();
+                intent.putExtra("program_transition_name", iv.getTransitionName());
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), iv, iv.getTransitionName());
+                startActivity(intent, options.toBundle());
+            }
+            else
+            {
+                Toast.makeText(getContext(), "UNTEN", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
+        }
+    }
+
+    /**
+     * <h2>Make Rating</h2>
+     * Opens the selected sound in the Sound Activity
+     *
+     * @param rating The selected rating
+     *
+     */
+
+    private void makeRating (int rating)
+    {
+        if (fragmentManager != null)
+        {
+            BottomDialogDailyRating bottomDialogDailyRating = new BottomDialogDailyRating();
+            bottomDialogDailyRating.newInstance(viewModel, rating);
+            bottomDialogDailyRating.show(fragmentManager, "dailyrating");
+        }
     }
 
     /**

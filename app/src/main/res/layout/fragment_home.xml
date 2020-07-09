@@ -54,6 +54,7 @@
                 android:weightSum="5"
                 android:background="@drawable/edittext_primary_dark_transparent_light">
                 <LinearLayout
+                    android:id="@+id/ratingFive"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -61,24 +62,25 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
+                    android:visibility="@{!vm.loading ? View.VISIBLE : View.INVISIBLE, default=invisible}"
                     android:foreground="?attr/selectableItemBackground"
-                    android:onClick="@{() -> vm.setRating(5)}"
                     tools:ignore="UseCompoundDrawables">
                         <ImageView
-                            android:layout_width="@dimen/playSmallSize"
-                            android:layout_height="@dimen/playSmallSize"
+                            android:layout_width="@dimen/playMiniSize"
+                            android:layout_height="@dimen/playMiniSize"
                             android:src="@drawable/verygood"
                             android:contentDescription="@string/very_good"
-                            android:tint="@{vm.rating != 5 ? @color/colorLightSecondary : @color/colorAccent, default=@color/colorLightSecondary}" />
+                            android:tint="@{vm.rating != 5 ? @color/colorLight : @color/colorAccent, default=@color/colorLight}" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/very_good"
                             android:layout_marginTop="@dimen/tinyMargin"
-                            style="@style/RegularText"
-                            android:textColor="@{vm.rating != 5 ? @color/colorLightSecondary : @color/colorAccent, default=@color/colorLightSecondary}"/>
+                            style="@style/SmallText"
+                            android:textColor="@{vm.rating != 5 ? @color/colorLight : @color/colorAccent, default=@color/colorLight}"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/ratingFour"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -86,24 +88,25 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
+                    android:visibility="@{!vm.loading ? View.VISIBLE : View.INVISIBLE, default=invisible}"
                     android:foreground="?attr/selectableItemBackground"
-                    android:onClick="@{() -> vm.setRating(4)}"
                     tools:ignore="UseCompoundDrawables">
                     <ImageView
-                        android:layout_width="@dimen/playSmallSize"
-                        android:layout_height="@dimen/playSmallSize"
+                        android:layout_width="@dimen/playMiniSize"
+                        android:layout_height="@dimen/playMiniSize"
                         android:src="@drawable/good"
                         android:contentDescription="@string/good"
-                        android:tint="@{vm.rating != 4 ? @color/colorLightSecondary : @color/colorAccent, default=@color/colorLightSecondary}" />
+                        android:tint="@{vm.rating != 4 ? @color/colorLight : @color/colorAccent, default=@color/colorLight}" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/good"
                         android:layout_marginTop="@dimen/tinyMargin"
-                        style="@style/RegularText"
-                        android:textColor="@{vm.rating != 4 ? @color/colorLightSecondary : @color/colorAccent, default=@color/colorLightSecondary}"/>
+                        style="@style/SmallText"
+                        android:textColor="@{vm.rating != 4 ? @color/colorLight : @color/colorAccent, default=@color/colorLight}"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/ratingThree"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -111,24 +114,25 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
+                    android:visibility="@{!vm.loading ? View.VISIBLE : View.INVISIBLE, default=invisible}"
                     android:foreground="?attr/selectableItemBackground"
-                    android:onClick="@{() -> vm.setRating(3)}"
                     tools:ignore="UseCompoundDrawables">
                     <ImageView
-                        android:layout_width="@dimen/playSmallSize"
-                        android:layout_height="@dimen/playSmallSize"
+                        android:layout_width="@dimen/playMiniSize"
+                        android:layout_height="@dimen/playMiniSize"
                         android:src="@drawable/neutral"
                         android:contentDescription="@string/neutral"
-                        android:tint="@{vm.rating != 3 ? @color/colorLightSecondary : @color/colorAccent, default=@color/colorLightSecondary}" />
+                        android:tint="@{vm.rating != 3 ? @color/colorLight : @color/colorAccent, default=@color/colorLight}" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/neutral"
                         android:layout_marginTop="@dimen/tinyMargin"
-                        style="@style/RegularText"
-                        android:textColor="@{vm.rating != 3 ? @color/colorLightSecondary : @color/colorAccent, default=@color/colorLightSecondary}"/>
+                        style="@style/SmallText"
+                        android:textColor="@{vm.rating != 3 ? @color/colorLight : @color/colorAccent, default=@color/colorLight}"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/ratingTwo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -136,24 +140,25 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
+                    android:visibility="@{!vm.loading ? View.VISIBLE : View.INVISIBLE, default=invisible}"
                     android:foreground="?attr/selectableItemBackground"
-                    android:onClick="@{() -> vm.setRating(2)}"
                     tools:ignore="UseCompoundDrawables">
                     <ImageView
-                        android:layout_width="@dimen/playSmallSize"
-                        android:layout_height="@dimen/playSmallSize"
+                        android:layout_width="@dimen/playMiniSize"
+                        android:layout_height="@dimen/playMiniSize"
                         android:src="@drawable/bad"
                         android:contentDescription="@string/bad"
-                        android:tint="@{vm.rating != 2 ? @color/colorLightSecondary : @color/colorAccent, default=@color/colorLightSecondary}" />
+                        android:tint="@{vm.rating != 2 ? @color/colorLight : @color/colorAccent, default=@color/colorLight}" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/bad"
                         android:layout_marginTop="@dimen/tinyMargin"
-                        style="@style/RegularText"
-                        android:textColor="@{vm.rating != 2 ? @color/colorLightSecondary : @color/colorAccent, default=@color/colorLightSecondary}"/>
+                        style="@style/SmallText"
+                        android:textColor="@{vm.rating != 2 ? @color/colorLight : @color/colorAccent, default=@color/colorLight}"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/ratingOne"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -161,22 +166,22 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
+                    android:visibility="@{!vm.loading ? View.VISIBLE : View.INVISIBLE, default=invisible}"
                     android:foreground="?attr/selectableItemBackground"
-                    android:onClick="@{() -> vm.setRating(1)}"
                     tools:ignore="UseCompoundDrawables">
                     <ImageView
-                        android:layout_width="@dimen/playSmallSize"
-                        android:layout_height="@dimen/playSmallSize"
+                        android:layout_width="@dimen/playMiniSize"
+                        android:layout_height="@dimen/playMiniSize"
                         android:src="@drawable/verybad"
                         android:contentDescription="@string/miserable"
-                        android:tint="@{vm.rating != 1 ? @color/colorLightSecondary : @color/colorAccent, default=@color/colorLightSecondary}" />
+                        android:tint="@{vm.rating != 1 ? @color/colorLight : @color/colorAccent, default=@color/colorLight}" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/miserable"
                         android:layout_marginTop="@dimen/tinyMargin"
-                        style="@style/RegularText"
-                        android:textColor="@{vm.rating != 1 ? @color/colorLightSecondary : @color/colorAccent, default=@color/colorLightSecondary}"/>
+                        style="@style/SmallText"
+                        android:textColor="@{vm.rating != 1 ? @color/colorLight : @color/colorAccent, default=@color/colorLight}"/>
                 </LinearLayout>
             </LinearLayout>
             <TextView
@@ -200,6 +205,7 @@
 
             </com.example.tinni.custom.Placeholder>
             <LinearLayout
+                android:id="@+id/currentProgram"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/mediumMargin"
@@ -297,11 +303,11 @@
                 android:placeholderVisibility="@{vm.loading}"
                 android:layout_height="wrap_content">
 
-                <include layout="@layout/item_placeholder"/>
-                <include layout="@layout/item_placeholder"/>
-                <include layout="@layout/item_placeholder"/>
-                <include layout="@layout/item_placeholder"/>
-                <include layout="@layout/item_placeholder"/>
+                <include layout="@layout/sound_item_horizontal_placeholder"/>
+                <include layout="@layout/sound_item_horizontal_placeholder"/>
+                <include layout="@layout/sound_item_horizontal_placeholder"/>
+                <include layout="@layout/sound_item_horizontal_placeholder"/>
+                <include layout="@layout/sound_item_horizontal_placeholder"/>
 
             </com.example.tinni.custom.Placeholder>
             <androidx.recyclerview.widget.RecyclerView
@@ -328,11 +334,11 @@
                 android:placeholderVisibility="@{vm.loading}"
                 android:layout_height="wrap_content">
 
-                <include layout="@layout/item_placeholder"/>
-                <include layout="@layout/item_placeholder"/>
-                <include layout="@layout/item_placeholder"/>
-                <include layout="@layout/item_placeholder"/>
-                <include layout="@layout/item_placeholder"/>
+                <include layout="@layout/sound_item_horizontal_placeholder"/>
+                <include layout="@layout/sound_item_horizontal_placeholder"/>
+                <include layout="@layout/sound_item_horizontal_placeholder"/>
+                <include layout="@layout/sound_item_horizontal_placeholder"/>
+                <include layout="@layout/sound_item_horizontal_placeholder"/>
 
             </com.example.tinni.custom.Placeholder>
             <androidx.recyclerview.widget.RecyclerView

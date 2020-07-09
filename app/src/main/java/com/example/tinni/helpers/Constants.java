@@ -2,6 +2,7 @@ package com.example.tinni.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.format.DateUtils;
 import android.widget.Toast;
 
 import androidx.databinding.ObservableArrayList;
@@ -11,6 +12,7 @@ import com.example.tinni.models.Answer;
 import com.example.tinni.models.Category;
 import com.example.tinni.models.Program;
 import com.example.tinni.models.Question;
+import com.example.tinni.models.Rating;
 import com.example.tinni.models.SelectedProgram;
 import com.example.tinni.models.Session;
 import com.example.tinni.models.Sound;
@@ -21,8 +23,10 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * <h1>Constants</h1>
@@ -50,7 +54,8 @@ import java.util.List;
  * Program currentProgram: The recently selected Program object
  * Session updateSession: The session to update after completion
  * Program selectedProgram: The Program object currently done by the user
- * int changedProfgram: The ID of the program recently changed to update its active indicator
+ * List<Rating> ratings: The list of daily ratings
+ * int changedProgram: The ID of the program recently changed to update its active indicator
  * Gson gson: The instance of the Gson Library
  * float volume: The saved volume setting
  * Constants instance: The current instance of this class
@@ -81,6 +86,7 @@ public class Constants
     public Program programToRemove = null;
     public Session updateSession = null;
     public SelectedProgram selectedProgram = null;
+    public List<Rating> ratings = new ArrayList<>();
     public int changedProgram = 0;
     public int limit = 10;
     public final Gson gson = new Gson();
@@ -130,7 +136,16 @@ public class Constants
             //preferences.edit().clear().apply();
             //preferences.edit().remove("program").apply();
             //preferences.edit().remove("pastprograms").apply();
-            //preferences.edit().remove("listened").apply();
+            //preferences.edit().remove("ratings").apply();
+
+            String serializedRatings = preferences.getString("ratings", null);
+            if (serializedRatings != null)
+            {
+                Type type = new TypeToken<List<Rating>>()
+                {
+                }.getType();
+                ratings = gson.fromJson(serializedRatings, type);
+            }
 
             String serializedCustom = preferences.getString("custom", null);
             if (serializedCustom != null)
@@ -437,6 +452,82 @@ public class Constants
 
             Collections.sort(programs, (obj1, obj2) -> obj1.getTitle().compareToIgnoreCase(obj2.getTitle()));
 
+            /*
+            long day = 86400000;
+            for (int i = 10; i >= 1; i--)
+            {
+                ratings.add(new Rating(ThreadLocalRandom.current().nextInt(1, 5 + 1), System.currentTimeMillis() - (i * day), "Hello " + i));
+            }
+            SharedPreferences.Editor editor = preferences.edit();
+            String json = gson.toJson(ratings);
+            editor.putString("ratings", json);
+            editor.apply();
+
+             */
+        }
+    }
+
+    /**
+     * <h2>Add Rating</h2>
+     * Add daily rating
+     *
+     * @param rating The rating from 1 to 5
+     *
+     * Source: https://stackoverflow.com/a/28107791/2700965
+     */
+
+    public void addRating (int rating, String text)
+    {
+        System.out.println("#### add rating: " + rating);
+        Rating lastRating = wasLastRatingToday();
+        if (lastRating != null)
+        {
+            lastRating.setRating(rating);
+            lastRating.setText(text);
+        }
+        else
+        {
+            ratings.add(new Rating(rating, System.currentTimeMillis(), text));
+        }
+
+        SharedPreferences.Editor editor = preferences.edit();
+        String json = gson.toJson(ratings);
+        editor.putString("ratings", json);
+        editor.apply();
+    }
+
+    /**
+     * <h2>Was Last Rating Today</h2>
+     * Checks if the last element of the ratings is from today
+     *
+     * Source: https://stackoverflow.com/a/16146263/2700965
+     *
+     */
+
+    public Rating wasLastRatingToday ()
+    {
+        if (ratings.size() > 0)
+        {
+            Rating lastRating = ratings.get(ratings.size() - 1);
+            if (lastRating != null)
+            {
+                if (DateUtils.isToday(lastRating.getDate()))
+                {
+                    return lastRating;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else
+        {
+           return null;
         }
     }
 
