@@ -6,6 +6,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tinni.R;
+
 import java.util.Objects;
 
 /**
@@ -28,6 +30,7 @@ public class MarginDecorator extends RecyclerView.ItemDecoration
 {
     private final int space;
     private final String type;
+    private static final Functions func = new Functions();
 
     public MarginDecorator(String type, int space)
     {
@@ -56,6 +59,21 @@ public class MarginDecorator extends RecyclerView.ItemDecoration
                     if (parent.getChildAdapterPosition(view) == 0)
                     {
                         outRect.top = space;
+                    }
+                    break;
+                case "FirstAndLast":
+                    if (parent.getChildAdapterPosition(view) == 0)
+                    {
+                        outRect.left = space;
+                        outRect.right = func.pxFromDp(view.getContext(), view.getContext().getResources().getInteger(R.integer.small_margin));
+                    }
+                    else if (parent.getChildAdapterPosition(view) == Objects.requireNonNull(parent.getAdapter()).getItemCount() - 1)
+                    {
+                        outRect.right = space;
+                    }
+                    else
+                    {
+                        outRect.right = func.pxFromDp(view.getContext(), view.getContext().getResources().getInteger(R.integer.small_margin));
                     }
                     break;
                 case "StaggeredGrid":

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  * <h1>Past Program Layout</h1>
+  * Layout for the Past Program Activity
+  *
+  * @author Nassim Amar
+  * @version 1.0
+  * @since 10.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.example.tinni.ui.pastprogram.PastProgramViewModel" />
+    </data>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:focusableInTouchMode="true"
+        android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/galleryHeight"
+            android:background="@android:color/transparent">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/galleryHeight"
+                app:contentScrim="@color/colorPrimaryDark"
+                app:scrimAnimationDuration="@integer/anim_length_medium"
+                app:expandedTitleTextAppearance="@style/Heading"
+                app:expandedTitleMarginBottom="@dimen/collapsingTitleMarginBottom"
+                app:expandedTitleGravity="bottom"
+                app:expandedTitleMarginStart="@dimen/defaultMargin"
+                app:expandedTitleMarginEnd="@dimen/defaultMargin"
+                app:collapsedTitleTextAppearance="@style/SmallHeading"
+                app:title="@{vm.selected.program.title}"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/galleryHeight">
+                    <com.bosphere.fadingedgelayout.FadingEdgeLayout
+                        android:layout_width="match_parent"
+                        app:fel_edge="bottom"
+                        app:fel_size_bottom="@dimen/fadeBottomSize"
+                        android:paddingBottom="@dimen/defaultMargin"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:contentDescription="@{vm.selected.program.title}"
+                            android:id="@+id/programImg"/>
+                    </com.bosphere.fadingedgelayout.FadingEdgeLayout>
+                    <LinearLayout
+                        android:id="@+id/topContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/defaultMargin"
+                        android:paddingEnd="@dimen/defaultMargin"
+                        android:gravity="center_vertical"
+                        android:visibility="invisible"
+                        android:layout_gravity="bottom">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="@dimen/mediumMargin"
+                            android:programTextCompleted="@{vm.selected}"
+                            style="@style/SubHeading"
+                            android:textColor="@color/colorSecondary" />
+                        <ImageView
+                            android:id="@+id/export"
+                            android:layout_width="@dimen/playSmallSize"
+                            android:layout_height="@dimen/playSmallSize"
+                            android:background="@drawable/circle_accent_ripple"
+                            android:src="@drawable/download"
+                            android:layout_weight="0"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:layout_marginStart="@dimen/defaultMargin"
+                            android:padding="@dimen/defaultMargin"
+                            android:contentDescription="@string/download_as_pdf"
+                            android:tint="@color/colorLight" />
+                    </LinearLayout>
+                </FrameLayout>
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:visibility="invisible"
+                    android:background="@android:color/transparent"
+                    app:layout_collapseMode="pin"
+                    android:theme="@style/ToolbarTheme">
+                    <ImageView
+                        android:id="@+id/more"
+                        android:layout_width="@dimen/iconSizeToolbar"
+                        android:layout_height="@dimen/iconSizeToolbar"
+                        android:adjustViewBounds="true"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@string/actions"
+                        android:background="@drawable/circle_light_ripple"
+                        android:padding="@dimen/iconPadding"
+                        android:scaleType="fitCenter"
+                        android:layout_marginEnd="@dimen/smallMargin"
+                        android:layout_marginStart="@dimen/smallMargin"
+                        android:src="@drawable/dots"
+                        android:layout_gravity="top|end"
+                        android:tint="@color/colorLight" />
+                    <ProgressBar
+                        android:id="@+id/moreLoading"
+                        android:visibility="gone"
+                        android:layout_width="@dimen/iconSizeToolbar"
+                        android:padding="@dimen/iconPadding"
+                        android:indeterminateTint="@color/colorLight"
+                        android:layout_gravity="top|end"
+                        android:layout_marginEnd="@dimen/smallMargin"
+                        android:layout_marginStart="@dimen/smallMargin"
+                        android:layout_height="@dimen/iconSizeToolbar"/>
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:id="@+id/scroll"
+            android:visibility="invisible"
+            android:fillViewport="true"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:paddingStart="@dimen/defaultMargin"
+                android:paddingEnd="@dimen/defaultMargin"
+                android:paddingBottom="@dimen/defaultMargin"
+                android:orientation="vertical">
+                <com.example.tinni.custom.ExpandableTextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/defaultMargin"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{vm.selected.program.description != null &amp;&amp; vm.selected.program.description.length() > 0 ? View.VISIBLE : View.GONE, default=visible}"
+                    android:description="@{vm.selected.program.description}"/>
+                <TextView
+                    android:id="@+id/questionnaireTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.format(@string/questionnaire, vm.selected.program.questions.size())}"
+                    android:layout_marginTop="@dimen/defaultMargin"
+                    style="@style/MediumHeading" />
+                <com.example.tinni.custom.Placeholder
+                    android:id="@+id/placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/defaultMargin"
+                    android:orientation="vertical"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                    <include layout="@layout/questionnaire_placeholder"/>
+                    <include layout="@layout/questionnaire_placeholder"/>
+                    <include layout="@layout/questionnaire_placeholder"/>
+                    <include layout="@layout/questionnaire_placeholder"/>
+                    <include layout="@layout/questionnaire_placeholder"/>
+                    <include layout="@layout/questionnaire_placeholder"/>
+
+                </com.example.tinni.custom.Placeholder>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/questionnaire"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                <TextView
+                    android:id="@+id/sessionsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.format(@string/progress, vm.sessions.size())}"
+                    android:layout_marginTop="@dimen/defaultMargin"
+                    style="@style/MediumHeading" />
+
+                <com.example.tinni.custom.Placeholder
+                    android:id="@+id/sessionsPlaceholder"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/defaultMargin"
+                    android:layout_height="match_parent">
+
+                    <include layout="@layout/session_placeholder"/>
+                    <include layout="@layout/session_placeholder"/>
+                    <include layout="@layout/session_placeholder"/>
+                    <include layout="@layout/session_placeholder"/>
+                    <include layout="@layout/session_placeholder"/>
+                    <include layout="@layout/session_placeholder"/>
+                    <include layout="@layout/session_placeholder"/>
+                    <include layout="@layout/session_placeholder"/>
+
+                </com.example.tinni.custom.Placeholder>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sessions"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

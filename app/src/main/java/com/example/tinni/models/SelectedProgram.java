@@ -1,11 +1,19 @@
 package com.example.tinni.models;
 
+import android.widget.TextView;
+
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableInt;
 import androidx.databinding.ObservableList;
 
+import com.example.tinni.R;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * <h1>Selected Program Model</h1></h1>
@@ -26,6 +34,7 @@ import java.util.List;
 
 public class SelectedProgram
 {
+    private int id;
     private Program program;
     public ObservableArrayList<Session> sessions = new ObservableArrayList<>();
     private long start;
@@ -38,10 +47,21 @@ public class SelectedProgram
      * Constructor for object
      */
 
-    public SelectedProgram(Program program, long start)
+    public SelectedProgram(int id, Program program, long start)
     {
+        this.id = id;
         this.program = program;
         this.start = start;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
     public Program getProgram()
@@ -92,5 +112,30 @@ public class SelectedProgram
     public void setEndQuestions(List<Question> endQuestions)
     {
         this.endQuestions = endQuestions;
+    }
+
+    /**
+     * <h3>From To</h3>
+     * Converts two milliseconds to a from to date
+     *
+     * @param from The from date in milliseconds
+     * @param to The to date in milliseconds
+     */
+
+    @BindingAdapter({"android:dateFrom", "android:dateTo"})
+    public static void setMonthDateYear(TextView textView, long from, long to)
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
+        String fromDate = formatter.format(new Date(from));
+        String toDate = formatter.format(new Date(to));
+
+        if (!fromDate.equals(toDate))
+        {
+            textView.setText(String.format(textView.getResources().getString(R.string.from_to), fromDate, toDate));
+        }
+        else
+        {
+            textView.setText(toDate);
+        }
     }
 }

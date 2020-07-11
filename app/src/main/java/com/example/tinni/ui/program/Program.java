@@ -71,6 +71,7 @@ public class Program extends AppCompatActivity
     private static Animation moveIn;
     private boolean closing = false;
     private SessionAdapter sessionAdapter;
+    private boolean sessionsLoaded = false;
     private Session currentSession = null;
     private boolean isDeleting = false;
     private static FragmentManager fragmentManager;

@@ -8,6 +8,8 @@ import androidx.databinding.ObservableBoolean;
 import com.example.tinni.R;
 import com.example.tinni.helpers.Functions;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -36,6 +38,7 @@ public class Session
     private Sound sound;
     private int time;
     private int rating = 0;
+    private long date = System.currentTimeMillis();
     private static final Functions func = new Functions();
 
     /**
@@ -60,6 +63,7 @@ public class Session
         this.time = s.getTime();
         this.done.set(s.done.get());
         this.rating = s.getRating();
+        this.date = s.getDate();
     }
 
     public int getId()
@@ -102,6 +106,16 @@ public class Session
         this.rating = rating;
     }
 
+    public long getDate()
+    {
+        return date;
+    }
+
+    public void setDate(long date)
+    {
+        this.date = date;
+    }
+
     /**
      * <h3>Session Text</h3>
      * Setting the sub text with detailed information of session
@@ -138,5 +152,25 @@ public class Session
     public static void setTimeFull(TextView textView, int time)
     {
         textView.setText(func.getTotalTime(textView.getContext(), time));
+    }
+
+    /**
+     * <h3>Session Progress Text</h3>
+     * Setting the sub text with detailed information of session inside the progress page
+     *
+     * @param id the id of the session
+     * @param time the length of the session
+     * @param date The date of the session
+     */
+
+    @BindingAdapter({"android:sessionId", "android:sessionTime", "android:sessionDate"})
+    public static void setSessionProgressText(TextView textView, int id, int time, long date)
+    {
+        String sessionCount = String.format(textView.getContext().getString(R.string.session_number), id);
+        String timeText = func.getTotalTime(textView.getContext(), time);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
+        String dateString = formatter.format(new Date(date));
+
+        textView.setText(String.format(textView.getContext().getString(R.string.session_text_progress), sessionCount, timeText, dateString));
     }
 }

@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
+import android.media.AudioDeviceInfo;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -451,6 +453,27 @@ public class Sound extends AppCompatActivity
         binding.layer.startAnimation(anim);
     }
 
+    private boolean isHeadphonesPluggedIn ()
+    {
+        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager != null)
+        {
+            AudioDeviceInfo[] audioDevices = audioManager.getDevices(AudioManager.GET_DEVICES_ALL);
+            for (AudioDeviceInfo deviceInfo : audioDevices)
+            {
+                if (deviceInfo.getType() == AudioDeviceInfo.TYPE_WIRED_HEADPHONES || deviceInfo.getType() == AudioDeviceInfo.TYPE_WIRED_HEADSET)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     private void setup ()
     {
         Toast.makeText(this, sound.getUri(), Toast.LENGTH_SHORT).show();
@@ -640,6 +663,11 @@ public class Sound extends AppCompatActivity
                     };
                     runOnUiThread(runnable);
                     binding.kenBurns.resume();
+
+                    if (!isHeadphonesPluggedIn())
+                    {
+                        Toast.makeText(this, getResources().getString(R.string.error_headphone), Toast.LENGTH_LONG).show();
+                    }
                     break;
                 case 1:
                     mediaPlayer.pause();

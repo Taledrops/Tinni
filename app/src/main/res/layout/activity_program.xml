@@ -153,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{String.format(@string/sessions_count, vm.current.sessions.size())}"
-                    android:layout_marginTop="@dimen/bigMargin"
+                    android:layout_marginTop="@dimen/defaultMargin"
                     style="@style/MediumHeading" />
 
                 <com.example.tinni.custom.Placeholder

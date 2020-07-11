@@ -27,7 +27,9 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -105,7 +107,10 @@ public class Program
         {
             this.sessions.add(new Session(s));
         }
-        this.sessions.get(0).active.set(true);
+        if (this.sessions.size() > 0)
+        {
+            this.sessions.get(0).active.set(true);
+        }
         for (Question q : p.getQuestions())
         {
             this.questions.add(new Question(q));
@@ -275,6 +280,38 @@ public class Program
             String totalTime = String.format(tv.getContext().getString(R.string.total_time), func.getTotalTime(tv.getContext(), timeSum));
             tv.setText(String.format(tv.getContext().getString(R.string.program_text), sessionCount, daily, totalTime));
             System.out.println("###### PROGRAM BINDADAPTER END : " + program.getSessions().size());
+        }
+    }
+
+    /**
+     * <h3>Program Text</h3>
+     * Setting the sub heading with detailed information of program
+     *
+     * @param selectedProgram current SelectedProgram object
+     */
+
+    @BindingAdapter("android:programTextCompleted")
+    public static void setProgramTextCompleted(TextView textView, SelectedProgram selectedProgram)
+    {
+        if (selectedProgram != null)
+        {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
+            String fromDate = formatter.format(new Date(selectedProgram.getStart()));
+            String toDate = formatter.format(new Date(selectedProgram.getEnd()));
+            String date;
+            if (!fromDate.equals(toDate))
+            {
+                date = String.format(textView.getResources().getString(R.string.from_to), fromDate, toDate);
+            }
+            else
+            {
+                date = toDate;
+            }
+
+            long total = Constants.getInstance().pastPrograms.stream().filter(s -> s.getProgram().getId() == selectedProgram.getProgram().getId()).count();
+            String totalText = String.format(textView.getResources().getString(R.string.total_completed), total);
+
+            textView.setText(String.format(textView.getResources().getString(R.string.past_program_text), date, totalText));
         }
     }
 

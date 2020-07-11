@@ -180,14 +180,12 @@ public class HomeFragment extends Fragment
             if (p.getBitmap() != null)
             {
                 Constants.getInstance().programs.stream().filter(x -> x.getId() == p.getId()).findFirst().ifPresent(existingProgram -> existingProgram.setBitmap(p.getBitmap()));
-                Toast.makeText(getContext(), "OBEN", Toast.LENGTH_SHORT).show();
                 intent.putExtra("program_transition_name", iv.getTransitionName());
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), iv, iv.getTransitionName());
                 startActivity(intent, options.toBundle());
             }
             else
             {
-                Toast.makeText(getContext(), "UNTEN", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         }

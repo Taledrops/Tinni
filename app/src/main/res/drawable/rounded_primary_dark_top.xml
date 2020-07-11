@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Rounded Primary Dark Top</h1>
+ * Rounded box with dark background and rounded corners on the top
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 09.07.2020
+-->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" android:padding="@dimen/mediumMargin">
+    <solid android:color="@color/colorPrimaryDark"/>
+    <corners android:topLeftRadius="@dimen/cornerRadiusSmall"
+        android:topRightRadius="@dimen/cornerRadiusSmall" />
+</shape>

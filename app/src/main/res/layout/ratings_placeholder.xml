@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Ratings Placeholder</h1>
+ * Placeholder for a rating item
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 09.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Rating" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/defaultMargin"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="@dimen/placeholderWidth"
+            android:layout_height="@dimen/placeholderHeight"
+            android:contentDescription="@string/rating"
+            android:background="@drawable/rounded_primary_dark"/>
+        <ImageView
+            android:layout_width="@dimen/placeholderWidth"
+            android:layout_height="@dimen/placeholderHeightSmall"
+            android:contentDescription="@string/rating"
+            android:layout_marginTop="@dimen/tinyMargin"
+            android:background="@drawable/rounded_primary_dark"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/placeholderHeightSmall"
+            android:contentDescription="@string/rating"
+            android:layout_marginTop="@dimen/smallMargin"
+            android:layout_marginEnd="@dimen/defaultMargin"
+            android:background="@drawable/rounded_primary_dark"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/placeholderHeightSmall"
+            android:contentDescription="@string/rating"
+            android:layout_marginTop="@dimen/tinyMargin"
+            android:layout_marginEnd="@dimen/bigMargin"
+            android:background="@drawable/rounded_primary_dark"/>
+    </LinearLayout>
+</layout>

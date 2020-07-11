@@ -126,7 +126,7 @@
                 style="@style/SmallHeading"
                 android:textColor="@color/colorSecondary"/>
             <Button
-                android:id="@+id/retryButtonEmpty"
+                android:id="@+id/retryButton"
                 style="@style/Button"
                 android:layout_marginTop="@dimen/defaultMargin"
                 android:text="@string/show_all_sounds" />

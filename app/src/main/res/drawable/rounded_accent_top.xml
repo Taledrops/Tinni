@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Rounded Accent Top</h1>
+ * Rounded box with accentColor background and rounded borders on the top
+ * All english texts for multiple use
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 09.07.2020
+-->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" android:padding="@dimen/mediumMargin">
+    <solid android:color="@color/colorAccent"/>
+    <corners android:topLeftRadius="@dimen/cornerRadiusSmall"
+        android:topRightRadius="@dimen/cornerRadiusSmall" />
+</shape>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Stat Placeholder</h1>
+ * Placeholder for a stat item
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 10.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Stat" />
+    </data>
+    <ImageView
+        android:layout_width="@dimen/playMediumSize"
+        android:layout_height="@dimen/playMediumSize"
+        android:contentDescription="@string/stats"
+        android:layout_marginEnd="@dimen/defaultMargin"
+        android:background="@drawable/circle_primary_dark"
+        style="@style/SmallHeading"/>
+</layout>

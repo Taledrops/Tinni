@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Questionnaire Placeholder</h1>
+ * Placeholder for a Questionnaire object
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 10.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Questionnaire" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/defaultMargin"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="@dimen/playSmallSize"
+            android:layout_height="@dimen/playSmallSize"
+            android:layout_weight="0"
+            android:contentDescription="@{String.valueOf(0)}"
+            android:background="@drawable/circle_primary_dark"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/defaultMargin"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/smallMargin"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/placeholderHeight"
+                android:contentDescription="@string/question"
+                android:layout_marginEnd="@dimen/bigMargin"
+                android:background="@drawable/rounded_primary_dark"/>
+            <ImageView
+                android:layout_width="@dimen/placeholderWidth"
+                android:layout_height="@dimen/placeholderHeightSmall"
+                android:contentDescription="@string/question"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:background="@drawable/rounded_primary_dark"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/placeholderHeight"
+                android:layout_marginEnd="@dimen/placeholderWidth"
+                android:contentDescription="@string/question"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:background="@drawable/rounded_primary_dark"/>
+            <ImageView
+                android:layout_width="@dimen/placeholderWidth"
+                android:layout_height="@dimen/placeholderHeightSmall"
+                android:contentDescription="@string/question"
+                android:layout_marginTop="@dimen/mediumMargin"
+                android:background="@drawable/rounded_primary_dark"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/placeholderHeight"
+                android:layout_marginEnd="@dimen/placeholderWidth"
+                android:contentDescription="@string/question"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:background="@drawable/rounded_primary_dark"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

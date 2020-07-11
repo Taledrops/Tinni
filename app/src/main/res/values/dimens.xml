@@ -25,9 +25,11 @@
     <dimen name="tinySmallMargin">3dp</dimen>
     <dimen name="tinyMargin">2dp</dimen>
     <dimen name="itemMargin">62dp</dimen>
+    <dimen name="iconMargin">13dp</dimen>
     <dimen name="lineHeight">7dp</dimen>
     <dimen name="lineHeightSmall">2dp</dimen>
     <dimen name="tagBorder">1dp</dimen>
+    <dimen name="cornerRadiusSmall">4dp</dimen>
     <dimen name="cornerRadius">8dp</dimen>
     <dimen name="cornerRadiusBig">16dp</dimen>
     <dimen name="cornerRadiusHuge">32dp</dimen>
@@ -49,6 +51,7 @@
     <dimen name="seekbarRadius">30dp</dimen>
     <dimen name="arrowSize">15dp</dimen>
     <dimen name="arrowSizeBig">35dp</dimen>
+    <dimen name="arrowMargin">4dp</dimen>
     <dimen name="clearSize">25dp</dimen>
     <dimen name="clearPadding">8dp</dimen>
     <dimen name="clearMarginRight">45dp</dimen>
@@ -62,16 +65,21 @@
     <dimen name="bufferProgressThickness">26dp</dimen>n
     <dimen name="collapsingTitleMarginBottom">25dp</dimen>
     <dimen name="fadeBottomSize">100dp</dimen>
-    <dimen name="fadeRightSize">300dp</dimen>
     <dimen name="placeholderHeight">10dp</dimen>
     <dimen name="placeholderHeightSmall">8dp</dimen>
     <dimen name="placeholderWidth">100dp</dimen>
     <dimen name="placeholderWidthSmall">60dp</dimen>
     <dimen name="placeholderCurrentProgramMargin">52dp</dimen>
     <dimen name="placeholderItemMargin">37dp</dimen>
+    <dimen name="placeholderBarMargin">112dp</dimen>
+    <dimen name="placeholderSmallProgramMargin">82dp</dimen>
     <dimen name="elevation">4dp</dimen>
     <dimen name="numberInputWidth">70dp</dimen>
     <dimen name="miniButtonSize">15dp</dimen>
     <dimen name="answerHeight">40dp</dimen>
     <dimen name="itemSize">150dp</dimen>
+    <dimen name="programWidth">250dp</dimen>
+    <dimen name="programHeight">150dp</dimen>
+    <dimen name="ratingBarHeight">80dp</dimen>
+    <dimen name="ratingBarWidth">35dp</dimen>
 </resources>

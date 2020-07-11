@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Ratings Item</h1>
+ * Layout for a rating item
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 09.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Rating" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/defaultMargin"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:monthDateYear="@{model.date}"
+            style="@style/SmallHeading" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFromRating="@{model.rating}"
+            style="@style/ItalicText" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.text}"
+            android:layout_marginTop="@dimen/tinyMargin"
+            style="@style/RegularText" />
+    </LinearLayout>
+</layout>

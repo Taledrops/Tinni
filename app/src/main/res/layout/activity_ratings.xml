@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  * <h1>Ratings Layout</h1>
+  * Layout for the Ratings Activity
+  *
+  * @author Nassim Amar
+  * @version 1.0
+  * @since 09.07.2020
+-->
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.example.tinni.ui.ratings.RatingsViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimaryDark"
+                android:elevation="@dimen/elevation"
+                app:title="@string/daily_tinnitus_progress"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                android:theme="@style/ToolbarTheme"/>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/defaultMargin"
+            android:paddingEnd="@dimen/defaultMargin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ratings"
+                android:visibility="@{vm.ratings != null &amp;&amp; vm.ratings.size() > 0 ? View.VISIBLE : View.GONE, default=visible}"
+                android:layout_width="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:layout_height="match_parent" />
+            <com.example.tinni.custom.Placeholder
+                android:id="@+id/placeholder"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:placeholderVisibility="@{vm.loading}"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_height="match_parent">
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                        <include layout="@layout/ratings_placeholder"/>
+                    </LinearLayout>
+                </ScrollView>
+
+
+
+            </com.example.tinni.custom.Placeholder>
+        </FrameLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

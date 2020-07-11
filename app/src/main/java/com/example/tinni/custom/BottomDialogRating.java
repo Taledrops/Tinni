@@ -201,6 +201,7 @@ public class BottomDialogRating extends BottomSheetDialogFragment
             {
                 getDialog().dismiss();
                 session.setRating(answerId);
+                session.setDate(System.currentTimeMillis());
                 if (viewModel.updateProgram())
                 {
                     BottomDialogQuestions bottomDialogQuestions = new BottomDialogQuestions();

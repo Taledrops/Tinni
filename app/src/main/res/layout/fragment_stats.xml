@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  * <h1>XML Layout for the stats fragment</h1>
+  *
+  * @author Nassim Amar
+  * @version 1.0
+  * @since 09.07.2020
+-->
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
@@ -7,13 +16,209 @@
             name="vm"
             type="com.example.tinni.ui.stats.StatsViewModel" />
     </data>
-    <LinearLayout
-        android:layout_height="match_parent"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stats" />
-    </LinearLayout>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/defaultMargin"
+                android:paddingStart="@dimen/defaultMargin"
+                android:paddingEnd="@dimen/defaultMargin"
+                android:gravity="center"
+                android:focusableInTouchMode="true">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/defaultMargin"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/your_statistics"
+                        style="@style/Heading" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/smallMargin"
+                        android:text="@string/your_statistics_sub"
+                        style="@style/SubHeading" />
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/download"
+                    android:layout_width="@dimen/playSmallSize"
+                    android:layout_height="@dimen/playSmallSize"
+                    android:background="@drawable/circle_accent_ripple"
+                    android:src="@drawable/upload"
+                    android:contentDescription="@string/download_as_pdf"
+                    android:layout_weight="0"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="@dimen/iconMargin"
+                    android:layout_gravity="center"
+                    android:tint="@color/colorLight" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:gravity="center"
+
+                android:background="@drawable/primary_dark_ripple_no_padding"
+                android:paddingStart="@dimen/defaultMargin"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingEnd="@dimen/defaultMargin">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/usage_statistics"
+                    android:layout_marginEnd="@dimen/defaultMargin"
+                    style="@style/MediumHeading" />
+                <ImageView
+                    style="@style/HeaderArrow"
+                    android:contentDescription="@string/usage_statistics"
+                    android:layout_weight="0"
+                    android:src="@drawable/close"/>
+            </LinearLayout>
+            <com.example.tinni.custom.Placeholder
+                android:id="@+id/statsPlaceholder"
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/defaultMargin"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:placeholderVisibility="@{vm.loading}"
+                android:layout_height="wrap_content">
+                <include layout="@layout/stat_placeholder" />
+                <include layout="@layout/stat_placeholder" />
+                <include layout="@layout/stat_placeholder" />
+                <include layout="@layout/stat_placeholder" />
+                <include layout="@layout/stat_placeholder" />
+                <include layout="@layout/stat_placeholder" />
+                <include layout="@layout/stat_placeholder" />
+            </com.example.tinni.custom.Placeholder>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/stats"
+                android:paddingTop="@dimen/mediumMargin"
+                android:paddingBottom="@dimen/mediumMargin"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:visibility="@{vm.stats != null &amp;&amp; vm.stats.size() > 0 &amp;&amp; !vm.loading ? View.VISIBLE : View.GONE, default=gone}"
+                android:nestedScrollingEnabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/completedHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:gravity="center"
+                android:visibility="@{vm.ratings != null &amp;&amp; vm.ratings.size() > 0 ? View.VISIBLE : View.GONE, default=visible}"
+                android:background="@drawable/primary_dark_ripple_no_padding"
+                android:paddingStart="@dimen/defaultMargin"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingEnd="@dimen/defaultMargin">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/daily_tinnitus_progress"
+                    android:layout_marginEnd="@dimen/defaultMargin"
+                    style="@style/MediumHeading" />
+                <ImageView
+                    style="@style/HeaderArrow"
+                    android:contentDescription="@string/daily_tinnitus_progress"
+                    android:layout_weight="0"/>
+            </LinearLayout>
+            <com.example.tinni.custom.Placeholder
+                android:id="@+id/ratingPlaceholder"
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/defaultMargin"
+                android:layout_marginTop="@dimen/placeholderBarMargin"
+                android:placeholderVisibility="@{vm.loading}"
+                android:layout_height="wrap_content">
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+                <include layout="@layout/rating_placeholder" />
+            </com.example.tinni.custom.Placeholder>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ratings"
+                android:paddingTop="@dimen/mediumMargin"
+                android:paddingBottom="@dimen/mediumMargin"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:visibility="@{vm.ratings != null &amp;&amp; vm.ratings.size() > 0 &amp;&amp; !vm.loading ? View.VISIBLE : View.GONE, default=gone}"
+                android:nestedScrollingEnabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/programsHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:gravity="center"
+                android:visibility="@{vm.programs != null &amp;&amp; vm.programs.size() > 0 ? View.VISIBLE : View.GONE, default=visible}"
+                android:background="@drawable/primary_dark_ripple_no_padding"
+                android:paddingStart="@dimen/defaultMargin"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingEnd="@dimen/defaultMargin">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/completed_programs"
+                    android:layout_marginEnd="@dimen/defaultMargin"
+                    style="@style/MediumHeading" />
+                <ImageView
+                    style="@style/HeaderArrow"
+                    android:contentDescription="@string/completed_programs"
+                    android:layout_weight="0"/>
+            </LinearLayout>
+            <com.example.tinni.custom.Placeholder
+                android:id="@+id/programsPlaceholder"
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/defaultMargin"
+                android:layout_marginTop="@dimen/placeholderSmallProgramMargin"
+                android:placeholderVisibility="@{vm.loading}"
+                android:layout_height="wrap_content">
+                <include layout="@layout/program_small_placeholder" />
+                <include layout="@layout/program_small_placeholder" />
+                <include layout="@layout/program_small_placeholder" />
+                <include layout="@layout/program_small_placeholder" />
+            </com.example.tinni.custom.Placeholder>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/programs"
+                android:paddingTop="@dimen/mediumMargin"
+                android:paddingBottom="@dimen/mediumMargin"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:visibility="@{vm.programs != null &amp;&amp; vm.programs.size() > 0 &amp;&amp; !vm.loading ? View.VISIBLE : View.GONE, default=gone}"
+                android:nestedScrollingEnabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

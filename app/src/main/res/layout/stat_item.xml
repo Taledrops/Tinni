@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Stat Item</h1>
+ * Layout for a stat item
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 09.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Stat" />
+    </data>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="@dimen/playMediumSize"
+            android:layout_height="@dimen/playMediumSize"
+            android:contentDescription="@{String.valueOf(model.number)}"
+            android:gravity="center"
+            android:background="@drawable/circle_primary_dark_transparent"
+            android:text="@{String.valueOf(model.number)}"
+            style="@style/SmallHeading"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.title}"
+            android:layout_marginTop="@dimen/smallMargin"
+            style="@style/SmallHeading" />
+        <TextView
+            android:id="@+id/listened"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tinyMargin"
+            android:text="@{model.subtitle}"
+            style="@style/SubHeading" />
+    </LinearLayout>
+</layout>

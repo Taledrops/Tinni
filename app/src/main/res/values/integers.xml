@@ -17,6 +17,7 @@
     <integer name="anim_alpha">300</integer>
     <integer name="default_margin">15</integer>
     <integer name="medium_margin">10</integer>
+    <integer name="small_margin">5</integer>
     <integer name="item_view_cache_size">20</integer>
     <integer name="player_repeat">200</integer>
     <integer name="duration_button">800</integer>

@@ -205,6 +205,21 @@
     </style>
 
     <!--
+   * <h2>Header Arror</h2>
+   * Style settings for small arrows in headers
+   -->
+
+    <style name="HeaderArrow">
+        <item name="android:layout_width">@dimen/arrowSize</item>
+        <item name="android:layout_height">@dimen/arrowSize</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:src">@drawable/arrow_r</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginTop">@dimen/tinyMargin</item>
+        <item name="android:tint">@color/colorLight</item>
+    </style>
+
+    <!--
    * <h2>Sub Text Wide</h2>
    * Style settings for small texts
    -->

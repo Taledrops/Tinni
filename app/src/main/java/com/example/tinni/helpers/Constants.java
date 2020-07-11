@@ -2,6 +2,7 @@ package com.example.tinni.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 
@@ -56,6 +57,9 @@ import java.util.concurrent.ThreadLocalRandom;
  * Program selectedProgram: The Program object currently done by the user
  * List<Rating> ratings: The list of daily ratings
  * int changedProgram: The ID of the program recently changed to update its active indicator
+ * int limit: Limit for retrieving list items (preview)
+ * int ratingsLimit: Limit for retrieving list items (ratings, 14 days)
+ * long installed: Date of the first install of the app
  * Gson gson: The instance of the Gson Library
  * float volume: The saved volume setting
  * Constants instance: The current instance of this class
@@ -89,6 +93,8 @@ public class Constants
     public List<Rating> ratings = new ArrayList<>();
     public int changedProgram = 0;
     public int limit = 10;
+    public int ratingsLimit = 14;
+    public long installed = System.currentTimeMillis();
     public final Gson gson = new Gson();
     public float volume;
     public static final Constants instance = new Constants();
@@ -112,7 +118,8 @@ public class Constants
      * Fill sounds list
      * Fill categories list
      *
-     * Source: https://stackoverflow.com/a/28107791/2700965
+     * Source 1: https://stackoverflow.com/a/28107791/2700965
+     * Source 2: https://stackoverflow.com/a/5311917/2700965
      */
 
     public void init (Context context)
@@ -121,6 +128,15 @@ public class Constants
         {
             init = true;
             picasso = new Picasso.Builder(context).build();
+
+            try
+            {
+                installed = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).firstInstallTime;
+            }
+            catch (PackageManager.NameNotFoundException e)
+            {
+                e.printStackTrace();
+            }
 
             allowedFileTypes.add("audio/mpeg");
             allowedFileTypes.add("audio/mp4");
@@ -431,7 +447,7 @@ public class Constants
             programSessions.add(new Session(1, true, sounds.get(7), 1200, false));
             programSessions.add(new Session(2, true, sounds.get(1), 800, false));
 
-            programs.add(new Program(3, false, "Late night stimulation", "\n" + "The night's rest is very important for people. People with tinnitus often have the problem that their symptoms are particularly noticeable at night. This program is designed to counteract exactly this effect.", R.drawable.night, programSessions, programQuestions, 1, false, null));
+            programs.add(new Program(3, false, "Late night stimulation", "The night's rest is very important for people. People with tinnitus often have the problem that their symptoms are particularly noticeable at night. This program is designed to counteract exactly this effect.", R.drawable.night, programSessions, programQuestions, 1, false, null));
 
             if (selectedProgram != null && selectedProgram.getProgram() != null)
             {
@@ -736,7 +752,7 @@ public class Constants
         else
         {
             program.active.set(true);
-            selectedProgram = new SelectedProgram(new Program(program), System.currentTimeMillis());
+            selectedProgram = new SelectedProgram((int)(System.currentTimeMillis()) / 1000, new Program(program), System.currentTimeMillis());
             selectedProgram.sessions.add(program.getSessions().get(0));
             SharedPreferences.Editor editor = preferences.edit();
             String json = gson.toJson(selectedProgram);

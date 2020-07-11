@@ -33,58 +33,45 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/defaultMargin"
-                android:paddingBottom="@dimen/defaultMargin"
+                android:padding="@dimen/defaultMargin"
+                android:gravity="center"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 android:focusableInTouchMode="true">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/defaultMargin"
-                    android:paddingEnd="@dimen/defaultMargin"
-                    android:text="@string/explore_programs"
-                    style="@style/Heading" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/defaultMargin"
-                    android:paddingEnd="@dimen/defaultMargin"
-                    android:layout_marginTop="@dimen/smallMargin"
-                    android:text="@string/explore_programs_sub"
-                    style="@style/SubHeading" />
-
                 <LinearLayout
-                    android:id="@+id/importProgram"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="@dimen/defaultMargin"
+                    android:layout_weight="1"
                     android:layout_marginEnd="@dimen/defaultMargin"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_marginTop="@dimen/defaultMargin"
-                    android:background="@drawable/rounded_transparent_border">
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/explore_programs"
+                        style="@style/Heading" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/import_program"
-                        style="@style/RegularText"
-                        android:textColor="@color/colorLight"/>
-                    <ImageView
-                        android:layout_width="@dimen/iconSize"
-                        android:layout_height="@dimen/iconSize"
-                        android:src="@drawable/download"
-                        android:tint="@color/colorLight"
-                        android:layout_marginStart="@dimen/smallMargin"
-                        android:contentDescription="@string/favorites" />
+                        android:layout_marginTop="@dimen/smallMargin"
+                        android:text="@string/explore_programs_sub"
+                        style="@style/SubHeading" />
                 </LinearLayout>
+                <ImageView
+                    android:id="@+id/importProgram"
+                    android:layout_width="@dimen/playSmallSize"
+                    android:layout_height="@dimen/playSmallSize"
+                    android:background="@drawable/circle_accent_ripple"
+                    android:src="@drawable/download"
+                    android:contentDescription="@string/import_program"
+                    android:layout_weight="0"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="@dimen/iconMargin"
+                    android:layout_gravity="center"
+                    android:tint="@color/colorLight" />
             </LinearLayout>
-
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.example.tinni.custom.Placeholder

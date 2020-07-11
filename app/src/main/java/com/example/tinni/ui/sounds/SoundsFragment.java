@@ -2,6 +2,7 @@ package com.example.tinni.ui.sounds;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +116,8 @@ public class SoundsFragment extends Fragment
         });
 
         binding.fab.setOnClickListener(v -> openAdd());
+
+        binding.retryButton.setOnClickListener(v -> categoryAdapter.categoryList.stream().filter(Category::isReset).findFirst().ifPresent(this::categoryClick));
 
         ItemClickSupport.addTo(binding.categories)
                 .setOnItemClickListener((recyclerView, position, v) ->
@@ -286,7 +289,12 @@ public class SoundsFragment extends Fragment
         if (!loaded || viewModel.getSounds().getValue() == null)
         {
             loaded = true;
-            viewModel.fill(new WeakReference<>(getContext()));
+            Handler handler = new Handler();
+            handler.postDelayed(() ->
+            {
+                viewModel.fill(new WeakReference<>(getContext()));
+                handler.removeCallbacksAndMessages(null);
+            }, getResources().getInteger(R.integer.start_delay));
         }
 
         if (Constants.getInstance().soundToAdd != null && soundAdapter != null)

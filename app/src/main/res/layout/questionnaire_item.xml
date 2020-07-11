@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Questionnaire Item</h1>
+ * Layout for a Questionnaire object
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 10.07.2020
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.example.tinni.models.Questionnaire" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/defaultMargin"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="@dimen/playSmallSize"
+            android:layout_height="@dimen/playSmallSize"
+            android:layout_weight="0"
+            android:background="@drawable/circle_primary_dark_transparent"
+            android:text="@{String.valueOf(model.id)}"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/defaultMargin"
+            style="@style/SmallHeading"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/smallMargin"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{model.question}"
+                style="@style/SmallHeading" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/before_program"
+                android:layout_marginTop="@dimen/defaultMargin"
+                style="@style/ItalicText" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:text="@{model.before}"
+                style="@style/RegularText"
+                android:textColor="@color/colorSecondary"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/after_program"
+                android:layout_marginTop="@dimen/mediumMargin"
+                style="@style/ItalicText" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:text="@{model.after}"
+                style="@style/RegularText"
+                android:textColor="@color/colorSecondary"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

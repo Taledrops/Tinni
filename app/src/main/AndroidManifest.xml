@@ -30,6 +30,28 @@
         <activity
             android:name=".ui.program.Program"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.pastprogram.PastProgram"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.ratings.Ratings"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.completed.Completed"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.notification.NotificationDummy"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.tinni.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/paths"/>
+        </provider>
     </application>
 
 </manifest>

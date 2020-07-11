@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,7 @@ public class ProgramsFragment extends Fragment
 
         viewModel.getPrograms().observe(getViewLifecycleOwner(), result ->
         {
-            if (getContext() != null && result != null)
+            if (getContext() != null && result != null && result.size() > 0)
             {
                 if (programAdapter == null)
                 {
@@ -238,7 +239,12 @@ public class ProgramsFragment extends Fragment
         if (!loaded || viewModel.getPrograms().getValue() == null)
         {
             loaded = true;
-            viewModel.fill();
+            Handler handler = new Handler();
+            handler.postDelayed(() ->
+            {
+                viewModel.fill();
+                handler.removeCallbacksAndMessages(null);
+            }, getResources().getInteger(R.integer.start_delay));
         }
 
         if (Constants.getInstance().changedProgram != 0 && programAdapter != null)

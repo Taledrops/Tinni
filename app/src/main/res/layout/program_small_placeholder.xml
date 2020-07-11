@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * <h1>Program Placeholder</h1>
+ * Placeholder while programs are loading
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since 27.06.2020
+-->
+
+<ImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/programWidth"
+    android:layout_height="@dimen/programHeight"
+    android:background="@drawable/rounded_primary_dark"
+    android:layout_marginRight="@dimen/defaultMargin"
+    android:contentDescription="@string/program"
+    android:gravity="center_vertical">
+</ImageView>
