@@ -78,24 +78,22 @@ public class StatsViewModel extends ViewModel
 
     public void prepare (Context context)
     {
-        boolean update = false;
-        if ((ratings.getValue() == null || ratings.getValue().size() == 0 || Constants.getInstance().ratings.size() > ratings.getValue().size()) && Constants.getInstance().ratings.size() > 0)
+        if ((ratings.getValue() == null || ratings.getValue().size() == 0 || Constants.getInstance().ratings.size() > ratings.getValue().size() || Constants.getInstance().updateStats) && Constants.getInstance().ratings.size() > 0)
         {
             List<Rating> newRatings = Constants.getInstance().ratings.stream().limit(Constants.getInstance().ratingsLimit).collect(Collectors.toList());
             Collections.reverse(newRatings);
             ratings.setValue(newRatings);
-            update = true;
         }
-        if ((programs.getValue() == null || programs.getValue().size() == 0 || Constants.getInstance().pastPrograms.size() > allPrograms.size()) && Constants.getInstance().pastPrograms.size() > 0)
+
+        if ((programs.getValue() == null || programs.getValue().size() == 0 || Constants.getInstance().pastPrograms.size() > allPrograms.size() || Constants.getInstance().updateStats) && Constants.getInstance().pastPrograms.size() > 0)
         {
             List<SelectedProgram> newPrograms = Constants.getInstance().pastPrograms.stream().limit(Constants.getInstance().limit).collect(Collectors.toList());
             Collections.reverse(newPrograms);
             allPrograms = new ArrayList<>(Constants.getInstance().pastPrograms);
             programs.setValue(newPrograms);
-            update = true;
         }
 
-        if (stats.getValue() == null || stats.getValue().size() == 0 || update)
+        if (stats.getValue() == null || stats.getValue().size() == 0 || Constants.getInstance().updateStats)
         {
             List<Stat> newStats = new ArrayList<>();
             long days = TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - Constants.getInstance().installed);
@@ -149,6 +147,9 @@ public class StatsViewModel extends ViewModel
 
             stats.setValue(newStats);
         }
+
+        Constants.getInstance().updateStats = false;
+
         loading.set(false);
     }
 }

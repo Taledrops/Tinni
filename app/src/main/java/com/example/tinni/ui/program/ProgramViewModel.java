@@ -38,6 +38,7 @@ public class ProgramViewModel extends ViewModel
     public MutableLiveData<Program> current = new MutableLiveData<>();
     public ObservableField<SelectedProgram> active = new ObservableField<>(null);
     public Session nextSession = null;
+    public SelectedProgram finished = null;
 
     /**
      * <h2>Get Current</h2>
@@ -166,10 +167,8 @@ public class ProgramViewModel extends ViewModel
         if (active.get() == null && start)
         {
             active.set(Constants.getInstance().handleSelectedProgram(current.getValue()));
-            System.out.println(" #### START QUESTIONS 1");
             if (active.get() != null && Objects.requireNonNull(active.get()).getProgram() != null)
             {
-                System.out.println(" #### START QUESTIONS 2");
                 Objects.requireNonNull(active.get()).getStartQuestions().addAll(Objects.requireNonNull(current.getValue()).getQuestions());
                 current.setValue(Objects.requireNonNull(active.get()).getProgram());
             }
@@ -179,6 +178,7 @@ public class ProgramViewModel extends ViewModel
             Objects.requireNonNull(active.get()).getEndQuestions().addAll(Objects.requireNonNull(current.getValue()).getQuestions());
             Objects.requireNonNull(active.get()).setEnd(System.currentTimeMillis());
             Constants.getInstance().handleSelectedProgram(current.getValue());
+            finished = active.get();
             active.set(null);
             current.getValue().getSessions().forEach(x -> x.done.set(false));
             current.getValue().getSessions().forEach(x -> x.active.set(true));

@@ -1,8 +1,6 @@
 package com.example.tinni.ui.pastprogram;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.widget.Toast;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -10,10 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.tinni.R;
-import com.example.tinni.helpers.Constants;
 import com.example.tinni.models.Answer;
-import com.example.tinni.models.Category;
-import com.example.tinni.models.Program;
 import com.example.tinni.models.Question;
 import com.example.tinni.models.Questionnaire;
 import com.example.tinni.models.SelectedProgram;
@@ -21,7 +16,6 @@ import com.example.tinni.models.Session;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -66,7 +60,6 @@ public class PastProgramViewModel extends ViewModel
     {
         if (questionnaire.getValue() == null || questionnaire.getValue().size() == 0 || selected.get() == null)
         {
-            Toast.makeText(context, "na 1 -> " + selectedProgram.getStartQuestions().size() + " --- " + selectedProgram.getEndQuestions().size(), Toast.LENGTH_SHORT).show();
             selected.set(selectedProgram);
 
             List<Questionnaire> newQuestionnaire = new ArrayList<>();
@@ -131,7 +124,6 @@ public class PastProgramViewModel extends ViewModel
 
                 i++;
             }
-            Toast.makeText(context, "na 2 -> " + newQuestionnaire.size(), Toast.LENGTH_SHORT).show();
 
             if (newQuestionnaire.size() > 0)
             {
@@ -147,6 +139,7 @@ public class PastProgramViewModel extends ViewModel
         {
             if (selectedProgram.getProgram() != null && selectedProgram.getProgram().getSessions() != null && selectedProgram.getProgram().getSessions().size() > 0)
             {
+                System.out.println("#### SESSION SIZE: " + selectedProgram.getProgram().getSessions().size());
                 sessions.setValue(selectedProgram.getProgram().getSessions());
             }
             else

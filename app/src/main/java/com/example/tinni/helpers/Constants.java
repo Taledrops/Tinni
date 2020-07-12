@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.text.format.DateUtils;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.databinding.ObservableArrayList;
@@ -11,6 +12,7 @@ import androidx.databinding.ObservableArrayList;
 import com.example.tinni.R;
 import com.example.tinni.models.Answer;
 import com.example.tinni.models.Category;
+import com.example.tinni.models.Note;
 import com.example.tinni.models.Program;
 import com.example.tinni.models.Question;
 import com.example.tinni.models.Rating;
@@ -28,6 +30,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 /**
  * <h1>Constants</h1>
@@ -56,6 +59,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Session updateSession: The session to update after completion
  * Program selectedProgram: The Program object currently done by the user
  * List<Rating> ratings: The list of daily ratings
+ * List<Notes> notes: The list of personal notes
  * int changedProgram: The ID of the program recently changed to update its active indicator
  * int limit: Limit for retrieving list items (preview)
  * int ratingsLimit: Limit for retrieving list items (ratings, 14 days)
@@ -91,9 +95,14 @@ public class Constants
     public Session updateSession = null;
     public SelectedProgram selectedProgram = null;
     public List<Rating> ratings = new ArrayList<>();
+    public List<Note> notes = new ArrayList<>();
     public int changedProgram = 0;
     public int limit = 10;
     public int ratingsLimit = 14;
+    public boolean updateHome = false;
+    public boolean updatePrograms = false;
+    public boolean updateSounds = false;
+    public boolean updateStats = false;
     public long installed = System.currentTimeMillis();
     public final Gson gson = new Gson();
     public float volume;
@@ -224,6 +233,15 @@ public class Constants
                 {
                 }.getType();
                 customPrograms = gson.fromJson(serializedCustomPrograms, type);
+            }
+
+            String serializedNotes = preferences.getString("notes", null);
+            if (serializedNotes != null)
+            {
+                Type type = new TypeToken<List<Note>>()
+                {
+                }.getType();
+                notes = gson.fromJson(serializedNotes, type);
             }
 
             categories.add(new Category(4, context.getString(R.string.nature), false, false, false, Constants.getInstance().selectedCategories.contains(4)));
@@ -510,6 +528,7 @@ public class Constants
         String json = gson.toJson(ratings);
         editor.putString("ratings", json);
         editor.apply();
+        Constants.getInstance().updateStats = true;
     }
 
     /**
@@ -548,6 +567,27 @@ public class Constants
     }
 
     /**
+     * <h2>Add Note</h2>
+     * Add custom note to SharedPreferences and list
+     *
+     * @param note The note to add
+     *
+     * Source: https://stackoverflow.com/a/28107791/2700965
+     */
+
+    public void addNote (Note note, boolean edit)
+    {
+        if (!edit)
+        {
+            notes.add(note);
+        }
+        SharedPreferences.Editor editor = preferences.edit();
+        String json = gson.toJson(notes);
+        editor.putString("notes", json);
+        editor.apply();
+    }
+
+    /**
      * <h2>Add Custom Sound</h2>
      * Add custom sound to SharedPreferences and list
      *
@@ -565,6 +605,7 @@ public class Constants
         String json = gson.toJson(customSounds);
         editor.putString("custom", json);
         editor.apply();
+        updateStats = true;
     }
 
     /**
@@ -596,6 +637,56 @@ public class Constants
         }
 
         sounds.stream().filter(x -> x.getId() == sound.getId()).findFirst().ifPresent(s -> sounds.remove(s));
+
+        for (Program p : customPrograms)
+        {
+            if (p.getSessions() != null && p.getSessions().size() > 0)
+            {
+                List<Session> sessions = p.getSessions().stream().filter(x -> x.getSound().getId() == sound.getId()).collect(Collectors.toList());
+                for (Session s : sessions)
+                {
+                    p.getSessions().remove(s);
+                }
+            }
+        }
+
+        for (Program p : programs)
+        {
+            if (p.getSessions() != null && p.getSessions().size() > 0)
+            {
+                List<Session> sessions = p.getSessions().stream().filter(x -> x.getSound().getId() == sound.getId()).collect(Collectors.toList());
+                for (Session s : sessions)
+                {
+                    p.getSessions().remove(s);
+                }
+            }
+        }
+
+        SharedPreferences.Editor editor = preferences.edit();
+        String json = gson.toJson(customPrograms);
+        editor.putString("customprograms", json);
+        editor.apply();
+
+        for (SelectedProgram sp : pastPrograms)
+        {
+            if (sp.getProgram() != null && sp.getProgram().getSessions() != null && sp.getProgram().getSessions().size() > 0)
+            {
+                List<Session> sessions = sp.getProgram().getSessions().stream().filter(x -> x.getSound().getId() == sound.getId()).collect(Collectors.toList());
+                for (Session s : sessions)
+                {
+                    sp.getProgram().getSessions().remove(s);
+                }
+            }
+        }
+
+        editor = preferences.edit();
+        json = gson.toJson(pastPrograms);
+        editor.putString("pastprograms", json);
+        editor.apply();
+
+        updatePrograms = true;
+        updateHome = true;
+        updateStats = true;
     }
 
     /**
@@ -619,6 +710,8 @@ public class Constants
         String json = gson.toJson(customPrograms);
         editor.putString("customprograms", json);
         editor.apply();
+
+        updateStats = true;
     }
 
     /**
@@ -655,6 +748,24 @@ public class Constants
                     deleteSelectedProgram();
                 }
             }
+
+            pastPrograms.removeIf(x -> x.getProgram().getId() == program.getId());
+
+            if (pastPrograms.size() > 0)
+            {
+                SharedPreferences.Editor editor = preferences.edit();
+                String json = gson.toJson(pastPrograms);
+                editor.putString("pastprograms", json);
+                editor.apply();
+            }
+            else
+            {
+                preferences.edit().remove("pastprograms").apply();
+            }
+
+            updatePrograms = true;
+            updateHome = true;
+            updateStats = true;
         }
 
         programs.stream().filter(x -> x.getId() == program.getId()).findFirst().ifPresent(p -> programs.remove(p));
@@ -747,6 +858,7 @@ public class Constants
             selectedProgram.getProgram().active.set(false);
             selectedProgram = null;
             preferences.edit().remove("program").apply();
+            updateHome = true;
             return null;
         }
         else
@@ -758,6 +870,7 @@ public class Constants
             String json = gson.toJson(selectedProgram);
             editor.putString("program", json);
             editor.apply();
+            updateHome = true;
             return selectedProgram;
         }
     }

@@ -33,6 +33,7 @@
     <dimen name="cornerRadius">8dp</dimen>
     <dimen name="cornerRadiusBig">16dp</dimen>
     <dimen name="cornerRadiusHuge">32dp</dimen>
+    <dimen name="iconSizeSmall">10dp</dimen>
     <dimen name="iconSize">15dp</dimen>
     <dimen name="iconSizeBig">20dp</dimen>
     <dimen name="iconSizeHuge">45dp</dimen>

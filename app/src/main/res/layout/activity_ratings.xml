@@ -89,6 +89,19 @@
 
             </com.example.tinni.custom.Placeholder>
         </FrameLayout>
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/defaultMargin"
+            app:rippleColor="@color/colorAccentDark"
+            app:borderWidth="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:backgroundTint="@color/colorAccent"
+            app:maxImageSize="@dimen/iconSize"
+            android:tint="@color/colorLight"
+            android:src="@drawable/download" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

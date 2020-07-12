@@ -2,12 +2,17 @@ package com.example.tinni.ui.sound;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.pdf.PdfDocument;
 import android.media.AudioAttributes;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
@@ -34,21 +39,38 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.tinni.BuildConfig;
 import com.example.tinni.R;
+import com.example.tinni.custom.BottomDialogImport;
+import com.example.tinni.custom.BottomDialogNote;
 import com.example.tinni.databinding.ActivitySoundBinding;
 import com.example.tinni.helpers.AppBarStateChangeListener;
 import com.example.tinni.helpers.Constants;
 import com.example.tinni.helpers.Functions;
+import com.example.tinni.models.Questionnaire;
+import com.example.tinni.models.Session;
+import com.example.tinni.models.SoundStat;
 import com.example.tinni.ui.notification.NotificationDummy;
 import com.google.android.material.appbar.AppBarLayout;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import me.tankery.lib.circularseekbar.CircularSeekBar;
 
@@ -95,6 +117,7 @@ public class Sound extends AppCompatActivity
     private int startDate = (int)(System.currentTimeMillis()) / 1000;
     private NotificationManagerCompat notificationManagerCompat;
     private NotificationCompat.Builder notificationBuilder;
+    private static FragmentManager fragmentManager;
 
     public interface onLikeSoundResult
     {
@@ -121,6 +144,8 @@ public class Sound extends AppCompatActivity
         fadeOut = AnimationUtils.loadAnimation(this, R.anim.fadeout);
         appear = AnimationUtils.loadAnimation(this, R.anim.appear);
         disappear = AnimationUtils.loadAnimation(this, R.anim.disappear);
+
+        fragmentManager = getSupportFragmentManager();
 
         binding.bottomPlay.post(() -> binding.scrollContent.setPadding(0, 0, 0, binding.bottomPlayer.getHeight()));
 
@@ -297,6 +322,7 @@ public class Sound extends AppCompatActivity
         });
 
         binding.more.setOnClickListener(v -> openMore());
+        binding.notesContainer.setOnClickListener(v -> addNote());
     }
 
     /**
@@ -322,6 +348,21 @@ public class Sound extends AppCompatActivity
         });
 
         likeStoryAsyncTask.execute();
+    }
+
+    /**
+     * <h2>Add Note</h2>
+     * Opens the Bottom Dialog to add/edit a note
+     */
+
+    private void addNote ()
+    {
+        if (fragmentManager != null)
+        {
+            BottomDialogNote bottomDialogNote = new BottomDialogNote();
+            bottomDialogNote.newInstance(viewModel);
+            bottomDialogNote.show(fragmentManager, "note");
+        }
     }
 
     /**
@@ -371,8 +412,8 @@ public class Sound extends AppCompatActivity
         {
             switch (item.getItemId())
             {
-                case R.id.stats:
-                    Toast.makeText(wrapper, "Stats", Toast.LENGTH_SHORT).show();
+                case R.id.history:
+                    generatePdf();
                     return true;
                 case R.id.delete:
                     if (!isDeleting)
@@ -400,6 +441,110 @@ public class Sound extends AppCompatActivity
         });
 
         popup.show();
+    }
+
+    /**
+     * <h2>Generate PDF</h2>
+     * Generates a pdf file of the program
+     *
+     * Source 1: https://stackoverflow.com/a/23392246/2700965
+     * Source 2: https://stackoverflow.com/a/52789871/2700965
+     * Source 3: UNITI app, "Shades of noise"
+     *
+     */
+
+    private void generatePdf()
+    {
+        List<SoundStat> list = Constants.getInstance().listened.stream().filter(x -> x.getId() == sound.getId()).collect(Collectors.toList());
+        if (list.size() > 0)
+        {
+            // Create document
+            PdfDocument document = new PdfDocument();
+
+            final File sharedFolder = new File(getFilesDir(), "history");
+            if (!sharedFolder.exists())
+            {
+                sharedFolder.mkdirs();
+            }
+
+            try
+            {
+                int pageWidth = 595;
+                int pageHeight = 842;
+                int pageNumber = 1;
+                int y = 130;
+                final File file = File.createTempFile("history" + (int) (System.currentTimeMillis()) / 1000, ".pdf", sharedFolder);
+                file.createNewFile();
+                FileOutputStream fOut = new FileOutputStream(file);
+                PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
+                PdfDocument.Page page = document.startPage(pageInfo);
+                Canvas canvas = page.getCanvas();
+                Paint paint = new Paint();
+                Paint titlePaint = new Paint();
+                titlePaint.setColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+
+                canvas.drawText(String.format(getResources().getString(R.string.history_for), sound.getTitle()), 10, 20, paint);
+                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
+                String date = formatter.format(new Date(System.currentTimeMillis()));
+
+                canvas.drawText(date, 10, 40, paint);
+
+                canvas.drawText(String.format(getResources().getString(R.string.history_for_number), sound.getTitle(), list.size()), 10, 70, titlePaint);
+
+                canvas.drawText(getResources().getString(R.string.date), 20, 100, titlePaint);
+                canvas.drawText(getResources().getString(R.string.time), 170, 100, titlePaint);
+                canvas.drawLine(20f, 105f, 575f, 105f, titlePaint);
+
+                for (SoundStat ss : list)
+                {
+                    if (y > pageHeight)
+                    {
+                        pageNumber++;
+                        document.finishPage(page);
+                        pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
+                        page = document.startPage(pageInfo);
+                        canvas = page.getCanvas();
+
+                        canvas.drawText(String.format(getResources().getString(R.string.history_for_page), sound.getTitle(), pageNumber), 10, 20, paint);
+                        canvas.drawText(date, 10, 40, paint);
+                        y = 130;
+                    }
+
+                    canvas.drawText(formatter.format(new Date(ss.getDate())), 20, y, paint);
+                    canvas.drawText(String.format(getResources().getString(R.string.minutes_short), String.format(Locale.getDefault(), "%d:%02d", ss.getTime() / 60, ss.getTime() % 60)), 170, y, paint);
+                    y += 30;
+                }
+
+                document.finishPage(page);
+                document.writeTo(fOut);
+                document.close();
+
+                if (file.exists())
+                {
+                    Uri path = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file);
+                    System.out.println("create pdf uri path==>" + path);
+
+                    try
+                    {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(path, "application/pdf");
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        startActivity(intent);
+                    } catch (ActivityNotFoundException e)
+                    {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_pdf), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+                Toast.makeText(this, getResources().getString(R.string.error_simple), Toast.LENGTH_LONG).show();
+            }
+        }
+        else
+        {
+            Toast.makeText(this, getResources().getString(R.string.error_listened), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void appearing ()

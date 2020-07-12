@@ -62,6 +62,10 @@
     <string name="error_no_ratings">You have not yet tracked a day. Tracking can be done on the home page!</string>
     <string name="error_no_completed_programs">You have not yet completed a program!</string>
     <string name="error_headphone">Use headphones for a higher quality listening experience</string>
+    <string name="error_pdf">You have not installed an app that can display the PDF</string>
+    <string name="error_listened">There is no history for this sound yet</string>
+    <string name="error_history">You have not yet completed this program</string>
+    <string name="error_ratings">You have not rated your days yet</string>
     <string name="start">Start</string>
     <string name="cancel">Cancel</string>
     <string name="edit">Edit</string>
@@ -156,7 +160,7 @@
     <string name="delete">Delete</string>
     <string name="delete_success">You have successfully removed your sound</string>
     <string name="delete_program_success">You have successfully removed your program</string>
-    <string name="delete_verification">Do you really want to delete this sound?</string>
+    <string name="delete_verification">Do you really want to delete this sound? It will also be removed from every (completed) program!</string>
     <string name="delete_session_verification">Do you really want to delete this session?</string>
     <string name="delete_answer_verification">Do you really want to delete this answer?</string>
     <string name="delete_program_verification">Do you really want to delete this program?</string>
@@ -179,7 +183,7 @@
     <string name="answer_added">Answer has been added</string>
     <string name="export_program">Export program</string>
     <string name="import_program">Import program</string>
-    <string name="export_text">There is now a JSON code in your clipboard that you can send to the person concerned. Your program can then be imported by pasting it in the corresponding form inside the app.</string>
+    <string name="export_text">There is now a JSON code in your clipboard that you can send to the person concerned. Your program can then be imported by pasting it in the corresponding form inside the app.\n\nNote: Custom Sounds will not be imported!</string>
     <string name="got_it">Got it</string>
     <string name="json_code">JSON code</string>
     <string name="import_text">Paste the JSON code that you have received here. If the code is valid, the program will be added immediately.</string>
@@ -196,6 +200,7 @@
     <string name="download_as_pdf">Download as PDF</string>
     <string name="completed_programs">Completed programs</string>
     <string name="daily_tinnitus_progress">Daily tinnitus progress</string>
+    <string name="daily_tinnitus_progress_page">Daily tinnitus progress (Page %1$d)</string>
     <string name="rating">Rating</string>
     <string name="from_to">%1$s - %2$s</string>
     <string name="usage_statistics">Usage stats</string>
@@ -211,7 +216,7 @@
     <string name="ratings_done">Ratings done</string>
     <string name="ratings_average">%1$.1f on average</string>
     <string name="listened_minutes">Minutes listened</string>
-    <string name="minutes_daily">%1$d minutes daily</string>
+    <string name="minutes_daily">%1$d minutes on average</string>
     <string name="past_program_text">%1$s, %2$s</string>
     <string name="total_completed">completed %1$d times in total</string>
     <string name="before_program">Before the program:</string>
@@ -219,5 +224,19 @@
     <string name="no_answer">No answer</string>
     <string name="progress">Process (%1$d)</string>
     <string name="separator">%1$d: %2$s</string>
-    <string name="rating_arrow">-> %1$s</string>
+    <string name="no_entries">No entries</string>
+    <string name="report_for">Report for %1$s</string>
+    <string name="report_for_page">Report for %1$s (Page %2$d)</string>
+    <string name="delete_data_verfication">This will delete all data, statistics, sounds and programs that you have previously collected. This step cannot be undone.\n\n Are you sure you want to delete all data?</string>
+    <string name="personal_note">Personal note</string>
+    <string name="personal_note_sub">Here you have the option to add a personal note to the sound that only you can see</string>
+    <string name="note_saved">Your note has been saved successfully</string>
+    <string name="show_results">Show results</string>
+    <string name="history">History</string>
+    <string name="history_for">History for %1$s</string>
+    <string name="history_for_page">History for %1$s (Page %2$d)</string>
+    <string name="history_for_number">History for %1$s (%2$d times listened)</string>
+    <string name="date">Date</string>
+    <string name="time">Dauer</string>
+    <string name="summary">Summary</string>
 </resources>

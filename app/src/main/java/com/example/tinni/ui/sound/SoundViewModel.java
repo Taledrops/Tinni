@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.tinni.helpers.Constants;
+import com.example.tinni.models.Note;
 import com.example.tinni.models.Program;
 import com.example.tinni.models.Session;
 import com.example.tinni.models.Sound;
@@ -38,7 +39,9 @@ public class SoundViewModel extends ViewModel
     public ObservableBoolean repeat = new ObservableBoolean(false);
     public ObservableField<Session> session = new ObservableField<>(null);
     public ObservableField<Program> program = new ObservableField<>(null);
+    public ObservableField<String> note = new ObservableField<>();
     public ObservableInt length = new ObservableInt(0);
+    private Note noteObject = null;
 
     /**
      * <h2>Prepare</h2>
@@ -72,6 +75,13 @@ public class SoundViewModel extends ViewModel
             this.length.set(sound.getLength());
         }
         liked.set(Constants.getInstance().favorites.contains(sound.getId()));
+
+        Note n = Constants.getInstance().notes.stream().filter(x -> x.getId() == sound.getId()).findFirst().orElse(null);
+        if (n != null)
+        {
+            noteObject = n;
+            note.set(n.text.get());
+        }
     }
 
     /**
@@ -142,6 +152,28 @@ public class SoundViewModel extends ViewModel
         protected void onPostExecute(Boolean res)
         {
             delegate.result(res);
+        }
+    }
+
+    /**
+     * <h2>Save Note</h2>
+     * Saving the note by updating the SharedPreferences
+     *
+     */
+
+    public void saveNote ()
+    {
+        if (current.getValue() != null)
+        {
+            if (noteObject == null)
+            {
+                Constants.getInstance().addNote(new Note(current.getValue().getId(), note.get()), false);
+            }
+            else
+            {
+                noteObject.text.set(note.get());
+                Constants.getInstance().addNote(new Note(current.getValue().getId(), note.get()), true);
+            }
         }
     }
 

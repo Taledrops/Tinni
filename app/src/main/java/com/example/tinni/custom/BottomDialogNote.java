@@ -1,46 +1,39 @@
 package com.example.tinni.custom;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.tinni.R;
-import com.example.tinni.adapters.QuestionAdapter;
-import com.example.tinni.databinding.BottomFinishBinding;
-import com.example.tinni.databinding.BottomRatingBinding;
+import com.example.tinni.adapters.ProgramAdapter;
+import com.example.tinni.databinding.BottomImportBinding;
+import com.example.tinni.databinding.BottomNoteBinding;
 import com.example.tinni.helpers.Constants;
-import com.example.tinni.models.Answer;
 import com.example.tinni.models.Program;
-import com.example.tinni.models.Question;
-import com.example.tinni.models.SelectedProgram;
-import com.example.tinni.models.Session;
-import com.example.tinni.ui.program.ProgramViewModel;
+import com.example.tinni.ui.programs.ProgramsFragment;
+import com.example.tinni.ui.programs.ProgramsViewModel;
+import com.example.tinni.ui.sound.SoundViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Type;
 import java.util.Objects;
 
 /**
- * <h1>Bottom Dialog Finish</h1>
- * BottomSheetDialogFragment for the finish ui
+ * <h1>Bottom Dialog Note</h1>
+ * BottomSheetDialogFragment for the add note ui
  *
  * Variables:
  * BottomDialogQuestions dialog: The instance of the current dialog
- * ProgramViewModel viewModel: The corresponding ProgramViewModel
+ * ProgramsViewModel viewModel: The corresponding ProgramsViewModel
  * Session session: The current session
  * FragmentManager fragmentManager: The current FragmentManager
  * List<Question> questions: The list of questions
@@ -49,25 +42,26 @@ import java.util.Objects;
  *
  * @author Nassim Amar
  * @version 1.0
- * @since   02.07.2020
+ * @since   12.07.2020
  */
 
-public class BottomDialogFinish extends BottomSheetDialogFragment
+public class BottomDialogNote extends BottomSheetDialogFragment
 {
-    private BottomDialogFinish dialog;
-    private ProgramViewModel viewModel;
+    private BottomDialogNote dialog;
+    private SoundViewModel viewModel;
+    private String oldText;
 
     /**
      * <h2>New instance</h2>
      * Creates a new instance of the BottomDialogQuestions class
      *
-     * @param _viewModel The corresponding ProgramViewModel
+     * @param _viewModel The corresponding ProgramsViewModel
      *
      */
 
-    public void newInstance(ProgramViewModel _viewModel)
+    public void newInstance(SoundViewModel _viewModel)
     {
-        dialog = new BottomDialogFinish();
+        dialog = new BottomDialogNote();
         viewModel = _viewModel;
     }
 
@@ -84,6 +78,14 @@ public class BottomDialogFinish extends BottomSheetDialogFragment
     public void onCancel(@NonNull DialogInterface dialog)
     {
         super.onCancel(dialog);
+        if (oldText != null && oldText.length() > 0)
+        {
+            viewModel.note.set(oldText);
+        }
+        else
+        {
+            viewModel.note.set("");
+        }
     }
 
     /**
@@ -99,6 +101,7 @@ public class BottomDialogFinish extends BottomSheetDialogFragment
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setStyle(STYLE_NORMAL, R.style.BottomDialog);
     }
 
     /**
@@ -140,36 +143,35 @@ public class BottomDialogFinish extends BottomSheetDialogFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        BottomFinishBinding binding = DataBindingUtil.inflate(inflater, R.layout.bottom_finish, container, false);
+        BottomNoteBinding binding = DataBindingUtil.inflate(inflater, R.layout.bottom_note, container, false);
         binding.setLifecycleOwner(this);
         binding.setVm(viewModel);
 
-        binding.close.setOnClickListener(v -> showResults());
+        binding.save.setOnClickListener(v -> save());
+
+        if (viewModel.note.get() != null && Objects.requireNonNull(viewModel.note.get()).length() > 0)
+        {
+            oldText = viewModel.note.get();
+        }
 
         return binding.getRoot();
 
     }
 
     /**
-     * <h2>Show Results</h2>
+     * <h2>Save</h2>
      *
-     * Open the pastPrograms Activity
+     * Saving the note
      *
      */
 
-    private void showResults()
+    private void save ()
     {
-        if (getActivity() != null && viewModel.finished != null && viewModel.finished.getProgram() != null)
+        if (viewModel.note.get() != null && Objects.requireNonNull(viewModel.note.get()).length() > 0)
         {
-            SelectedProgram sp = viewModel.finished;
-            Program p = Objects.requireNonNull(viewModel.finished.getProgram());
-            if (p != null)
-            {
-                Intent intent = new Intent(getActivity(), com.example.tinni.ui.pastprogram.PastProgram.class);
-                intent.putExtra("selectedprogram", sp.getId());
-                getActivity().startActivity(intent);
-            }
+            viewModel.saveNote();
+            Toast.makeText(getContext(), getResources().getString(R.string.note_saved), Toast.LENGTH_SHORT).show();
+            dismiss();
         }
-        dismiss();
     }
 }

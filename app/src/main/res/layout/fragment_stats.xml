@@ -69,11 +69,11 @@
                     android:tint="@color/colorLight" />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/delete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/defaultMargin"
                 android:gravity="center"
-
                 android:background="@drawable/primary_dark_ripple_no_padding"
                 android:paddingStart="@dimen/defaultMargin"
                 android:foreground="?attr/selectableItemBackground"

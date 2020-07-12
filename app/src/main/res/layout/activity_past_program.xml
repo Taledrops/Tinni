@@ -86,7 +86,7 @@
                             android:focusable="true"
                             android:foreground="?attr/selectableItemBackground"
                             android:layout_marginStart="@dimen/defaultMargin"
-                            android:padding="@dimen/defaultMargin"
+                            android:padding="@dimen/iconMargin"
                             android:contentDescription="@string/download_as_pdf"
                             android:tint="@color/colorLight" />
                     </LinearLayout>
@@ -176,7 +176,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/questionnaire"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:visibility="gone"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
                 <TextView

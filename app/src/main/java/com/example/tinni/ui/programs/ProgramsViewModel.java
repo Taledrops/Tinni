@@ -38,8 +38,13 @@ public class ProgramsViewModel extends ViewModel
      * Call populateProgramsAsyncTask to populate the categories and sounds triggered on SoundsFragment
      */
 
-    public void fill ()
+    public void fill (boolean reset)
     {
+        if (reset)
+        {
+            programs.setValue(new ArrayList<>());
+            Constants.getInstance().updatePrograms = false;
+        }
         new populateProgramsAsyncTask(programs, loading).execute();
     }
 

@@ -359,6 +359,54 @@
                         android:paddingStart="@dimen/defaultMargin"
                         android:description="@{vm.current.description}"
                         android:paddingEnd="@dimen/defaultMargin"/>
+                    <LinearLayout
+                        android:id="@+id/notesContainer"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/defaultMargin"
+                        android:paddingStart="@dimen/defaultMargin"
+                        android:paddingEnd="@dimen/defaultMargin"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/personal_note"
+                            style="@style/MediumHeading" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="@dimen/smallMargin"
+                            android:layout_height="wrap_content"
+                            android:text="@={vm.note}"
+                            android:visibility="@{vm.note != null &amp;&amp; vm.note.length() > 0 ? View.VISIBLE : View.GONE, default=gone}"
+                            style="@style/RegularText"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_accent"
+                            android:layout_marginTop="@dimen/smallMargin"
+                            android:gravity="center"
+                            android:visibility="@{vm.note == null || vm.note.length() == 0 ? View.VISIBLE : View.GONE, default=visible}"
+                            android:paddingTop="@dimen/smallMargin"
+                            android:paddingEnd="@dimen/bigMargin"
+                            android:paddingBottom="@dimen/smallMargin"
+                            android:paddingStart="@dimen/bigMargin">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/smallMargin"
+                                android:text="@string/add"
+                                style="@style/SmallHeading" />
+                            <ImageView
+                                android:layout_width="@dimen/iconSizeSmall"
+                                android:layout_height="@dimen/iconSizeSmall"
+                                android:contentDescription="@string/add"
+                                android:src="@drawable/plus"
+                                android:tint="@color/colorLight" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
             <LinearLayout

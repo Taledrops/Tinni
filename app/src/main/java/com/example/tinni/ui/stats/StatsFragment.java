@@ -1,22 +1,35 @@
 package com.example.tinni.ui.stats;
 
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.tinni.MainActivity;
 import com.example.tinni.R;
 import com.example.tinni.adapters.ProgramSmallAdapter;
 import com.example.tinni.adapters.RatingAdapter;
@@ -31,6 +44,8 @@ import com.example.tinni.models.Program;
 import com.example.tinni.models.Rating;
 import com.example.tinni.models.SelectedProgram;
 import com.example.tinni.models.Session;
+
+import java.util.Objects;
 
 /**
  * <h1>Stats Fragment</h1>
@@ -127,6 +142,7 @@ public class StatsFragment extends Fragment
 
         binding.completedHeader.setOnClickListener(v -> openRatings());
         binding.programsHeader.setOnClickListener(v -> openCompletedPrograms());
+        binding.delete.setOnClickListener(v -> deleteData());
 
         ItemClickSupport.addTo(binding.ratings)
                 .setOnItemClickListener((recyclerView, position, v) -> openRatings());
@@ -142,6 +158,44 @@ public class StatsFragment extends Fragment
                 });
 
         return binding.getRoot();
+    }
+
+    /**
+     * <h2>Delete Data</h2>
+     * Deletes all the SharedPreferences and restarts the app
+     *
+     * Source: https://stackoverflow.com/a/46848226/2700965
+     *
+     */
+
+    private void deleteData ()
+    {
+        if (getActivity() != null)
+        {
+            @SuppressLint("ApplySharedPref") AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity(), R.style.DialogTheme)
+                    .setMessage(getResources().getString(R.string.delete_data_verfication))
+                    .setPositiveButton(getResources().getString(R.string.delete), (dialog, which) ->
+                    {
+                        Constants.getInstance().preferences.edit().clear().commit();
+                        PackageManager packageManager = getActivity().getPackageManager();
+                        Intent intent = packageManager.getLaunchIntentForPackage(getActivity().getPackageName());
+                        if (intent != null)
+                        {
+                            ComponentName componentName = intent.getComponent();
+                            Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+                            getActivity().startActivity(mainIntent);
+                            Runtime.getRuntime().exit(0);
+                        }
+                    })
+                    .setNegativeButton(getResources().getString(R.string.cancel), null);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            alertDialog.show();
+            Button nbutton = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+            nbutton.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+            Button pbutton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+            pbutton.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+        }
     }
 
     /**

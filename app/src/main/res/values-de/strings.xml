@@ -61,6 +61,10 @@
     <string name="error_no_ratings">Du hast noch keinen Tag getracked, das kannst du auf der Startseite nachholen!</string>
     <string name="error_no_completed_programs">Du hast noch kein Programm absolviert!</string>
     <string name="error_headphone">Verwende Kopfhörer für ein hochwertigeres Hörerlebnis</string>
+    <string name="error_pdf">Du hast keine App installiert, die das PDF anzeigen kann</string>
+    <string name="error_listened">Zu diesem Sound existiert noch keine Historie</string>
+    <string name="error_history">Du hast dieses Programm noch nicht absolviert</string>
+    <string name="error_ratings">Du hast noch keine Bewertung abgegeben</string>
     <string name="start">Starten</string>
     <string name="cancel">Abbrechen</string>
     <string name="edit">Ändern</string>
@@ -155,7 +159,7 @@
     <string name="delete">Löschen</string>
     <string name="delete_success">Du hast deinen Sound erfolgreich entfernt</string>
     <string name="delete_program_success">Du hast dein Programm erfolgreich entfernt</string>
-    <string name="delete_verification">Möchtest du diesen Sound wirklich löschen?</string>
+    <string name="delete_verification">Möchtest du diesen Sound wirklich löschen? Er wird ebenfalls aus allen (absolvierten) Programmen entfernt!</string>
     <string name="delete_session_verification">Möchtest du diese Sitzung wirklich löschen?</string>
     <string name="delete_answer_verification">Möchtest du diese Antwort wirklich löschen?</string>
     <string name="delete_program_verification">Möchtest du dieses Programm wirklich löschen?</string>
@@ -178,7 +182,7 @@
     <string name="answer_added">Antwort wurde hinzugefügt</string>
     <string name="export_program">Programm exportieren</string>
     <string name="import_program">Programm importieren</string>
-    <string name="export_text">In deiner Zwischenablage befindet sich nun ein JSON Code, den du an die betreffende Person senden kannst. Diese kann dein Programm dann mit Hilfe dieses Codes importieren.</string>
+    <string name="export_text">In deiner Zwischenablage befindet sich nun ein JSON Code, den du an die betreffende Person senden kannst. Diese kann dein Programm dann mit Hilfe dieses Codes importieren.\n\nHinweis: Custom Sounds werden nicht exportiert!</string>
     <string name="got_it">Verstanden</string>
     <string name="json_code">JSON Code</string>
     <string name="import_text">Füge hier den JSON Code ein, den du zugesendet bekommen hast. Sofern der Code gültig ist, wird das Programm umgehend hinzugefügt und ist absolvierbar.</string>
@@ -195,6 +199,7 @@
     <string name="download_as_pdf">Als PDF herunterladen</string>
     <string name="completed_programs">Absolvierte Programme</string>
     <string name="daily_tinnitus_progress">Täglicher Tinnitus Verlauf</string>
+    <string name="daily_tinnitus_progress_page">Täglicher Tinnitus Verlauf (Seite %1$d)</string>
     <string name="rating">Bewertung</string>
     <string name="from_to">%1$s - %2$s</string>
     <string name="usage_statistics">Nutzungsstatistik</string>
@@ -210,7 +215,7 @@
     <string name="ratings_done">Bewertungen abgegeben</string>
     <string name="ratings_average">%1$.1f im Durchschnitt</string>
     <string name="listened_minutes">Gehörte Minuten</string>
-    <string name="minutes_daily">%1$d Minuten täglich</string>
+    <string name="minutes_daily">%1$d Minuten durchschnittlich</string>
     <string name="past_program_text">%1$s, %2$s</string>
     <string name="total_completed">insgesamt %1$d Mal absolviert</string>
     <string name="before_program">Vor dem Programm:</string>
@@ -218,5 +223,19 @@
     <string name="no_answer">Keine Antwort</string>
     <string name="progress">Verlauf (%1$d)</string>
     <string name="separator">%1$d: %2$s</string>
-    <string name="rating_arrow">-> %1$s</string>
+    <string name="no_entries">Keine Einträge</string>
+    <string name="report_for">Bericht zu %1$s</string>
+    <string name="report_for_page">Bericht zu %1$s (Seite %2$d)</string>
+    <string name="delete_data_verfication">Hiermit werden alle Daten, Statistiken, Sounds und Programme gelöscht, die du bisher gesammelt hast. Dieser Schritt kann nicht rückgängig gemacht werden.\n\n Möchtest du wirklich alle Daten löschen?</string>
+    <string name="personal_note">Persönliche Notiz</string>
+    <string name="personal_note_sub">Du hast hier die Möglichkeit, eine persönliche Notiz, die nur von dir einsehbar ist, zu dem Sound hinzuzufügen</string>
+    <string name="note_saved">Deine Notiz wurde erfolgreich gespeichert</string>
+    <string name="show_results">Auswertung ansehen</string>
+    <string name="history">Historie</string>
+    <string name="history_for">Historie zu %1$s</string>
+    <string name="history_for_page">Historie zu %1$s (Seite %2$d)</string>
+    <string name="history_for_number">Historie zu %1$s (%2$d Mal angehört)</string>
+    <string name="date">Datum</string>
+    <string name="time">Duration</string>
+    <string name="summary">Zusammenfassung</string>
 </resources>

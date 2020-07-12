@@ -39,11 +39,17 @@ import com.example.tinni.helpers.Constants;
 import com.example.tinni.helpers.Functions;
 import com.example.tinni.helpers.ItemClickSupport;
 import com.example.tinni.helpers.MarginDecorator;
+import com.example.tinni.models.SelectedProgram;
 import com.example.tinni.models.Session;
+import com.example.tinni.models.SoundStat;
 import com.example.tinni.ui.sound.SoundViewModel;
 
 import java.lang.ref.WeakReference;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * <h1>Program Activity</h1>
@@ -221,12 +227,13 @@ public class Program extends AppCompatActivity
             switch (item.getItemId())
             {
                 case R.id.stats:
-                    Toast.makeText(wrapper, "Stats", Toast.LENGTH_SHORT).show();
+                    openPastProgram();
                     return true;
                 case R.id.export:
                     com.example.tinni.models.Program p = new com.example.tinni.models.Program(viewModel.current.getValue());
                     p.active.set(false);
                     p.setDone(false);
+                    p.getSessions().removeIf(x -> x.getSound().isCustom());
                     for (Session s : p.getSessions())
                     {
                         s.active.set(true);
@@ -277,6 +284,34 @@ public class Program extends AppCompatActivity
         });
 
         popup.show();
+    }
+
+    /**
+     * <h2>Open Past Program</h2>
+     * Opens the last completed program of this program
+     *
+     * Source: https://stackoverflow.com/a/13821611/2700965
+     */
+
+    private void openPastProgram ()
+    {
+        List<SelectedProgram> list = Constants.getInstance().pastPrograms.stream().filter(x -> x.getProgram().getId() == program.getId()).collect(Collectors.toList());
+        if (list.size() > 0)
+        {
+            Collections.sort(list, (obj1, obj2) -> Long.compare(obj2.getEnd(), obj1.getEnd()));
+            SelectedProgram sp = list.get(0);
+            com.example.tinni.models.Program p = sp.getProgram();
+            if (p != null)
+            {
+                Intent intent = new Intent(this, com.example.tinni.ui.pastprogram.PastProgram.class);
+                intent.putExtra("selectedprogram", sp.getId());
+                startActivity(intent);
+            }
+        }
+        else
+        {
+            Toast.makeText(this, getResources().getString(R.string.error_history), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

@@ -51,8 +51,12 @@ public class HomeViewModel extends ViewModel
                 currentProgram.set(Constants.getInstance().selectedProgram.getProgram());
             }
         }
+        else
+        {
+            currentProgram.set(null);
+        }
 
-        if ((last.getValue() == null || last.getValue().size() == 0) && Constants.getInstance().listened.size() > 0)
+        if ((last.getValue() == null || last.getValue().size() == 0 || Constants.getInstance().updateHome) && Constants.getInstance().listened.size() > 0)
         {
             List<Sound> lastSounds = new ArrayList<>();
 
@@ -79,7 +83,7 @@ public class HomeViewModel extends ViewModel
             }
         }
 
-        if ((favorites.getValue() == null || favorites.getValue().size() == 0) && Constants.getInstance().favorites.size() > 0)
+        if ((favorites.getValue() == null || favorites.getValue().size() == 0 || Constants.getInstance().updateHome) && Constants.getInstance().favorites.size() > 0)
         {
             List<Sound> favoriteSounds = new ArrayList<>();
 
@@ -116,6 +120,8 @@ public class HomeViewModel extends ViewModel
                 rating.set(0);
             }
         }
+
+        Constants.getInstance().updateHome = false;
 
         loading.set(false);
     }

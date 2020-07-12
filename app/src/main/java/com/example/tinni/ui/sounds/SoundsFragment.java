@@ -286,9 +286,10 @@ public class SoundsFragment extends Fragment
     public void onResume()
     {
         super.onResume();
-        if (!loaded || viewModel.getSounds().getValue() == null)
+        if (!loaded || viewModel.getSounds().getValue() == null || Constants.getInstance().updateSounds)
         {
             loaded = true;
+            Constants.getInstance().updateSounds = false;
             Handler handler = new Handler();
             handler.postDelayed(() ->
             {

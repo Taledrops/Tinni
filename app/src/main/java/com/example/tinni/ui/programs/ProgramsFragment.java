@@ -236,13 +236,13 @@ public class ProgramsFragment extends Fragment
     {
         super.onResume();
         Toast.makeText(getContext(), "RESUME", Toast.LENGTH_SHORT).show();
-        if (!loaded || viewModel.getPrograms().getValue() == null)
+        if (!loaded || viewModel.getPrograms().getValue() == null || Constants.getInstance().updatePrograms)
         {
             loaded = true;
             Handler handler = new Handler();
             handler.postDelayed(() ->
             {
-                viewModel.fill();
+                viewModel.fill(Constants.getInstance().updatePrograms);
                 handler.removeCallbacksAndMessages(null);
             }, getResources().getInteger(R.integer.start_delay));
         }
