@@ -25,49 +25,23 @@
             android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="@dimen/defaultMargin"
+                android:layout_height="wrap_content"
                 android:paddingStart="@dimen/defaultMargin"
                 android:paddingEnd="@dimen/defaultMargin"
-                android:gravity="center"
-                android:focusableInTouchMode="true">
+                android:layout_marginTop="@dimen/defaultMargin"
+                android:text="@string/your_statistics"
+                style="@style/Heading" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="@dimen/defaultMargin"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/your_statistics"
-                        style="@style/Heading" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/smallMargin"
-                        android:text="@string/your_statistics_sub"
-                        style="@style/SubHeading" />
-                </LinearLayout>
-                <ImageView
-                    android:id="@+id/download"
-                    android:layout_width="@dimen/playSmallSize"
-                    android:layout_height="@dimen/playSmallSize"
-                    android:background="@drawable/circle_accent_ripple"
-                    android:src="@drawable/upload"
-                    android:contentDescription="@string/download_as_pdf"
-                    android:layout_weight="0"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:padding="@dimen/iconMargin"
-                    android:layout_gravity="center"
-                    android:tint="@color/colorLight" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/defaultMargin"
+                android:paddingEnd="@dimen/defaultMargin"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:text="@string/your_statistics_sub"
+                style="@style/SubHeading" />
             <LinearLayout
                 android:id="@+id/delete"
                 android:layout_width="match_parent"

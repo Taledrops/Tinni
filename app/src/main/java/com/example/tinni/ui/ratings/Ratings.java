@@ -206,7 +206,7 @@ public class Ratings extends AppCompatActivity
                     }
 
                     canvas.drawText(formatter.format(new Date(r.getDate())), 20, y, titlePaint);
-                    canvas.drawLine(20f, (float)y + 5 , 575f, 105f, titlePaint);
+                    canvas.drawLine(20f, (float)y + 5 , 575f, (float)y + 5, titlePaint);
                     y += 30;
                     String ratingText;
                     Paint ratingPaint;
@@ -252,6 +252,7 @@ public class Ratings extends AppCompatActivity
                         staticLayout.draw(canvas);
                         canvas.restore();
                         y += staticLayout.getHeight();
+                        y += 30;
                     }
                 }
 

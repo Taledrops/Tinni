@@ -236,6 +236,6 @@
     <string name="history_for_page">Historie zu %1$s (Seite %2$d)</string>
     <string name="history_for_number">Historie zu %1$s (%2$d Mal angehört)</string>
     <string name="date">Datum</string>
-    <string name="time">Duration</string>
+    <string name="time">Dauer</string>
     <string name="summary">Zusammenfassung</string>
 </resources>
