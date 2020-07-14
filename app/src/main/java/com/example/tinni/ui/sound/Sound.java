@@ -9,9 +9,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
 import android.media.AudioAttributes;
 import android.media.AudioDeviceInfo;
@@ -35,26 +33,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tinni.BuildConfig;
 import com.example.tinni.R;
-import com.example.tinni.custom.BottomDialogImport;
 import com.example.tinni.custom.BottomDialogNote;
 import com.example.tinni.databinding.ActivitySoundBinding;
 import com.example.tinni.helpers.AppBarStateChangeListener;
 import com.example.tinni.helpers.Constants;
 import com.example.tinni.helpers.Functions;
-import com.example.tinni.models.Questionnaire;
-import com.example.tinni.models.Session;
 import com.example.tinni.models.SoundStat;
 import com.example.tinni.ui.notification.NotificationDummy;
 import com.google.android.material.appbar.AppBarLayout;
@@ -65,7 +58,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -79,6 +71,38 @@ import me.tankery.lib.circularseekbar.CircularSeekBar;
  * Everything related to the sound ui
  *
  * Variables:
+ * 
+ * final float MAX_VOLUME: Constant value for the maximum volume of the MediaPlayer (100)
+ * float lastVolume: Saved value for the last volume selected
+ * boolean isMuted: Indicator if MediaPlayer is muted
+ * SoundViewModel viewModel: Instance of the SoundViewModel
+ * com.example.tinni.models.Sound sound: The current sound object
+ * ActivitySoundBinding binding: Instance to the Layout binding
+ * Animation appear: Instance of the appear animation
+ * Animation disappear: Instance of the disappear animation
+ * Animation tap: Instance of the tap animation
+ * Animation fadeIn: Instance of the fadeIn animation
+ * Animation fadeOut: Instance of the fadeOut animation
+ * Runnable runnable: Instance of a runnable
+ * Handler handler: Instance of a handler
+ * boolean collapsed: Indicator if AppBar is collapsed
+ * boolean closing: Indicator if current Activity is being closed
+ * int appbarOffset: Current offset of the AppBar
+ * boolean setup: Indicator if sound is set up
+ * MediaPlayer mediaPlayer: Instance of the MediaPlayer object
+ * boolean isLiking: Indicator if process of liking is still in progress
+ * boolean isDeleting: Indicator if process of deleting is still in progress
+ * boolean preparing: Indicator if MediaPlayer is preparing
+ * boolean animateEnd: Indicator whether the transition animation should be done
+ * int session: Current session id
+ * int currentTime: The current second mark of the player
+ * LocalDateTime startTime: Date of the player started (only for session)
+ * boolean finished: Indicator if play time has surpassed the session time (only for session)
+ * int startDate: Time in seconds the player has started
+ * NotificationManagerCompat notificationManagerCompat: Instance of the NotificationManagerCompat
+ * NotificationCompat.Builder notificationBuilder: Instance of the NotificationCompat.Builder
+ * FragmentManager fragmentManager: Instance of the FragmentManager
+ * final Functions func: Instance of the Functions helper class
  *
  * @author Nassim Amar
  * @version 1.0
@@ -92,7 +116,6 @@ public class Sound extends AppCompatActivity
     private boolean isMuted = false;
     private SoundViewModel viewModel;
     private com.example.tinni.models.Sound sound;
-    private static final Functions func = new Functions();
     private ActivitySoundBinding binding;
     private static Animation appear;
     private static Animation disappear;
@@ -118,16 +141,40 @@ public class Sound extends AppCompatActivity
     private NotificationManagerCompat notificationManagerCompat;
     private NotificationCompat.Builder notificationBuilder;
     private static FragmentManager fragmentManager;
+    private static final Functions func = new Functions();
+
+    /**
+     * <h2>On Like Sound Result</h2>
+     *
+     * Interface of retrieving the result of the liking event
+     */
 
     public interface onLikeSoundResult
     {
         void result(boolean liking);
     }
 
+    /**
+     * <h2>On Delete Sound Result</h2>
+     *
+     * Interface of retrieving the result of the deleting event
+     */
+
     public interface onDeleteSoundResult
     {
         void result(boolean success);
     }
+
+    /**
+     * <h2>On Create</h2>
+     *
+     * Called when the Activity is created
+     * Connecting the view to the viewModel
+     * Instantiating the animations
+     * Handle the transition of the main image
+     * Handle the click events
+     * Handle the listeners
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -327,7 +374,10 @@ public class Sound extends AppCompatActivity
 
     /**
      * <h2>Like Sound</h2>
+     *
      * Handles the liking of this sound
+     * Calls the Like Sound AsyncTask on the SoundViewModel
+     * returns a success message
      */
 
     private void likeSound ()
@@ -352,6 +402,7 @@ public class Sound extends AppCompatActivity
 
     /**
      * <h2>Add Note</h2>
+     *
      * Opens the Bottom Dialog to add/edit a note
      */
 
@@ -367,7 +418,9 @@ public class Sound extends AppCompatActivity
 
     /**
      * <h2>Delete Sound</h2>
-     * Calls the AsyncTask to delete this sound
+     *
+     * Calls the Delete Sound AsyncTask on the SoundViewModel to delete this sound
+     * Finishes the Activity or displays an error message depending on the result
      */
 
     private void deleteSound ()
@@ -392,7 +445,10 @@ public class Sound extends AppCompatActivity
 
     /**
      * <h2>Open More</h2>
+     *
      * Opens the more popup
+     * Calls the generatePdf function if history is selected
+     * Shows an AlertDialog if delete is selected
      */
 
     private void openMore ()
@@ -445,12 +501,11 @@ public class Sound extends AppCompatActivity
 
     /**
      * <h2>Generate PDF</h2>
-     * Generates a pdf file of the program
+     * Generates a pdf file of the history of this sound
      *
      * Source 1: https://stackoverflow.com/a/23392246/2700965
      * Source 2: https://stackoverflow.com/a/52789871/2700965
      * Source 3: UNITI app, "Shades of noise"
-     *
      */
 
     private void generatePdf()
@@ -462,82 +517,95 @@ public class Sound extends AppCompatActivity
             PdfDocument document = new PdfDocument();
 
             final File sharedFolder = new File(getFilesDir(), "history");
-            if (!sharedFolder.exists())
+
+            boolean isCreated = sharedFolder.exists() || sharedFolder.mkdirs();
+
+            if (isCreated)
             {
-                sharedFolder.mkdirs();
-            }
-
-            try
-            {
-                int pageWidth = 595;
-                int pageHeight = 842;
-                int pageNumber = 1;
-                int y = 130;
-                final File file = File.createTempFile("history" + (int) (System.currentTimeMillis()) / 1000, ".pdf", sharedFolder);
-                file.createNewFile();
-                FileOutputStream fOut = new FileOutputStream(file);
-                PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
-                PdfDocument.Page page = document.startPage(pageInfo);
-                Canvas canvas = page.getCanvas();
-                Paint paint = new Paint();
-                Paint titlePaint = new Paint();
-                titlePaint.setColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-
-                canvas.drawText(String.format(getResources().getString(R.string.history_for), sound.getTitle()), 10, 20, paint);
-                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
-                String date = formatter.format(new Date(System.currentTimeMillis()));
-
-                canvas.drawText(date, 10, 40, paint);
-
-                canvas.drawText(String.format(getResources().getString(R.string.history_for_number), sound.getTitle(), list.size()), 10, 70, titlePaint);
-
-                canvas.drawText(getResources().getString(R.string.date), 20, 100, titlePaint);
-                canvas.drawText(getResources().getString(R.string.time), 170, 100, titlePaint);
-                canvas.drawLine(20f, 105f, 575f, 105f, titlePaint);
-
-                for (SoundStat ss : list)
+                try
                 {
-                    if (y > pageHeight)
+                    int pageWidth = 595;
+                    int pageHeight = 842;
+                    int pageNumber = 1;
+                    int y = 130;
+                    final File file = File.createTempFile("history" + (int) (System.currentTimeMillis()) / 1000, ".pdf", sharedFolder);
+                    boolean created = file.createNewFile();
+                    if (created)
                     {
-                        pageNumber++;
-                        document.finishPage(page);
-                        pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
-                        page = document.startPage(pageInfo);
-                        canvas = page.getCanvas();
+                        FileOutputStream fOut = new FileOutputStream(file);
+                        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
+                        PdfDocument.Page page = document.startPage(pageInfo);
+                        Canvas canvas = page.getCanvas();
+                        Paint paint = new Paint();
+                        Paint titlePaint = new Paint();
+                        titlePaint.setColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 
-                        canvas.drawText(String.format(getResources().getString(R.string.history_for_page), sound.getTitle(), pageNumber), 10, 20, paint);
+                        canvas.drawText(String.format(getResources().getString(R.string.history_for), sound.getTitle()), 10, 20, paint);
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
+                        String date = formatter.format(new Date(System.currentTimeMillis()));
+
                         canvas.drawText(date, 10, 40, paint);
-                        y = 130;
+
+                        canvas.drawText(String.format(getResources().getString(R.string.history_for_number), sound.getTitle(), list.size()), 10, 70, titlePaint);
+
+                        canvas.drawText(getResources().getString(R.string.date), 20, 100, titlePaint);
+                        canvas.drawText(getResources().getString(R.string.time), 170, 100, titlePaint);
+                        canvas.drawLine(20f, 105f, 575f, 105f, titlePaint);
+
+                        for (SoundStat ss : list)
+                        {
+                            if (y > pageHeight)
+                            {
+                                pageNumber++;
+                                document.finishPage(page);
+                                pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
+                                page = document.startPage(pageInfo);
+                                canvas = page.getCanvas();
+
+                                canvas.drawText(String.format(getResources().getString(R.string.history_for_page), sound.getTitle(), pageNumber), 10, 20, paint);
+                                canvas.drawText(date, 10, 40, paint);
+                                y = 130;
+                            }
+
+                            canvas.drawText(formatter.format(new Date(ss.getDate())), 20, y, paint);
+                            canvas.drawText(String.format(getResources().getString(R.string.minutes_short), String.format(Locale.getDefault(), "%d:%02d", ss.getTime() / 60, ss.getTime() % 60)), 170, y, paint);
+                            y += 30;
+                        }
+
+                        document.finishPage(page);
+                        document.writeTo(fOut);
+                        document.close();
+
+                        if (file.exists())
+                        {
+                            Uri path = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file);
+                            System.out.println("create pdf uri path==>" + path);
+
+                            try
+                            {
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setDataAndType(path, "application/pdf");
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                startActivity(intent);
+                            } catch (ActivityNotFoundException e)
+                            {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_pdf), Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
-
-                    canvas.drawText(formatter.format(new Date(ss.getDate())), 20, y, paint);
-                    canvas.drawText(String.format(getResources().getString(R.string.minutes_short), String.format(Locale.getDefault(), "%d:%02d", ss.getTime() / 60, ss.getTime() % 60)), 170, y, paint);
-                    y += 30;
+                    else
+                    {
+                        Toast.makeText(this, getResources().getString(R.string.error_simple), Toast.LENGTH_LONG).show();
+                    }
                 }
-
-                document.finishPage(page);
-                document.writeTo(fOut);
-                document.close();
-
-                if (file.exists())
+                catch (IOException e)
                 {
-                    Uri path = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file);
-                    System.out.println("create pdf uri path==>" + path);
-
-                    try
-                    {
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(path, "application/pdf");
-                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        startActivity(intent);
-                    } catch (ActivityNotFoundException e)
-                    {
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_pdf), Toast.LENGTH_SHORT).show();
-                    }
+                    e.printStackTrace();
+                    Toast.makeText(this, getResources().getString(R.string.error_simple), Toast.LENGTH_LONG).show();
                 }
-            } catch (IOException e)
+            }
+            else
             {
-                e.printStackTrace();
                 Toast.makeText(this, getResources().getString(R.string.error_simple), Toast.LENGTH_LONG).show();
             }
         }
@@ -546,6 +614,13 @@ public class Sound extends AppCompatActivity
             Toast.makeText(this, getResources().getString(R.string.error_listened), Toast.LENGTH_SHORT).show();
         }
     }
+
+    /**
+     * <h2>Appearing</h2>
+     *
+     * Handles the appear animation of the views
+     * Creates a notification to display the current playback in the Android notifications
+     */
 
     private void appearing ()
     {
@@ -598,7 +673,14 @@ public class Sound extends AppCompatActivity
         binding.layer.startAnimation(anim);
     }
 
-    private boolean isHeadphonesPluggedIn ()
+    /**
+     * <h2>Are Headphones Plugged In</h2>
+     * Checks whether headphones are plugged in or not
+     *
+     * Source: https://stackoverflow.com/a/48340347/2700965
+     */
+
+    private boolean areHeadphonesPluggedIn ()
     {
         AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         if (audioManager != null)
@@ -611,17 +693,19 @@ public class Sound extends AppCompatActivity
                     return true;
                 }
             }
-            return false;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
+
+    /**
+     * <h2>Setup</h2>
+     *
+     * Sets up the MediaPlayer with the current sound
+     * Adds SeekBar, progress and error listeners
+     */
 
     private void setup ()
     {
-        Toast.makeText(this, sound.getUri(), Toast.LENGTH_SHORT).show();
         preparing = true;
 
         if (mediaPlayer != null)
@@ -634,7 +718,6 @@ public class Sound extends AppCompatActivity
         try
         {
             mediaPlayer = new MediaPlayer();
-            System.out.println("#### URI SOUND: " + uri);
             mediaPlayer.setDataSource(Sound.this, uri);
             mediaPlayer.setAudioAttributes(
                     new AudioAttributes
@@ -730,6 +813,14 @@ public class Sound extends AppCompatActivity
         }
     }
 
+    /**
+     * <h2>Play</h2>
+     *
+     * Plays, pauses or restarts the sound
+     * Creates a notification for the current sound project
+     * Creates a runnable to display the current playback time
+     */
+
     private void play ()
     {
         if (sound.playing.get() != 2)
@@ -741,7 +832,6 @@ public class Sound extends AppCompatActivity
                     sound.playing.set(1);
                     if (notificationManagerCompat != null && notificationBuilder != null)
                     {
-                        Toast.makeText(this, "NOT 1", Toast.LENGTH_SHORT).show();
                         notificationManagerCompat.notify(sound.getId(), notificationBuilder.build());
                     }
 
@@ -809,7 +899,7 @@ public class Sound extends AppCompatActivity
                     runOnUiThread(runnable);
                     binding.kenBurns.resume();
 
-                    if (!isHeadphonesPluggedIn())
+                    if (!areHeadphonesPluggedIn())
                     {
                         Toast.makeText(this, getResources().getString(R.string.error_headphone), Toast.LENGTH_LONG).show();
                     }
@@ -836,9 +926,10 @@ public class Sound extends AppCompatActivity
 
     /**
      * <h2>Stop</h2>
+     *
      * Stops the playback
      * Checks for repeat on the viewModel and replays the sound if true
-     * Stops callbacks and handlers and resets the MedidPlayer and seekbar
+     * Stops callbacks and handlers and resets the MediaPlayer and SeekBar
      *
      * @param close whether the Activity is being closed
      *
@@ -846,13 +937,10 @@ public class Sound extends AppCompatActivity
 
     private void stop (boolean close)
     {
-        Toast.makeText(this, "stop 1 ", Toast.LENGTH_SHORT).show();
         if (mediaPlayer != null && sound.playing.get() == 1)
         {
-            Toast.makeText(this, "stop 2 ", Toast.LENGTH_SHORT).show();
             if (session == 0 || currentTime >= viewModel.length.get() || close)
             {
-                Toast.makeText(this, "stop 3", Toast.LENGTH_SHORT).show();
                 if (handler != null && runnable != null)
                 {
                     handler.removeCallbacks(runnable);
@@ -876,10 +964,8 @@ public class Sound extends AppCompatActivity
 
                 if (session > 0)
                 {
-                    Toast.makeText(this, "stop 4 ", Toast.LENGTH_SHORT).show();
                     if (!Objects.requireNonNull(viewModel.session.get()).done.get())
                     {
-                        Toast.makeText(this, "stop 6 ", Toast.LENGTH_SHORT).show();
                         Constants.getInstance().updateSession = viewModel.session.get();
                     }
                     close();
@@ -887,7 +973,6 @@ public class Sound extends AppCompatActivity
             }
             else
             {
-                Toast.makeText(this, "stop 5 ", Toast.LENGTH_SHORT).show();
                 mediaPlayer.start();
             }
         }
@@ -897,6 +982,16 @@ public class Sound extends AppCompatActivity
             play();
         }
     }
+
+    /**
+     * <h2>Volume</h2>
+     *
+     * Changes the volume for the MediaPlayer
+     *
+     * @param volume The volume to change to
+     * @param bar Indicator if volume bar should be changed
+     *
+     */
 
     private void volume (float volume, boolean bar)
     {
@@ -927,7 +1022,8 @@ public class Sound extends AppCompatActivity
     }
 
     /**
-     * <h3>Change</h3>
+     * <h2>Change</h2>
+     *
      * Handles the manual change of the seekbar
      *
      * if session is 0:
@@ -940,7 +1036,6 @@ public class Sound extends AppCompatActivity
      * the resulting fraction gives us the relative value to seek to in the sound file
      *
      * also set the currentTime to the current progress and the startTime to now minus currentTime
-     *
      *
      * @param progress The current progress
      */
@@ -973,6 +1068,14 @@ public class Sound extends AppCompatActivity
             sound.time.set(currentTime * 1000);
         }
     }
+
+    /**
+     * <h2>Skip</h2>
+     *
+     * Handles the press on the +-10 seconds buttons and skips the sound accordingly
+     *
+     * @param forward Indicator if the +10 seconds button was clicked
+     */
 
     private void skip (boolean forward)
     {
@@ -1010,6 +1113,13 @@ public class Sound extends AppCompatActivity
         }
     }
 
+    /**
+     * <h2>On Support Navigate Up</h2>
+     *
+     * Override
+     * Show the back arrow and call onBackPressed
+     */
+
     @Override
     public boolean onSupportNavigateUp()
     {
@@ -1017,11 +1127,27 @@ public class Sound extends AppCompatActivity
         return true;
     }
 
+    /**
+     * <h2>On Back Pressed</h2>
+     *
+     * Override
+     * Call the close function when back button is pressed
+     */
+
     @Override
     public void onBackPressed()
     {
         close();
     }
+
+    /**
+     * <h2>Close</h2>
+     *
+     * Closes the current activity
+     * Resets the MediaPlayer and removes all the listeners and handlers
+     * Add sound to the listened shared Preferences with the seconds listened
+     * Handle the disappear animations and check if closing should be animated
+     */
 
     private void close ()
     {
