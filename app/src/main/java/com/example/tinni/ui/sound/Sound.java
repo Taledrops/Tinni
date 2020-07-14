@@ -725,7 +725,8 @@ public class Sound extends AppCompatActivity
                             .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                             .build());
             mediaPlayer.prepareAsync();
-            mediaPlayer.setOnBufferingUpdateListener((mp, percent) -> binding.buffer.setProgress(percent));
+            mediaPlayer.setOnBufferingUpdateListener((mp, percent) ->
+                    binding.buffer.setProgress(percent));
             mediaPlayer.setOnPreparedListener(mp ->
             {
                 if (!closing)
