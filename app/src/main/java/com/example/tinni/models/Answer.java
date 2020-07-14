@@ -9,8 +9,8 @@ import androidx.databinding.ObservableField;
  *
  * Fields:
  * int id: Unique identifier for answer
- * String text: Text of the answer
- * boolean active: Indicator if answer was selected
+ * ObservableField<String> text: Text of the answer
+ * ObservableBoolean active: Indicator if answer was selected
  *
  * @author Nassim Amar
  * @version 1.0

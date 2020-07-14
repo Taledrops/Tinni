@@ -1,6 +1,7 @@
 package com.example.tinni.models;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -16,18 +17,26 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.ObservableInt;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tinni.R;
+import com.example.tinni.adapters.CategoryAdapter;
 import com.example.tinni.custom.AnimatedImageView;
 import com.example.tinni.custom.ExpandableTextView;
 import com.example.tinni.custom.Placeholder;
 import com.example.tinni.helpers.CircleTransform;
 import com.example.tinni.helpers.Constants;
 import com.example.tinni.helpers.Functions;
+import com.example.tinni.helpers.MarginDecorator;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -564,6 +573,32 @@ public class Sound
         else
         {
             func.paintDrawable(imageView, R.drawable.heart, R.color.colorAccent);
+        }
+    }
+
+    /**
+     * <h3>Categories</h3>
+     * Display all categories of the sound
+     *
+     * @param categories The list of categories
+     */
+
+    @SuppressLint("WrongConstant")
+    @BindingAdapter("android:categories")
+    public static void setCategories(RecyclerView recyclerView, List<Category> categories)
+    {
+        if (categories != null && categories.size() > 0)
+        {
+            FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(recyclerView.getContext());
+            layoutManager.setFlexWrap(FlexWrap.WRAP);
+            layoutManager.setFlexDirection(FlexDirection.ROW);
+            layoutManager.setJustifyContent(JustifyContent.SPACE_EVENLY);
+
+            recyclerView.addItemDecoration(new MarginDecorator("Bottom", func.pxFromDp(recyclerView.getContext(), recyclerView.getContext().getResources().getInteger(R.integer.medium_margin))));
+            recyclerView.setLayoutManager(layoutManager);
+
+            CategoryAdapter categoryAdapter = new CategoryAdapter(categories);
+            recyclerView.setAdapter(categoryAdapter);
         }
     }
 

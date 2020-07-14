@@ -344,9 +344,30 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/categories"
+                        android:visibility="@{vm.current.categories != null &amp;&amp; vm.current.categories.size() > 0 ? View.VISIBLE : View.GONE, default=visible}"
+                        android:layout_marginTop="@dimen/defaultMargin"
+                        android:paddingStart="@dimen/defaultMargin"
+                        android:paddingEnd="@dimen/defaultMargin"
+                        style="@style/MediumHeading" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/categories"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/defaultMargin"
+                        android:layout_marginStart="@dimen/defaultMargin"
+                        android:layout_marginEnd="@dimen/defaultMargin"
+                        android:scrollbars="none"
+                        android:visibility="@{vm.current.categories != null &amp;&amp; vm.current.categories.size() > 0 ? View.VISIBLE : View.GONE, default=visible}"
+                        android:categories="@{vm.current.categories}"
+                        android:layout_height="wrap_content">
+                    </androidx.recyclerview.widget.RecyclerView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/description"
                         android:visibility="@{vm.current.description != null &amp;&amp; vm.current.description.length() > 0 ? View.VISIBLE : View.GONE, default=visible}"
-                        android:layout_marginTop="@dimen/defaultMargin"
+                        android:layout_marginTop="@dimen/mediumMargin"
                         android:paddingStart="@dimen/defaultMargin"
                         android:paddingEnd="@dimen/defaultMargin"
                         style="@style/MediumHeading" />
