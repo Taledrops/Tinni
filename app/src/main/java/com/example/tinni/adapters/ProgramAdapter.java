@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tinni.databinding.ProgramItemBinding;
 import com.example.tinni.models.Program;
-import com.example.tinni.models.Sound;
 
 import java.util.List;
 
@@ -58,8 +57,8 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
     @Override
     public void onBindViewHolder(@NonNull ProgramViewHolder holder, int position)
     {
-        Program category = programList.get(position);
-        holder.bind(category);
+        Program program = programList.get(position);
+        holder.bind(program);
     }
 
     /**

@@ -57,8 +57,8 @@ public class ProgramListAdapter extends RecyclerView.Adapter<ProgramListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ProgramViewHolder holder, int position)
     {
-        SelectedProgram category = programList.get(position);
-        holder.bind(category);
+        SelectedProgram selectedProgram = programList.get(position);
+        holder.bind(selectedProgram);
     }
 
     /**
@@ -115,16 +115,6 @@ public class ProgramListAdapter extends RecyclerView.Adapter<ProgramListAdapter.
     {
         programList.clear();
         programList.addAll(newlist);
-        this.notifyDataSetChanged();
-    }
-
-    /**
-     * <h2>Update List</h2>
-     * Updates the ui
-     */
-
-    public void updateList()
-    {
         this.notifyDataSetChanged();
     }
 

@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tinni.databinding.SessionItemBinding;
 import com.example.tinni.databinding.SessionProgressItemBinding;
 import com.example.tinni.models.Session;
 
@@ -58,13 +57,13 @@ public class SessionProgressAdapter extends RecyclerView.Adapter<SessionProgress
     @Override
     public void onBindViewHolder(@NonNull SessionViewHolder holder, int position)
     {
-        Session category = sessionList.get(position);
-        holder.bind(category);
+        Session session = sessionList.get(position);
+        holder.bind(session);
     }
 
     /**
      * <h2>Get Item Count</h2>
-     * Returns the sound_item_horizontal count of the sessionList
+     * Returns the session count of the sessionList
      */
 
     @Override
@@ -92,7 +91,7 @@ public class SessionProgressAdapter extends RecyclerView.Adapter<SessionProgress
 
     /**
      * <h2>Get Item</h2>
-     * Get sound_item_horizontal inside the sessionList by its index
+     * Get session inside the sessionList by its index
      */
 
     public Session getItem(int position)
@@ -121,7 +120,7 @@ public class SessionProgressAdapter extends RecyclerView.Adapter<SessionProgress
 
     /**
      * <h2>Add Item</h2>
-     * Add sound_item_horizontal to the sessionList with its new index
+     * Add session to the sessionList with its new index
      */
 
     public void addItem(Session sound, int position)

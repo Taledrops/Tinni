@@ -529,73 +529,64 @@ public class Sound extends AppCompatActivity
                     int pageNumber = 1;
                     int y = 130;
                     final File file = File.createTempFile("history" + (int) (System.currentTimeMillis()) / 1000, ".pdf", sharedFolder);
-                    boolean created = file.createNewFile();
-                    if (created)
+                    FileOutputStream fOut = new FileOutputStream(file);
+                    PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
+                    PdfDocument.Page page = document.startPage(pageInfo);
+                    Canvas canvas = page.getCanvas();
+                    Paint paint = new Paint();
+                    Paint titlePaint = new Paint();
+                    titlePaint.setColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+
+                    canvas.drawText(String.format(getResources().getString(R.string.history_for), sound.getTitle()), 10, 20, paint);
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
+                    String date = formatter.format(new Date(System.currentTimeMillis()));
+
+                    canvas.drawText(date, 10, 40, paint);
+
+                    canvas.drawText(String.format(getResources().getString(R.string.history_for_number), sound.getTitle(), list.size()), 10, 70, titlePaint);
+
+                    canvas.drawText(getResources().getString(R.string.date), 20, 100, titlePaint);
+                    canvas.drawText(getResources().getString(R.string.time), 170, 100, titlePaint);
+                    canvas.drawLine(20f, 105f, 575f, 105f, titlePaint);
+
+                    for (SoundStat ss : list)
                     {
-                        FileOutputStream fOut = new FileOutputStream(file);
-                        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
-                        PdfDocument.Page page = document.startPage(pageInfo);
-                        Canvas canvas = page.getCanvas();
-                        Paint paint = new Paint();
-                        Paint titlePaint = new Paint();
-                        titlePaint.setColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-
-                        canvas.drawText(String.format(getResources().getString(R.string.history_for), sound.getTitle()), 10, 20, paint);
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
-                        String date = formatter.format(new Date(System.currentTimeMillis()));
-
-                        canvas.drawText(date, 10, 40, paint);
-
-                        canvas.drawText(String.format(getResources().getString(R.string.history_for_number), sound.getTitle(), list.size()), 10, 70, titlePaint);
-
-                        canvas.drawText(getResources().getString(R.string.date), 20, 100, titlePaint);
-                        canvas.drawText(getResources().getString(R.string.time), 170, 100, titlePaint);
-                        canvas.drawLine(20f, 105f, 575f, 105f, titlePaint);
-
-                        for (SoundStat ss : list)
+                        if (y > pageHeight)
                         {
-                            if (y > pageHeight)
-                            {
-                                pageNumber++;
-                                document.finishPage(page);
-                                pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
-                                page = document.startPage(pageInfo);
-                                canvas = page.getCanvas();
+                            pageNumber++;
+                            document.finishPage(page);
+                            pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
+                            page = document.startPage(pageInfo);
+                            canvas = page.getCanvas();
 
-                                canvas.drawText(String.format(getResources().getString(R.string.history_for_page), sound.getTitle(), pageNumber), 10, 20, paint);
-                                canvas.drawText(date, 10, 40, paint);
-                                y = 130;
-                            }
-
-                            canvas.drawText(formatter.format(new Date(ss.getDate())), 20, y, paint);
-                            canvas.drawText(String.format(getResources().getString(R.string.minutes_short), String.format(Locale.getDefault(), "%d:%02d", ss.getTime() / 60, ss.getTime() % 60)), 170, y, paint);
-                            y += 30;
+                            canvas.drawText(String.format(getResources().getString(R.string.history_for_page), sound.getTitle(), pageNumber), 10, 20, paint);
+                            canvas.drawText(date, 10, 40, paint);
+                            y = 130;
                         }
 
-                        document.finishPage(page);
-                        document.writeTo(fOut);
-                        document.close();
-
-                        if (file.exists())
-                        {
-                            Uri path = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file);
-                            System.out.println("create pdf uri path==>" + path);
-
-                            try
-                            {
-                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                intent.setDataAndType(path, "application/pdf");
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                startActivity(intent);
-                            } catch (ActivityNotFoundException e)
-                            {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_pdf), Toast.LENGTH_SHORT).show();
-                            }
-                        }
+                        canvas.drawText(formatter.format(new Date(ss.getDate())), 20, y, paint);
+                        canvas.drawText(String.format(getResources().getString(R.string.minutes_short), String.format(Locale.getDefault(), "%d:%02d", ss.getTime() / 60, ss.getTime() % 60)), 170, y, paint);
+                        y += 30;
                     }
-                    else
+
+                    document.finishPage(page);
+                    document.writeTo(fOut);
+                    document.close();
+
+                    if (file.exists())
                     {
-                        Toast.makeText(this, getResources().getString(R.string.error_simple), Toast.LENGTH_LONG).show();
+                        Uri path = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file);
+
+                        try
+                        {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(path, "application/pdf");
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            startActivity(intent);
+                        } catch (ActivityNotFoundException e)
+                        {
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_pdf), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 catch (IOException e)
@@ -725,8 +716,7 @@ public class Sound extends AppCompatActivity
                             .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                             .build());
             mediaPlayer.prepareAsync();
-            mediaPlayer.setOnBufferingUpdateListener((mp, percent) ->
-                    binding.buffer.setProgress(percent));
+            mediaPlayer.setOnBufferingUpdateListener((mp, percent) -> binding.buffer.setProgress(percent));
             mediaPlayer.setOnPreparedListener(mp ->
             {
                 if (!closing)

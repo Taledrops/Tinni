@@ -118,7 +118,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/mediumMargin"
                                 android:gravity="center_vertical"
-                                android:background="@drawable/rounded_primary_dark_transparent_light_top">
+                                android:background="@drawable/rounded_primary_dark_transparent_light">
                                 <ImageView
                                     android:id="@+id/play"
                                     android:layout_width="@dimen/playSmallSize"

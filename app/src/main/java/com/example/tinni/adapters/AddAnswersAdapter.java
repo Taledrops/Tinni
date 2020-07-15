@@ -1,6 +1,5 @@
 package com.example.tinni.adapters;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tinni.databinding.AddAnswerItemBinding;
 import com.example.tinni.helpers.ItemMoveCallback;
 import com.example.tinni.models.Answer;
-import com.example.tinni.models.Session;
 
 import java.util.Collections;
 import java.util.List;
@@ -61,8 +59,8 @@ public class AddAnswersAdapter extends RecyclerView.Adapter<AddAnswersAdapter.An
     @Override
     public void onBindViewHolder(@NonNull AnswerViewHolder holder, int position)
     {
-        Answer category = answerList.get(position);
-        holder.bind(category);
+        Answer answer = answerList.get(position);
+        holder.bind(answer);
     }
 
     /**

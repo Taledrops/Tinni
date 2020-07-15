@@ -119,16 +119,6 @@ public class ProgramSmallAdapter extends RecyclerView.Adapter<ProgramSmallAdapte
     }
 
     /**
-     * <h2>Update List</h2>
-     * Updates the ui
-     */
-
-    public void updateList()
-    {
-        this.notifyDataSetChanged();
-    }
-
-    /**
      * <h2>Add Item</h2>
      * Add sound_item_horizontal to the programList with its new index
      */

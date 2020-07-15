@@ -7,14 +7,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tinni.databinding.SelectSessionItemBinding;
-import com.example.tinni.databinding.SessionItemBinding;
 import com.example.tinni.models.Session;
 
 import java.util.List;
 
 /**
  * <h1>Select Session Adapter</h1>
- * Adapter for Session items
+ * Adapter for Select Session items
  *
  * Variables:
  * List<Session> sessionList: A list of Session objects to display
@@ -58,8 +57,8 @@ public class SelectSessionAdapter extends RecyclerView.Adapter<SelectSessionAdap
     @Override
     public void onBindViewHolder(@NonNull SessionViewHolder holder, int position)
     {
-        Session category = sessionList.get(position);
-        holder.bind(category);
+        Session session = sessionList.get(position);
+        holder.bind(session);
     }
 
     /**
@@ -92,7 +91,7 @@ public class SelectSessionAdapter extends RecyclerView.Adapter<SelectSessionAdap
 
     /**
      * <h2>Get Item</h2>
-     * Get sound_item_horizontal inside the sessionList by its index
+     * Get session inside the sessionList by its index
      */
 
     public Session getItem(int position)
@@ -121,7 +120,7 @@ public class SelectSessionAdapter extends RecyclerView.Adapter<SelectSessionAdap
 
     /**
      * <h2>Add Item</h2>
-     * Add sound_item_horizontal to the sessionList with its new index
+     * Add session to the sessionList with its new index
      */
 
     public void addItem(Session sound, int position)

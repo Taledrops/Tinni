@@ -7,18 +7,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tinni.databinding.SelectSessionItemBinding;
 import com.example.tinni.databinding.SelectedSessionItemBinding;
 import com.example.tinni.helpers.ItemMoveCallback;
 import com.example.tinni.models.Session;
-import com.example.tinni.models.Sound;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
  * <h1>Selected Session Adapter</h1>
- * Adapter for Session items
+ * Adapter for Selected Session items
  *
  * Variables:
  * List<Session> sessionList: A list of Session objects to display
@@ -62,13 +60,13 @@ public class SelectedSessionAdapter extends RecyclerView.Adapter<SelectedSession
     @Override
     public void onBindViewHolder(@NonNull SessionViewHolder holder, int position)
     {
-        Session category = sessionList.get(position);
-        holder.bind(category);
+        Session session = sessionList.get(position);
+        holder.bind(session);
     }
 
     /**
      * <h2>Get Item Count</h2>
-     * Returns the sound_item_horizontal count of the sessionList
+     * Returns the session count of the sessionList
      */
 
     @Override
@@ -96,7 +94,7 @@ public class SelectedSessionAdapter extends RecyclerView.Adapter<SelectedSession
 
     /**
      * <h2>Get Item</h2>
-     * Get sound_item_horizontal inside the sessionList by its index
+     * Get session inside the sessionList by its index
      */
 
     public Session getItem(int position)
@@ -123,7 +121,7 @@ public class SelectedSessionAdapter extends RecyclerView.Adapter<SelectedSession
 
     /**
      * <h2>Add Item</h2>
-     * Add sound_item_horizontal to the sessionList with its new index
+     * Add session to the sessionList with its new index
      */
 
     public void addItem(Session sound)
@@ -137,7 +135,7 @@ public class SelectedSessionAdapter extends RecyclerView.Adapter<SelectedSession
 
     /**
      * <h2>Remove Item</h2>
-     * Remove sound_item_horizontal from the soundList
+     * Remove session from the sessionList
      */
 
     public void removeItem(Session session)

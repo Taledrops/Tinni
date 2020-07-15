@@ -1,6 +1,5 @@
 package com.example.tinni.adapters;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tinni.databinding.AddQuestionItemBinding;
 import com.example.tinni.helpers.ItemMoveCallback;
 import com.example.tinni.models.Question;
-import com.example.tinni.models.Session;
 
 import java.util.Collections;
 import java.util.List;
@@ -61,13 +59,13 @@ public class AddQuestionsAdapter extends RecyclerView.Adapter<AddQuestionsAdapte
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position)
     {
-        Question category = questionList.get(position);
-        holder.bind(category);
+        Question question = questionList.get(position);
+        holder.bind(question);
     }
 
     /**
      * <h2>Get Item Count</h2>
-     * Returns the sound_item_horizontal count of the questionList
+     * Returns the question count of the questionList
      */
 
     @Override
@@ -95,7 +93,7 @@ public class AddQuestionsAdapter extends RecyclerView.Adapter<AddQuestionsAdapte
 
     /**
      * <h2>Get Item</h2>
-     * Get sound_item_horizontal inside the questionList by its index
+     * Get question inside the questionList by its index
      */
 
     public Question getItem(int position)
@@ -122,7 +120,7 @@ public class AddQuestionsAdapter extends RecyclerView.Adapter<AddQuestionsAdapte
 
     /**
      * <h2>Add Item</h2>
-     * Add sound_item_horizontal to the questionList with its new index
+     * Add question to the questionList with its new index
      */
 
     public void addItem(Question question)
@@ -136,7 +134,7 @@ public class AddQuestionsAdapter extends RecyclerView.Adapter<AddQuestionsAdapte
 
     /**
      * <h2>Edit Item</h2>
-     * Edit sound_item_horizontal in the questionList
+     * Edit question in the questionList
      */
 
     public void editItem(Question question)

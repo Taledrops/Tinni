@@ -57,13 +57,13 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.RatingView
     @Override
     public void onBindViewHolder(@NonNull RatingViewHolder holder, int position)
     {
-        Rating category = ratingList.get(position);
-        holder.bind(category);
+        Rating rating = ratingList.get(position);
+        holder.bind(rating);
     }
 
     /**
      * <h2>Get Item Count</h2>
-     * Returns the sound_item_horizontal count of the soundList
+     * Returns the rating count of the ratingList
      */
 
     @Override

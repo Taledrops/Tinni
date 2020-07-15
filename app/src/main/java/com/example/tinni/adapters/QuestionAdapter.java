@@ -57,8 +57,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position)
     {
-        Question category = questionList.get(position);
-        holder.bind(category);
+        Question question = questionList.get(position);
+        holder.bind(question);
     }
 
     /**
@@ -123,11 +123,11 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
      * Add sound_item_horizontal to the questionList with its new index
      */
 
-    public void addItem(Question sound, int position)
+    public void addItem(Question question, int position)
     {
         if (questionList != null)
         {
-            questionList.add(position, sound);
+            questionList.add(position, question);
             notifyItemInserted(position);
         }
     }

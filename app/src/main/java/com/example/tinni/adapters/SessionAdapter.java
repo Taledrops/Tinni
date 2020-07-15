@@ -57,13 +57,13 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
     @Override
     public void onBindViewHolder(@NonNull SessionViewHolder holder, int position)
     {
-        Session category = sessionList.get(position);
-        holder.bind(category);
+        Session session = sessionList.get(position);
+        holder.bind(session);
     }
 
     /**
      * <h2>Get Item Count</h2>
-     * Returns the sound_item_horizontal count of the sessionList
+     * Returns the session count of the sessionList
      */
 
     @Override
@@ -91,7 +91,7 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
 
     /**
      * <h2>Get Item</h2>
-     * Get sound_item_horizontal inside the sessionList by its index
+     * Get session inside the sessionList by its index
      */
 
     public Session getItem(int position)
@@ -120,14 +120,14 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
 
     /**
      * <h2>Add Item</h2>
-     * Add sound_item_horizontal to the sessionList with its new index
+     * Add session to the sessionList with its new index
      */
 
-    public void addItem(Session sound, int position)
+    public void addItem(Session session, int position)
     {
         if (sessionList != null)
         {
-            sessionList.add(position, sound);
+            sessionList.add(position, session);
             notifyItemInserted(position);
         }
     }

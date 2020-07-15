@@ -458,7 +458,6 @@ public class Add extends AppCompatActivity
                     {
                         viewModel.uri.set(uri.toString());
                         mediaPlayer.setDataSource(this, uri);
-                        System.out.println("#### URI ADD: " + uri);
                         try
                         {
                             mediaPlayer.prepare();

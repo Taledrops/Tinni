@@ -512,7 +512,6 @@ public class Constants
 
     public void addRating (int rating, String text)
     {
-        System.out.println("#### add rating: " + rating);
         Rating lastRating = wasLastRatingToday();
         if (lastRating != null)
         {

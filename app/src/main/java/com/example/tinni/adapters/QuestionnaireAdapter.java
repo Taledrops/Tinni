@@ -6,19 +6,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tinni.databinding.QuestionItemBinding;
 import com.example.tinni.databinding.QuestionnaireItemBinding;
-import com.example.tinni.models.Question;
 import com.example.tinni.models.Questionnaire;
 
 import java.util.List;
 
 /**
  * <h1>Question Adapter</h1>
- * Adapter for Question items
+ * Adapter for Questionnaire items
  *
  * Variables:
- * List<Question> questionList: A list of Question objects to display
+ * List<Questionnaire> questionList: A list of Questionnaire objects to display
  *
  * Source:
  * https://stackoverflow.com/a/48941212/2700965

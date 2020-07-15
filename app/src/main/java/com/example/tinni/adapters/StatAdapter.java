@@ -57,8 +57,8 @@ public class StatAdapter extends RecyclerView.Adapter<StatAdapter.StatViewHolder
     @Override
     public void onBindViewHolder(@NonNull StatViewHolder holder, int position)
     {
-        Stat category = statList.get(position);
-        holder.bind(category);
+        Stat stat = statList.get(position);
+        holder.bind(stat);
     }
 
     /**

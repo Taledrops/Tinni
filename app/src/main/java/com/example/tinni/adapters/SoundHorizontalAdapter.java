@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tinni.databinding.SoundItemBinding;
 import com.example.tinni.databinding.SoundItemHorizontalBinding;
 import com.example.tinni.models.Sound;
 
@@ -64,7 +63,7 @@ public class SoundHorizontalAdapter extends RecyclerView.Adapter<SoundHorizontal
 
     /**
      * <h2>Get Item Count</h2>
-     * Returns the sound_item_horizontal count of the soundList
+     * Returns the sound count of the soundList
      */
 
     @Override
@@ -92,7 +91,7 @@ public class SoundHorizontalAdapter extends RecyclerView.Adapter<SoundHorizontal
 
     /**
      * <h2>Get Item</h2>
-     * Get sound_item_horizontal inside the soundList by its index
+     * Get sound inside the soundList by its index
      */
 
     public Sound getItem(int position)
@@ -121,7 +120,7 @@ public class SoundHorizontalAdapter extends RecyclerView.Adapter<SoundHorizontal
 
     /**
      * <h2>Add Item</h2>
-     * Add sound_item_horizontal to the soundList with its new index
+     * Add sound to the soundList with its new index
      */
 
     public void addItem(Sound sound)
@@ -135,7 +134,7 @@ public class SoundHorizontalAdapter extends RecyclerView.Adapter<SoundHorizontal
 
     /**
      * <h2>Remove Item</h2>
-     * Remove sound_item_horizontal from the soundList
+     * Remove sound from the soundList
      */
 
     public void removeItem(Sound sound)

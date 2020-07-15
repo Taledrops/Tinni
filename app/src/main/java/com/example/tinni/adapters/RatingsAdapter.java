@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tinni.databinding.RatingItemBinding;
 import com.example.tinni.databinding.RatingsItemBinding;
 import com.example.tinni.models.Rating;
 
@@ -58,13 +57,13 @@ public class RatingsAdapter extends RecyclerView.Adapter<RatingsAdapter.RatingVi
     @Override
     public void onBindViewHolder(@NonNull RatingViewHolder holder, int position)
     {
-        Rating category = ratingList.get(position);
-        holder.bind(category);
+        Rating rating = ratingList.get(position);
+        holder.bind(rating);
     }
 
     /**
      * <h2>Get Item Count</h2>
-     * Returns the sound_item_horizontal count of the soundList
+     * Returns the rating count of the ratingList
      */
 
     @Override

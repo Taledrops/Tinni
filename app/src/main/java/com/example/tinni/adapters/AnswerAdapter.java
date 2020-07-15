@@ -82,9 +82,9 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
             this.binding = binding;
         }
 
-        public void bind(Answer program)
+        public void bind(Answer answer)
         {
-            binding.setModel(program);
+            binding.setModel(answer);
             binding.executePendingBindings();
         }
     }
