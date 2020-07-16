@@ -48,7 +48,7 @@
             <com.example.tinni.custom.Placeholder
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/defaultMargin"
+                android:layout_marginBottom="@dimen/defaultMargin"
                 android:placeholderVisibility="@{vm.loading}"
                 android:orientation="vertical"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">

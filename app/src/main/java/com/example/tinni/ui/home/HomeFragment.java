@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.tinni.R;
 import com.example.tinni.adapters.SoundHorizontalAdapter;
 import com.example.tinni.custom.BottomDialogDailyRating;
-import com.example.tinni.custom.BottomDialogQuestion;
 import com.example.tinni.databinding.FragmentHomeBinding;
 import com.example.tinni.helpers.Constants;
 import com.example.tinni.helpers.Functions;
@@ -31,9 +30,7 @@ import com.example.tinni.helpers.MarginDecorator;
 import com.example.tinni.models.Program;
 import com.example.tinni.models.Sound;
 
-import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <h1>Home Fragment</h1>
@@ -42,6 +39,13 @@ import java.util.stream.Collectors;
  * Variables:
  * FragmentHomeBinding binding: The binding to the layout file
  * HomeViewModel viewModel: The ViewModel to this page
+ * boolean lastLoaded: Indicator whether recently played items have already been loaded
+ * boolean favoritesLoaded: Indicator whether favorite items have already been loaded
+ * SoundHorizontalAdapter lastAdapter: Instance of the last adapter
+ * SoundHorizontalAdapter favoritesAdapter: Instance of the favorites adapter
+ * FragmentManager fragmentManager: Instance of the fragment manager
+ * boolean loaded: Indicator whether the items have already been loaded
+ * Functions func = new Functions(): Instance of the Functions helper class
  *
  * @author Nassim Amar
  * @version 1.0
@@ -57,11 +61,25 @@ public class HomeFragment extends Fragment
     private SoundHorizontalAdapter lastAdapter;
     private SoundHorizontalAdapter favoritesAdapter;
     private static FragmentManager fragmentManager;
+    private boolean loaded = false;
     private static final Functions func = new Functions();
+
+    /**
+     * <h2>On Fill Result</h2>
+     * Interface for loading content
+     */
+
+    public interface OnFillResult
+    {
+        void result(boolean success);
+    }
 
     /**
      * <h2>On Create View</h2>
      * Connecting the Fragment with the ViewModel and inflating its layout view
+     * Setting up the click events
+     * Observing the MutableLiveData in the viewModel
+     * Handling swipe refreshes
      */
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -74,6 +92,7 @@ public class HomeFragment extends Fragment
         if (getActivity() != null)
         {
             fragmentManager = getActivity().getSupportFragmentManager();
+            binding.swipeRefresh.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.colorPrimary), ContextCompat.getColor(getActivity(), R.color.colorPrimary), ContextCompat.getColor(getActivity(), R.color.colorPrimary));
         }
 
         viewModel.getLast().observe(getViewLifecycleOwner(), l ->
@@ -130,6 +149,17 @@ public class HomeFragment extends Fragment
             }
         });
 
+        binding.swipeRefresh.setOnRefreshListener(() ->
+        {
+            if (!viewModel.loading.get())
+            {
+                viewModel.fill(success -> binding.swipeRefresh.setRefreshing(false));
+            }
+            else
+            {
+                binding.swipeRefresh.setRefreshing(false);
+            }
+        });
 
         ItemClickSupport.addTo(binding.last)
                 .setOnItemClickListener((recyclerView, position, v) ->
@@ -193,7 +223,7 @@ public class HomeFragment extends Fragment
 
     /**
      * <h2>Make Rating</h2>
-     * Opens the selected sound in the Sound Activity
+     * Opens the rating view in a bottom dialog
      *
      * @param rating The selected rating
      *
@@ -246,7 +276,7 @@ public class HomeFragment extends Fragment
     /**
      * <h2>Scroll To Top</h2>
      * Scrolls the NestedScrollView to the top
-     * Triggered by click on the current navigation sound_item_horizontal
+     * Triggered by click on the current navigation item
      */
 
     public void scrollToTop ()
@@ -257,21 +287,23 @@ public class HomeFragment extends Fragment
 
     /**
      * <h2>On Resume</h2>
-     * Called when activity becomes visible
      * Sets the current program in the viewModel
      * Using a handler to give it room to breathe on startup
-     *
      */
 
     @Override
     public void onResume()
     {
         super.onResume();
-        Handler handler = new Handler();
-        handler.postDelayed(() ->
+        if (!loaded)
         {
-            viewModel.prepare();
-            handler.removeCallbacksAndMessages(null);
-        }, getResources().getInteger(R.integer.start_delay));
+            loaded = true;
+            Handler handler = new Handler();
+            handler.postDelayed(() ->
+            {
+                viewModel.fill(success -> {});
+                handler.removeCallbacksAndMessages(null);
+            }, getResources().getInteger(R.integer.start_delay));
+        }
     }
 }

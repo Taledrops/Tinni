@@ -136,12 +136,12 @@ public class StatsViewModel extends ViewModel
             newStats.add(new Stat(ratingsDone, context.getResources().getString(R.string.ratings_done), String.format(context.getResources().getString(R.string.ratings_average), avgRating)));
 
             long minutesSum  = Constants.getInstance().listened.stream().mapToLong(SoundStat::getTime).sum();
+            minutesSum = minutesSum / 60;
             OptionalDouble averageMinutes = Constants.getInstance().listened.stream().mapToDouble(SoundStat::getTime).average();
             double avgMinutes = 0;
             if(averageMinutes.isPresent())
             {
-                avgMinutes = averageMinutes.getAsDouble();
-
+                avgMinutes = averageMinutes.getAsDouble() / 60;
             }
             newStats.add(new Stat(minutesSum, context.getResources().getString(R.string.listened_minutes), String.format(context.getResources().getString(R.string.minutes_daily), (int)avgMinutes)));
 

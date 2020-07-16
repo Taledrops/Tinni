@@ -1,24 +1,16 @@
 package com.example.tinni.ui.programs;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -30,33 +22,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.tinni.R;
 import com.example.tinni.adapters.ProgramAdapter;
 import com.example.tinni.custom.BottomDialogImport;
-import com.example.tinni.custom.BottomDialogQuestion;
 import com.example.tinni.databinding.FragmentProgramsBinding;
 import com.example.tinni.helpers.Constants;
 import com.example.tinni.helpers.Functions;
 import com.example.tinni.helpers.ItemClickSupport;
 import com.example.tinni.helpers.MarginDecorator;
 import com.example.tinni.models.Program;
-import com.example.tinni.models.Session;
-import com.example.tinni.models.Sound;
-import com.example.tinni.ui.add.Add;
 import com.example.tinni.ui.add.AddProgram;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * <h1>Programs Fragment</h1>
  * Everything related to the programs ui
  *
  * Variables:
- * FragmentSoundsBinding binding: The binding to the layout file
- * SoundsViewModel viewModel: The ViewModel to this page
- * boolean loaded: Indicator if categories and sounds were already loaded
- * CategoryAdapter categoryAdapter: The adapter for the category items
- * SoundAdapter soundAdapter: The adapter for the sound items
+ * FragmentProgramsBinding binding: The binding to the layout file
+ * ProgramsViewModel viewModel: The ViewModel to this page
+ * boolean loaded: Indicator if programs were already loaded
+ * FragmentManager fragmentManager: Instance of the fragment manager
+ * ProgramAdapter programAdapter: The adapter for the program items
  * Functions func: A static instance of the helper class "Functions"
  *
  * @author Nassim Amar
@@ -70,15 +53,15 @@ public class ProgramsFragment extends Fragment
     private ProgramsViewModel viewModel;
     private static boolean loaded = false;
     private static FragmentManager fragmentManager;
-
     private ProgramAdapter programAdapter;
-
     private static final Functions func = new Functions();
 
     /**
      * <h2>On Create View</h2>
      * Connecting the Fragment with the ViewModel and inflating its layout view
-     * Observing category and sound items on SoundsViewModel and update ui
+     * Observing program items and updating the ui
+     * Handling click events
+     * Handling swipe refreshes
      */
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -91,6 +74,7 @@ public class ProgramsFragment extends Fragment
         if (getActivity() != null)
         {
             fragmentManager = getActivity().getSupportFragmentManager();
+            binding.swipeRefresh.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.colorPrimary), ContextCompat.getColor(getActivity(), R.color.colorPrimary), ContextCompat.getColor(getActivity(), R.color.colorPrimary));
         }
 
         viewModel.getPrograms().observe(getViewLifecycleOwner(), result ->
@@ -116,6 +100,18 @@ public class ProgramsFragment extends Fragment
             }
         });
 
+        binding.swipeRefresh.setOnRefreshListener(() ->
+        {
+            if (!viewModel.loading.get())
+            {
+                viewModel.fill(success -> binding.swipeRefresh.setRefreshing(false));
+            }
+            else
+            {
+                binding.swipeRefresh.setRefreshing(false);
+            }
+        });
+
         binding.fab.setOnClickListener(v -> openAdd());
 
         binding.importProgram.setOnClickListener(v -> importProgram());
@@ -135,7 +131,7 @@ public class ProgramsFragment extends Fragment
 
     /**
      * <h2>Import Program</h2>
-     * Imports a program with JSON
+     * Opens a dialog to import a program via JSON
      *
      */
 
@@ -152,7 +148,6 @@ public class ProgramsFragment extends Fragment
     /**
      * <h2>Update Adapter</h2>
      * Refreshes the RecyclerView by refreshing its adapter
-     *
      */
 
     public void updateAdapter ()
@@ -165,8 +160,7 @@ public class ProgramsFragment extends Fragment
 
     /**
      * <h2>Open Add</h2>
-     * Opens the Add Activity
-     *
+     * Opens the Add Program Activity
      */
 
     private void openAdd ()
@@ -225,9 +219,8 @@ public class ProgramsFragment extends Fragment
 
     /**
      * <h2>On Resume</h2>
-     * Called when fragment becomes visible
      * Loaded indicator assures that content is only loaded once
-     * Calling viewModel.Fill() inside onResume() has the purpose to only load the data once the page is fully loaded
+     * Calling viewModel.fill() inside onResume() has the purpose to only load the data once the page is fully loaded
      * Checking for viewModel.getPrograms().getValue() == null is a fallback for when the user closes and reopens the app
      */
 
@@ -235,14 +228,13 @@ public class ProgramsFragment extends Fragment
     public void onResume()
     {
         super.onResume();
-        Toast.makeText(getContext(), "RESUME", Toast.LENGTH_SHORT).show();
-        if (!loaded || viewModel.getPrograms().getValue() == null || Constants.getInstance().updatePrograms)
+        if (!loaded || viewModel.getPrograms().getValue() == null)
         {
             loaded = true;
             Handler handler = new Handler();
             handler.postDelayed(() ->
             {
-                viewModel.fill(Constants.getInstance().updatePrograms);
+                viewModel.fill(success -> {});
                 handler.removeCallbacksAndMessages(null);
             }, getResources().getInteger(R.integer.start_delay));
         }

@@ -99,8 +99,6 @@ public class Constants
     public int changedProgram = 0;
     public int limit = 10;
     public int ratingsLimit = 14;
-    public boolean updateHome = false;
-    public boolean updatePrograms = false;
     public boolean updateSounds = false;
     public boolean updateStats = false;
     public long installed = System.currentTimeMillis();
@@ -683,8 +681,6 @@ public class Constants
         editor.putString("pastprograms", json);
         editor.apply();
 
-        updatePrograms = true;
-        updateHome = true;
         updateStats = true;
     }
 
@@ -762,8 +758,6 @@ public class Constants
                 preferences.edit().remove("pastprograms").apply();
             }
 
-            updatePrograms = true;
-            updateHome = true;
             updateStats = true;
         }
 
@@ -857,7 +851,6 @@ public class Constants
             selectedProgram.getProgram().active.set(false);
             selectedProgram = null;
             preferences.edit().remove("program").apply();
-            updateHome = true;
             return null;
         }
         else
@@ -869,7 +862,6 @@ public class Constants
             String json = gson.toJson(selectedProgram);
             editor.putString("program", json);
             editor.apply();
-            updateHome = true;
             return selectedProgram;
         }
     }

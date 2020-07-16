@@ -77,7 +77,9 @@
         <com.example.tinni.custom.Placeholder
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/defaultMargin"
+            android:layout_marginStart="@dimen/defaultMargin"
+            android:layout_marginEnd="@dimen/defaultMargin"
+            android:layout_marginBottom="@dimen/defaultMargin"
             android:placeholderVisibility="@{vm.loading}"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -90,14 +92,18 @@
             <include layout="@layout/program_placeholder"/>
 
         </com.example.tinni.custom.Placeholder>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/programs"
-            android:visibility="@{vm.programs != null &amp;&amp; vm.programs.size() > 0 &amp;&amp; !vm.loading ? View.VISIBLE : View.GONE, default=gone}"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/programs"
+                android:visibility="@{vm.programs != null &amp;&amp; vm.programs.size() > 0 &amp;&amp; !vm.loading ? View.VISIBLE : View.GONE, default=gone}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"

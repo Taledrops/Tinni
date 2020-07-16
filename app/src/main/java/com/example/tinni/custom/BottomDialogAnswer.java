@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,17 +17,12 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.tinni.R;
 import com.example.tinni.adapters.AddAnswersAdapter;
-import com.example.tinni.adapters.AddQuestionsAdapter;
 import com.example.tinni.databinding.BottomAnswerBinding;
-import com.example.tinni.databinding.BottomQuestionBinding;
 import com.example.tinni.models.Answer;
-import com.example.tinni.models.Question;
-import com.example.tinni.ui.add.AddProgram;
 import com.example.tinni.ui.add.AddProgramViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -52,7 +46,6 @@ import java.util.Objects;
 
 public class BottomDialogAnswer extends BottomSheetDialogFragment
 {
-    private BottomDialogAnswer dialog;
     private AddAnswersAdapter addAnswersAdapter;
     private BottomDialogQuestion bottomDialogQuestion;
     private AddProgramViewModel viewModel;
@@ -67,7 +60,6 @@ public class BottomDialogAnswer extends BottomSheetDialogFragment
 
     public void newInstance(AddProgramViewModel _viewModel, AddAnswersAdapter _addAnswersAdapter, BottomDialogQuestion _bottomDialogQuestion)
     {
-        dialog = new BottomDialogAnswer();
         viewModel = _viewModel;
         addAnswersAdapter = _addAnswersAdapter;
         bottomDialogQuestion = _bottomDialogQuestion;

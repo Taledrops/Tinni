@@ -14,7 +14,22 @@ import com.example.tinni.models.SoundStat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
+/**
+ * <h1>Home View Model</h1>
+ * The viewModel connected to the HomeFragment
+ *
+ * Variables:
+ * ObservableField<Program> currentProgram: The observed current program
+ * ObservableBoolean loading: Indicator whether data is loading
+ * MutableLiveData<List<Sound>> last: The observed last played list
+ * MutableLiveData<List<Sound>> favorites The observed favorites list
+ * ObservableInt rating: The observed current rating between 1 and 5
+ *
+ * @author Nassim Amar
+ * @version 1.0
+ * @since   18.06.2020
+ */
 
 public class HomeViewModel extends ViewModel
 {
@@ -36,27 +51,28 @@ public class HomeViewModel extends ViewModel
 
     /**
      * <h2>Prepare</h2>
-     *
      * Sets up the data for the HomeFragment
+     * Sets the current program
+     * Fills the last played list
+     * Fills the favorites list
+     * Sets the current rating
      *
      * Source: https://stackoverflow.com/a/29671501/2700965
      */
 
-    public void prepare ()
+    public void fill (HomeFragment.OnFillResult delegate)
     {
+        loading.set(true);
         if (Constants.getInstance().selectedProgram != null && Constants.getInstance().selectedProgram.getProgram() != null)
         {
-            if (currentProgram.get() == null || Objects.requireNonNull(currentProgram.get()).getId() != Constants.getInstance().selectedProgram.getProgram().getId())
-            {
-                currentProgram.set(Constants.getInstance().selectedProgram.getProgram());
-            }
+            currentProgram.set(Constants.getInstance().selectedProgram.getProgram());
         }
         else
         {
             currentProgram.set(null);
         }
 
-        if ((last.getValue() == null || last.getValue().size() == 0 || Constants.getInstance().updateHome) && Constants.getInstance().listened.size() > 0)
+        if (Constants.getInstance().listened.size() > 0)
         {
             List<Sound> lastSounds = new ArrayList<>();
 
@@ -83,7 +99,7 @@ public class HomeViewModel extends ViewModel
             }
         }
 
-        if ((favorites.getValue() == null || favorites.getValue().size() == 0 || Constants.getInstance().updateHome) && Constants.getInstance().favorites.size() > 0)
+        if (Constants.getInstance().favorites.size() > 0)
         {
             List<Sound> favoriteSounds = new ArrayList<>();
 
@@ -104,31 +120,24 @@ public class HomeViewModel extends ViewModel
             }
         }
 
-        if (rating.get() == 0)
+        Rating lastRating = Constants.getInstance().wasLastRatingToday();
+        if (lastRating != null)
         {
-            for (Rating r : Constants.getInstance().ratings)
-            {
-                System.out.println("#### HABE: " + r.getRating() + " --- " + r.getDate() + " --- " + r.getText());
-            }
-            Rating lastRating = Constants.getInstance().wasLastRatingToday();
-            if (lastRating != null)
-            {
-                rating.set(lastRating.getRating());
-            }
-            else
-            {
-                rating.set(0);
-            }
+            rating.set(lastRating.getRating());
+        }
+        else
+        {
+            rating.set(0);
         }
 
-        Constants.getInstance().updateHome = false;
-
         loading.set(false);
+
+        delegate.result(true);
     }
 
     /**
      * <h2>Set Rating</h2>
-     * Clears the given Observable String
+     * Sets the current rating text
      *
      * @param val The rating value
      * @param text The text to the rating
