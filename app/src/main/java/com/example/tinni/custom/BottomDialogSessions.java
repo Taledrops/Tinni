@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.InputType;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,47 +18,38 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.tinni.R;
 import com.example.tinni.adapters.SelectSessionAdapter;
 import com.example.tinni.adapters.SelectedSessionAdapter;
-import com.example.tinni.adapters.SoundAdapter;
-import com.example.tinni.databinding.BottomFinishBinding;
 import com.example.tinni.databinding.BottomSessionsBinding;
 import com.example.tinni.helpers.Functions;
 import com.example.tinni.helpers.ItemClickSupport;
 import com.example.tinni.helpers.ItemMoveCallback;
 import com.example.tinni.helpers.MarginDecorator;
 import com.example.tinni.models.Session;
-import com.example.tinni.models.Sound;
 import com.example.tinni.ui.add.AddProgram;
 import com.example.tinni.ui.add.AddProgramViewModel;
-import com.example.tinni.ui.program.ProgramViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <h1>Bottom Dialog Sessions</h1>
  * BottomSheetDialogFragment for the finish ui
  *
  * Variables:
- * BottomDialogQuestions dialog: The instance of the current dialog
- * ProgramViewModel viewModel: The corresponding ProgramViewModel
- * Session session: The current session
- * FragmentManager fragmentManager: The current FragmentManager
- * List<Question> questions: The list of questions
+ * AddProgramViewModel viewModel: The corresponding AddProgramViewModel
+ * SelectedSessionAdapter selectedSessionAdapter: Instance of the SelectedSessionAdapter
+ * BottomSessionsBinding binding: Instance of the BottomSessionsBinding
+ * AddProgram addProgram: Instance of the AddProgram activity
+ * boolean setup: Indicator whether to setup the recyclerView
+ * Functions func: Instance of the helper class "Functions"
  *
  * Source: https://androidwave.com/bottom-sheet-dialog-fragment-in-android/
  *
@@ -72,7 +60,6 @@ import java.util.stream.Collectors;
 
 public class BottomDialogSessions extends BottomSheetDialogFragment
 {
-    private BottomDialogSessions dialog;
     private AddProgramViewModel viewModel;
     private SelectedSessionAdapter selectedSessionAdapter;
     private BottomSessionsBinding binding;
@@ -85,12 +72,12 @@ public class BottomDialogSessions extends BottomSheetDialogFragment
      * Creates a new instance of the BottomDialogQuestions class
      *
      * @param _viewModel The corresponding AddProgramViewModel
-     *
+     * @param _selectedSessionAdapter Instance of the SelectedSessionAdapter
+     * @param _addProgram Instance of the AddProgram activity
      */
 
     public void newInstance(AddProgramViewModel _viewModel, SelectedSessionAdapter _selectedSessionAdapter, AddProgram _addProgram)
     {
-        dialog = new BottomDialogSessions();
         viewModel = _viewModel;
         selectedSessionAdapter = _selectedSessionAdapter;
         addProgram = _addProgram;
@@ -102,7 +89,6 @@ public class BottomDialogSessions extends BottomSheetDialogFragment
      * Called when the dialog gets closed
      *
      * @param dialog The DialogInterface instance
-     *
      */
 
     @Override
@@ -118,7 +104,6 @@ public class BottomDialogSessions extends BottomSheetDialogFragment
      * Called when the dialog gets created
      *
      * @param savedInstanceState The saved Bundle
-     *
      */
 
     @Override
@@ -134,7 +119,6 @@ public class BottomDialogSessions extends BottomSheetDialogFragment
      * Sets the height of dialog to full screen height
      *
      * @param savedInstanceState The saved Bundle
-     *
      */
 
     @Override
@@ -145,7 +129,7 @@ public class BottomDialogSessions extends BottomSheetDialogFragment
         {
             View parent = (View) getView().getParent();
             BottomSheetBehavior<?> bottomSheetBehavior = BottomSheetBehavior.from(parent);
-            bottomSheetBehavior.setPeekHeight((int)(getResources().getDisplayMetrics().heightPixels));
+            bottomSheetBehavior.setPeekHeight(getResources().getDisplayMetrics().heightPixels);
         }
     }
 
@@ -154,12 +138,12 @@ public class BottomDialogSessions extends BottomSheetDialogFragment
      * Override
      * Called when the View gets created
      * Connects the ViewModel to the layout
-     * Fill the RecylerView with questions
+     * Fill the RecylerView with sounds
+     * Handle clicks
      *
      * @param inflater The LayoutInflater
      * @param container The ViewGroup
      * @param savedInstanceState The saved Bundle
-     *
      */
 
     @Nullable
@@ -226,11 +210,9 @@ public class BottomDialogSessions extends BottomSheetDialogFragment
 
     /**
      * <h2>Delete Session</h2>
-     *
      * Deleting a session with a verification prompt
      *
      * @param s The session to be deleted
-     *
      */
 
     private void deleteSession (Session s)
@@ -257,9 +239,7 @@ public class BottomDialogSessions extends BottomSheetDialogFragment
 
     /**
      * <h2>Setup Sessions</h2>
-     *
      * Setting up the RecyclerView for the selected sessions
-     *
      */
 
     private void setupSessions ()
@@ -284,7 +264,6 @@ public class BottomDialogSessions extends BottomSheetDialogFragment
 
     /**
      * <h2>Session Click</h2>
-     *
      * Handles the click on a session
      *
      * Source 1: https://stackoverflow.com/a/35383103/2700965

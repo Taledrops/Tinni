@@ -6,32 +6,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.tinni.R;
-import com.example.tinni.adapters.QuestionAdapter;
 import com.example.tinni.databinding.BottomFinishBinding;
-import com.example.tinni.databinding.BottomRatingBinding;
-import com.example.tinni.helpers.Constants;
-import com.example.tinni.models.Answer;
 import com.example.tinni.models.Program;
-import com.example.tinni.models.Question;
 import com.example.tinni.models.SelectedProgram;
-import com.example.tinni.models.Session;
 import com.example.tinni.ui.program.ProgramViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -39,11 +26,7 @@ import java.util.Objects;
  * BottomSheetDialogFragment for the finish ui
  *
  * Variables:
- * BottomDialogQuestions dialog: The instance of the current dialog
  * ProgramViewModel viewModel: The corresponding ProgramViewModel
- * Session session: The current session
- * FragmentManager fragmentManager: The current FragmentManager
- * List<Question> questions: The list of questions
  *
  * Source: https://androidwave.com/bottom-sheet-dialog-fragment-in-android/
  *
@@ -54,7 +37,6 @@ import java.util.Objects;
 
 public class BottomDialogFinish extends BottomSheetDialogFragment
 {
-    private BottomDialogFinish dialog;
     private ProgramViewModel viewModel;
 
     /**
@@ -67,7 +49,6 @@ public class BottomDialogFinish extends BottomSheetDialogFragment
 
     public void newInstance(ProgramViewModel _viewModel)
     {
-        dialog = new BottomDialogFinish();
         viewModel = _viewModel;
     }
 
@@ -119,7 +100,7 @@ public class BottomDialogFinish extends BottomSheetDialogFragment
         {
             View parent = (View) getView().getParent();
             BottomSheetBehavior<?> bottomSheetBehavior = BottomSheetBehavior.from(parent);
-            bottomSheetBehavior.setPeekHeight((int)(getResources().getDisplayMetrics().heightPixels));
+            bottomSheetBehavior.setPeekHeight(getResources().getDisplayMetrics().heightPixels);
         }
     }
 
@@ -128,7 +109,7 @@ public class BottomDialogFinish extends BottomSheetDialogFragment
      * Override
      * Called when the View gets created
      * Connects the ViewModel to the layout
-     * Fill the RecylerView with questions
+     * Sets the click listener for shwoing the results
      *
      * @param inflater The LayoutInflater
      * @param container The ViewGroup
@@ -144,7 +125,7 @@ public class BottomDialogFinish extends BottomSheetDialogFragment
         binding.setLifecycleOwner(this);
         binding.setVm(viewModel);
 
-        binding.close.setOnClickListener(v -> showResults());
+        binding.show.setOnClickListener(v -> showResults());
 
         return binding.getRoot();
 

@@ -13,6 +13,9 @@ import com.example.tinni.R;
  * Custom LinearLayout to simulate a loading effect by blinking
  * AlphaAnimation is used to achieve this
  *
+ * Variables:
+ * Animation animation: Instance of the Animation
+ *
  * @author Nassim Amar
  * @version 1.0
  * @since   18.06.2020
@@ -31,6 +34,13 @@ public class Placeholder extends LinearLayout
     {
         super(context, attrs);
     }
+
+    /**
+     * <h2>Blinking</h2>
+     * Creates a blinking effect via AlphaAnimation
+     *
+     * @param start Sets up animation if true, stops it if false and hides the view
+     */
 
     public void blinking (boolean start)
     {

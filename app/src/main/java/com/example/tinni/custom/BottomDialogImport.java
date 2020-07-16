@@ -1,14 +1,10 @@
 package com.example.tinni.custom;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,7 +16,6 @@ import com.example.tinni.adapters.ProgramAdapter;
 import com.example.tinni.databinding.BottomImportBinding;
 import com.example.tinni.helpers.Constants;
 import com.example.tinni.models.Program;
-import com.example.tinni.models.Sound;
 import com.example.tinni.ui.programs.ProgramsFragment;
 import com.example.tinni.ui.programs.ProgramsViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -34,11 +29,9 @@ import java.lang.reflect.Type;
  * BottomSheetDialogFragment for the import ui
  *
  * Variables:
- * BottomDialogQuestions dialog: The instance of the current dialog
  * ProgramsViewModel viewModel: The corresponding ProgramsViewModel
- * Session session: The current session
- * FragmentManager fragmentManager: The current FragmentManager
- * List<Question> questions: The list of questions
+ * programAdapter programAdapter: Instance of the program adapter
+ * ProgramsFragment programsFragment: Instance of the programs fragment
  *
  * Source: https://androidwave.com/bottom-sheet-dialog-fragment-in-android/
  *
@@ -49,7 +42,6 @@ import java.lang.reflect.Type;
 
 public class BottomDialogImport extends BottomSheetDialogFragment
 {
-    private BottomDialogImport dialog;
     private ProgramsViewModel viewModel;
     private ProgramAdapter programAdapter;
     private ProgramsFragment programsFragment;
@@ -64,7 +56,6 @@ public class BottomDialogImport extends BottomSheetDialogFragment
 
     public void newInstance(ProgramsViewModel _viewModel, ProgramAdapter _programAdapter, ProgramsFragment _programsFragment)
     {
-        dialog = new BottomDialogImport();
         viewModel = _viewModel;
         programAdapter = _programAdapter;
         programsFragment = _programsFragment;
@@ -119,7 +110,7 @@ public class BottomDialogImport extends BottomSheetDialogFragment
         {
             View parent = (View) getView().getParent();
             BottomSheetBehavior<?> bottomSheetBehavior = BottomSheetBehavior.from(parent);
-            bottomSheetBehavior.setPeekHeight((int)(getResources().getDisplayMetrics().heightPixels));
+            bottomSheetBehavior.setPeekHeight(getResources().getDisplayMetrics().heightPixels);
         }
     }
 
@@ -128,7 +119,7 @@ public class BottomDialogImport extends BottomSheetDialogFragment
      * Override
      * Called when the View gets created
      * Connects the ViewModel to the layout
-     * Fill the RecylerView with questions
+     * Sets the click listener for the button
      *
      * @param inflater The LayoutInflater
      * @param container The ViewGroup
@@ -174,22 +165,7 @@ public class BottomDialogImport extends BottomSheetDialogFragment
 
                 if (program != null && programAdapter != null)
                 {
-                    Toast.makeText(getContext(), "new ID: " + program.getId(), Toast.LENGTH_SHORT).show();
-
-                    for (Program p : Constants.getInstance().programs)
-                    {
-                        Toast.makeText(getContext(), "ANDERE: " + p.getId(), Toast.LENGTH_SHORT).show();
-                    }
-                    Program p = Constants.getInstance().programs.stream().filter(x -> x.getId() == program.getId()).findFirst().orElse(null);
-                    if (p != null)
-                    {
-                        program.setId((int)(System.currentTimeMillis()) / 1000);
-                        Toast.makeText(getContext(), "GIBTS -> " + p.getId() , Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        Toast.makeText(getContext(), "GIBTS NICHT", Toast.LENGTH_SHORT).show();
-                    }
+                    Constants.getInstance().programs.stream().filter(x -> x.getId() == program.getId()).findFirst().ifPresent(p -> program.setId((int) (System.currentTimeMillis()) / 1000));
                     programAdapter.addItem(program);
                     Toast.makeText(getContext(), getString(R.string.add_program_success), Toast.LENGTH_SHORT).show();
                     Constants.getInstance().addCustomProgram(program, false);

@@ -15,8 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.tinni.R;
 import com.example.tinni.adapters.QuestionAdapter;
-import com.example.tinni.databinding.BottomQuestionsBinding;
-import com.example.tinni.models.Answer;
 import com.example.tinni.models.Question;
 import com.example.tinni.ui.program.ProgramViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -29,7 +27,6 @@ import java.util.Objects;
  * BottomSheetDialogFragment for the questions ui
  *
  * Variables:
- * BottomDialogQuestions dialog: The instance of the current dialog
  * ProgramViewModel viewModel: The corresponding ProgramViewModel
  * boolean start: Indicator if this is the starting or ending questionnaire
  * FragmentManager fragmentManager: The current FragmentManager
@@ -43,7 +40,6 @@ import java.util.Objects;
 
 public class BottomDialogQuestions extends BottomSheetDialogFragment
 {
-    private BottomDialogQuestions dialog;
     private ProgramViewModel viewModel;
     private boolean start;
     private FragmentManager fragmentManager;
@@ -54,12 +50,12 @@ public class BottomDialogQuestions extends BottomSheetDialogFragment
      *
      * @param _viewModel The corresponding ProgramViewModel
      * @param _start Indicator if this is the starting questionnaire
+     * @param _fragmentManager: The current FragmentManager
      *
      */
 
     public void newInstance(ProgramViewModel _viewModel, boolean _start, FragmentManager _fragmentManager)
     {
-        dialog = new BottomDialogQuestions();
         viewModel = _viewModel;
         start = _start;
         fragmentManager = _fragmentManager;
@@ -113,7 +109,7 @@ public class BottomDialogQuestions extends BottomSheetDialogFragment
         {
             View parent = (View) getView().getParent();
             BottomSheetBehavior<?> bottomSheetBehavior = BottomSheetBehavior.from(parent);
-            bottomSheetBehavior.setPeekHeight((int)(getResources().getDisplayMetrics().heightPixels));
+            bottomSheetBehavior.setPeekHeight(getResources().getDisplayMetrics().heightPixels);
         }
     }
 

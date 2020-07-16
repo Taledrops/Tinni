@@ -12,7 +12,6 @@ import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.content.ContextCompat;
 
 import com.example.tinni.R;
-import com.example.tinni.helpers.Functions;
 
 /**
  * <h1>Expandable TextView</h1>
@@ -41,7 +40,6 @@ public class ExpandableTextView extends LinearLayout
     private final LinearLayout linearLayout = this;
     private TextView more;
     private TextView textView;
-    private static final Functions func = new Functions();
 
     public ExpandableTextView(Context context)
     {
@@ -51,7 +49,6 @@ public class ExpandableTextView extends LinearLayout
     /**
      * <h2>Constructor</h2>
      * Constructor with onClickListener
-     *
      */
 
     public ExpandableTextView(Context context, @Nullable AttributeSet attrs)
@@ -82,7 +79,6 @@ public class ExpandableTextView extends LinearLayout
      * Initialize the ExpandableTextView
      *
      * @param text the text of the TextView
-     *
      */
 
     public void Init (String text)

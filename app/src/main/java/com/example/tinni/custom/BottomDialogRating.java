@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.tinni.R;
 import com.example.tinni.adapters.QuestionAdapter;
-import com.example.tinni.databinding.BottomQuestionsBinding;
 import com.example.tinni.databinding.BottomRatingBinding;
 import com.example.tinni.models.Answer;
 import com.example.tinni.models.Question;
@@ -34,7 +33,6 @@ import java.util.Objects;
  * BottomSheetDialogFragment for the ratings ui
  *
  * Variables:
- * BottomDialogQuestions dialog: The instance of the current dialog
  * ProgramViewModel viewModel: The corresponding ProgramViewModel
  * Session session: The current session
  * FragmentManager fragmentManager: The current FragmentManager
@@ -49,7 +47,6 @@ import java.util.Objects;
 
 public class BottomDialogRating extends BottomSheetDialogFragment
 {
-    private BottomDialogRating dialog;
     private ProgramViewModel viewModel;
     private Session session;
     private FragmentManager fragmentManager;
@@ -60,12 +57,12 @@ public class BottomDialogRating extends BottomSheetDialogFragment
      * Creates a new instance of the BottomDialogQuestions class
      *
      * @param _viewModel The corresponding ProgramViewModel
-     *
+     * @param _session: The current session
+     * @param _fragmentManager: The current FragmentManager
      */
 
     public void newInstance(ProgramViewModel _viewModel, Session _session, FragmentManager _fragmentManager)
     {
-        dialog = new BottomDialogRating();
         viewModel = _viewModel;
         session = _session;
         fragmentManager = _fragmentManager;
@@ -77,7 +74,6 @@ public class BottomDialogRating extends BottomSheetDialogFragment
      * Called when the dialog gets closed
      *
      * @param dialog The DialogInterface instance
-     *
      */
 
     @Override
@@ -100,7 +96,6 @@ public class BottomDialogRating extends BottomSheetDialogFragment
      * Called when the dialog gets created
      *
      * @param savedInstanceState The saved Bundle
-     *
      */
 
     @Override
@@ -116,7 +111,6 @@ public class BottomDialogRating extends BottomSheetDialogFragment
      * Sets the height of dialog to full screen height
      *
      * @param savedInstanceState The saved Bundle
-     *
      */
 
     @Override
@@ -127,7 +121,7 @@ public class BottomDialogRating extends BottomSheetDialogFragment
         {
             View parent = (View) getView().getParent();
             BottomSheetBehavior<?> bottomSheetBehavior = BottomSheetBehavior.from(parent);
-            bottomSheetBehavior.setPeekHeight((int)(getResources().getDisplayMetrics().heightPixels));
+            bottomSheetBehavior.setPeekHeight(getResources().getDisplayMetrics().heightPixels);
         }
     }
 
@@ -136,12 +130,12 @@ public class BottomDialogRating extends BottomSheetDialogFragment
      * Override
      * Called when the View gets created
      * Connects the ViewModel to the layout
+     * Adds answers
      * Fill the RecylerView with questions
      *
      * @param inflater The LayoutInflater
      * @param container The ViewGroup
      * @param savedInstanceState The saved Bundle
-     *
      */
 
     @Nullable
@@ -180,7 +174,6 @@ public class BottomDialogRating extends BottomSheetDialogFragment
     /**
      * <h2>Save</h2>
      * Saves the current questionnaire
-     *
      */
 
     private void save()

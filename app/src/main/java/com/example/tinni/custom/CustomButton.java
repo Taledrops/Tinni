@@ -28,6 +28,16 @@ import com.example.tinni.R;
  * <h1>Custom Button</h1>
  * Custom button with animations
  * Can show a checkmark for success, a loading indicator and a cross for error
+ * 
+ * Variables:
+ * ImageView check: Instance of the check image;
+ * ImageView error: Instance of the error image
+ * TextView textView: Instance of the textview
+ * FrameLayout bg: Instance of the cbg
+ * ProgressBar progress: Instance of the progressBar
+ * int bgWidth: Measured width of the bg
+ * boolean expand: Indicator whether to expand
+ * int width: Width of the bg
  *
  * @author Nassim Amar
  * @version 1.0
@@ -52,7 +62,6 @@ public class CustomButton extends FrameLayout
     /**
      * <h2>Finished</h2>
      * An interface to indicate that the current animation is done
-     *
      */
 
     public interface Finished
@@ -63,7 +72,6 @@ public class CustomButton extends FrameLayout
     /**
      * <h2>Custom Button</h2>
      * The default constructor
-     *
      */
 
     public CustomButton(Context context, @Nullable AttributeSet attrs)
@@ -72,28 +80,10 @@ public class CustomButton extends FrameLayout
     }
 
     /**
-     * <h2>Change Text</h2>
-     * Changes the current button text
-     *
-     * Arguments:
-     * String text: The new text
-     *
-     */
-
-    public void ChangeText (String text)
-    {
-        if (textView != null)
-        {
-            textView.setText(text);
-        }
-    }
-
-    /**
      * <h2>Init</h2>
      * Initialization of the button
      *
-     * Arguments:
-     * String text: The text of the button
+     * @param text: The text of the button
      *
      */
 
@@ -177,7 +167,7 @@ public class CustomButton extends FrameLayout
             progress = progressBar;
             // END PROGRESS
 
-            // ADDEN
+            // ADDING
             frameLayout.addView(textView);
             linearLayout.addView(leftCircle);
             linearLayout.addView(frameLayout);
@@ -201,14 +191,13 @@ public class CustomButton extends FrameLayout
      * <h2>Animate</h2>
      * Animate the button
      *
-     * Arguments:
-     * int type:
-     *      1: Loading
-     *      2: Success
-     *      3: Error
-     * int duration: The duration of the animation
-     * int delay: The delay of the animation
-     * Finished callback: The callback once the animation is done
+     * @param type
+     *     1: Loading
+     *     2: Success
+     *     3: Error
+     * @param duration The duration of the animation
+     * @param delay The delay of the animation
+     * @param callback The callback once the animation is done
      *
      */
 

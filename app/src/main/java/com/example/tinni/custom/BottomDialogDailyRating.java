@@ -1,14 +1,10 @@
 package com.example.tinni.custom;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,31 +12,21 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.tinni.R;
-import com.example.tinni.adapters.ProgramAdapter;
 import com.example.tinni.databinding.BottomDailyRatingBinding;
-import com.example.tinni.databinding.BottomImportBinding;
 import com.example.tinni.helpers.Constants;
-import com.example.tinni.models.Program;
 import com.example.tinni.models.Rating;
 import com.example.tinni.ui.home.HomeViewModel;
-import com.example.tinni.ui.programs.ProgramsFragment;
-import com.example.tinni.ui.programs.ProgramsViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 
 /**
  * <h1>Bottom Dialog Daily Rating</h1>
  * BottomSheetDialogFragment for the daily rating ui
  *
  * Variables:
- * BottomDialogQuestions dialog: The instance of the current dialog
- * ProgramsViewModel viewModel: The corresponding ProgramsViewModel
- * Session session: The current session
- * FragmentManager fragmentManager: The current FragmentManager
- * List<Question> questions: The list of questions
+ * BottomDialogDailyRating dialog: The instance of the current dialog
+ * HomeViewModel viewModel: The corresponding HomeViewModel
+ * int rating: The current rating (1-5)
  *
  * Source: https://androidwave.com/bottom-sheet-dialog-fragment-in-android/
  *
@@ -51,7 +37,6 @@ import java.lang.reflect.Type;
 
 public class BottomDialogDailyRating extends BottomSheetDialogFragment
 {
-    private BottomDialogDailyRating dialog;
     private HomeViewModel viewModel;
     private int rating;
 
@@ -59,13 +44,12 @@ public class BottomDialogDailyRating extends BottomSheetDialogFragment
      * <h2>New instance</h2>
      * Creates a new instance of the BottomDialogQuestions class
      *
-     * @param _viewModel The corresponding ProgramsViewModel
+     * @param _viewModel The corresponding HomeViewModel
      *
      */
 
     public void newInstance(HomeViewModel _viewModel, int _rating)
     {
-        dialog = new BottomDialogDailyRating();
         viewModel = _viewModel;
         rating = _rating;
     }
@@ -119,7 +103,7 @@ public class BottomDialogDailyRating extends BottomSheetDialogFragment
         {
             View parent = (View) getView().getParent();
             BottomSheetBehavior<?> bottomSheetBehavior = BottomSheetBehavior.from(parent);
-            bottomSheetBehavior.setPeekHeight((int)(getResources().getDisplayMetrics().heightPixels));
+            bottomSheetBehavior.setPeekHeight(getResources().getDisplayMetrics().heightPixels);
         }
     }
 
@@ -128,7 +112,7 @@ public class BottomDialogDailyRating extends BottomSheetDialogFragment
      * Override
      * Called when the View gets created
      * Connects the ViewModel to the layout
-     * Fill the RecylerView with questions
+     * Handles the click on the save button
      *
      * @param inflater The LayoutInflater
      * @param container The ViewGroup

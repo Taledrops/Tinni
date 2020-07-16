@@ -173,11 +173,6 @@ public class AnimatedImageView extends ImageView
         restart();
     }
 
-    public boolean isPlaying ()
-    {
-        return !mPaused;
-    }
-
     @Override
     protected void onDraw(Canvas canvas)
     {
@@ -337,17 +332,6 @@ public class AnimatedImageView extends ImageView
 
 
     /**
-     * Sets the {@link TransitionGenerator} to be used in animations.
-     * @param transgen the {@link TransitionGenerator} to be used in animations.
-     */
-    public void setTransitionGenerator(TransitionGenerator transgen)
-    {
-        mTransGen = transgen;
-        startNewTransition();
-    }
-
-
-    /**
      * Updates the viewport rect. This must be called every time the size of this view changes.
      * @param width the new viewport with.
      * @param height the new viewport height.
@@ -388,26 +372,16 @@ public class AnimatedImageView extends ImageView
         }
     }
 
-
+    @SuppressWarnings("unused")
     public void setTransitionListener(TransitionListener transitionListener) {
         mTransitionListener = transitionListener;
     }
-
 
     /**
      * Pauses the Ken Burns Effect animation.
      */
     public void pause() {
         mPaused = true;
-    }
-
-    public void reset()
-    {
-        if (mCancelled == 0)
-        {
-            resume();
-            mCancelled = 1;
-        }
     }
 
     /**
@@ -429,12 +403,12 @@ public class AnimatedImageView extends ImageView
          * Notifies the start of a transition.
          * @param transition the transition that just started.
          */
-        public void onTransitionStart(Transition transition);
+        void onTransitionStart(Transition transition);
 
         /**
          * Notifies the end of a transition.
          * @param transition the transition that just ended.
          */
-        public void onTransitionEnd(Transition transition);
+        void onTransitionEnd(Transition transition);
     }
 }

@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.tinni.R;
-import com.example.tinni.databinding.BottomFinishBinding;
 import com.example.tinni.databinding.BottomNextBinding;
 import com.example.tinni.helpers.CircleTransform;
 import com.example.tinni.helpers.Constants;
@@ -31,11 +30,7 @@ import java.util.Objects;
  * BottomSheetDialogFragment for the next ui
  *
  * Variables:
- * BottomDialogQuestions dialog: The instance of the current dialog
  * ProgramViewModel viewModel: The corresponding ProgramViewModel
- * Session session: The current session
- * FragmentManager fragmentManager: The current FragmentManager
- * List<Question> questions: The list of questions
  *
  * Source: https://androidwave.com/bottom-sheet-dialog-fragment-in-android/
  *
@@ -46,7 +41,6 @@ import java.util.Objects;
 
 public class BottomDialogNext extends BottomSheetDialogFragment
 {
-    private BottomDialogNext dialog;
     private ProgramViewModel viewModel;
 
     /**
@@ -59,7 +53,6 @@ public class BottomDialogNext extends BottomSheetDialogFragment
 
     public void newInstance(ProgramViewModel _viewModel)
     {
-        dialog = new BottomDialogNext();
         viewModel = _viewModel;
     }
 
@@ -111,7 +104,7 @@ public class BottomDialogNext extends BottomSheetDialogFragment
         {
             View parent = (View) getView().getParent();
             BottomSheetBehavior<?> bottomSheetBehavior = BottomSheetBehavior.from(parent);
-            bottomSheetBehavior.setPeekHeight((int)(getResources().getDisplayMetrics().heightPixels));
+            bottomSheetBehavior.setPeekHeight(getResources().getDisplayMetrics().heightPixels);
         }
     }
 

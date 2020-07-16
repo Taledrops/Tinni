@@ -12,19 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.tinni.R;
-import com.example.tinni.adapters.ProgramAdapter;
-import com.example.tinni.databinding.BottomImportBinding;
 import com.example.tinni.databinding.BottomNoteBinding;
-import com.example.tinni.helpers.Constants;
-import com.example.tinni.models.Program;
-import com.example.tinni.ui.programs.ProgramsFragment;
-import com.example.tinni.ui.programs.ProgramsViewModel;
 import com.example.tinni.ui.sound.SoundViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.Objects;
 
 /**
@@ -32,11 +24,8 @@ import java.util.Objects;
  * BottomSheetDialogFragment for the add note ui
  *
  * Variables:
- * BottomDialogQuestions dialog: The instance of the current dialog
- * ProgramsViewModel viewModel: The corresponding ProgramsViewModel
- * Session session: The current session
- * FragmentManager fragmentManager: The current FragmentManager
- * List<Question> questions: The list of questions
+ * SoundViewModel viewModel: The corresponding SoundViewModel
+ * String oldText: Stores the old text of the note
  *
  * Source: https://androidwave.com/bottom-sheet-dialog-fragment-in-android/
  *
@@ -47,7 +36,6 @@ import java.util.Objects;
 
 public class BottomDialogNote extends BottomSheetDialogFragment
 {
-    private BottomDialogNote dialog;
     private SoundViewModel viewModel;
     private String oldText;
 
@@ -55,13 +43,12 @@ public class BottomDialogNote extends BottomSheetDialogFragment
      * <h2>New instance</h2>
      * Creates a new instance of the BottomDialogQuestions class
      *
-     * @param _viewModel The corresponding ProgramsViewModel
+     * @param _viewModel The corresponding SoundViewModel
      *
      */
 
     public void newInstance(SoundViewModel _viewModel)
     {
-        dialog = new BottomDialogNote();
         viewModel = _viewModel;
     }
 
@@ -122,7 +109,7 @@ public class BottomDialogNote extends BottomSheetDialogFragment
         {
             View parent = (View) getView().getParent();
             BottomSheetBehavior<?> bottomSheetBehavior = BottomSheetBehavior.from(parent);
-            bottomSheetBehavior.setPeekHeight((int)(getResources().getDisplayMetrics().heightPixels));
+            bottomSheetBehavior.setPeekHeight(getResources().getDisplayMetrics().heightPixels);
         }
     }
 
@@ -131,7 +118,8 @@ public class BottomDialogNote extends BottomSheetDialogFragment
      * Override
      * Called when the View gets created
      * Connects the ViewModel to the layout
-     * Fill the RecylerView with questions
+     * Handles the click on the button
+     * Stores the oldText
      *
      * @param inflater The LayoutInflater
      * @param container The ViewGroup

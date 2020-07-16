@@ -5,14 +5,11 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,22 +25,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.tinni.R;
 import com.example.tinni.adapters.AddAnswersAdapter;
 import com.example.tinni.adapters.AddQuestionsAdapter;
-import com.example.tinni.adapters.SelectedSessionAdapter;
-import com.example.tinni.databinding.BottomFinishBinding;
 import com.example.tinni.databinding.BottomQuestionBinding;
-import com.example.tinni.databinding.BottomSessionsBinding;
 import com.example.tinni.helpers.ItemClickSupport;
 import com.example.tinni.helpers.ItemMoveCallback;
 import com.example.tinni.models.Answer;
 import com.example.tinni.models.Question;
-import com.example.tinni.models.Session;
 import com.example.tinni.ui.add.AddProgram;
 import com.example.tinni.ui.add.AddProgramViewModel;
-import com.example.tinni.ui.program.ProgramViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -51,11 +42,12 @@ import java.util.Objects;
  * BottomSheetDialogFragment for the question ui
  *
  * Variables:
- * BottomDialogQuestion dialog: The instance of the current dialog
- * ProgramViewModel viewModel: The corresponding ProgramViewModel
- * Session session: The current session
- * FragmentManager fragmentManager: The current FragmentManager
- * List<Question> questions: The list of questions
+ * AddQuestionsAdapter addQuestionsAdapter: The instance of the AddQuestionsAdapter
+ * AddProgram addProgram: The instance of the AddProgram Activity
+ * AddProgramViewModel viewModel: The corresponding viewModel
+ * AddAnswersAdapter addAnswersAdapter: The instance of the AddAnswersAdapter
+ * FragmentManager fragmentManager: The instance of the fragmentManager
+ * Question question: The current question
  *
  * Source: https://androidwave.com/bottom-sheet-dialog-fragment-in-android/
  *
@@ -66,7 +58,6 @@ import java.util.Objects;
 
 public class BottomDialogQuestion extends BottomSheetDialogFragment
 {
-    private BottomDialogQuestion dialog;
     private AddQuestionsAdapter addQuestionsAdapter;
     private AddProgram addProgram;
     private AddProgramViewModel viewModel;
@@ -78,13 +69,15 @@ public class BottomDialogQuestion extends BottomSheetDialogFragment
      * <h2>New instance</h2>
      * Creates a new instance of the BottomDialogQuestion class
      *
-     * @param _viewModel The corresponding ProgramViewModel
-     *
+     * @param _viewModel The corresponding AddProgramViewModel
+     * @param _addQuestionsAdapter The instance of the AddQuestionsAdapter
+     * @param _addProgram The instance of the AddProgram Activity
+     * @param _fragmentManager The instance of the fragmentManager
+     * @param _question The current question
      */
 
     public void newInstance(AddProgramViewModel _viewModel, AddQuestionsAdapter _addQuestionsAdapter, AddProgram _addProgram, FragmentManager _fragmentManager, Question _question)
     {
-        dialog = new BottomDialogQuestion();
         viewModel = _viewModel;
         addQuestionsAdapter = _addQuestionsAdapter;
         addProgram = _addProgram;
@@ -96,9 +89,9 @@ public class BottomDialogQuestion extends BottomSheetDialogFragment
      * <h2>On Cancel</h2>
      * Override
      * Called when the dialog gets closed
+     * Updates the adapter on the AddProgram Activity
      *
      * @param dialog The DialogInterface instance
-     *
      */
 
     @Override
@@ -114,7 +107,6 @@ public class BottomDialogQuestion extends BottomSheetDialogFragment
      * Called when the dialog gets created
      *
      * @param savedInstanceState The saved Bundle
-     *
      */
 
     @Override
@@ -131,7 +123,6 @@ public class BottomDialogQuestion extends BottomSheetDialogFragment
      * Sets the height of dialog to full screen height
      *
      * @param savedInstanceState The saved Bundle
-     *
      */
 
     @Override
@@ -142,7 +133,7 @@ public class BottomDialogQuestion extends BottomSheetDialogFragment
         {
             View parent = (View) getView().getParent();
             BottomSheetBehavior<?> bottomSheetBehavior = BottomSheetBehavior.from(parent);
-            bottomSheetBehavior.setPeekHeight((int)(getResources().getDisplayMetrics().heightPixels));
+            bottomSheetBehavior.setPeekHeight(getResources().getDisplayMetrics().heightPixels);
         }
     }
 
@@ -151,12 +142,12 @@ public class BottomDialogQuestion extends BottomSheetDialogFragment
      * Override
      * Called when the View gets created
      * Connects the ViewModel to the layout
-     * Fill the RecylerView with questions
+     * Sets up the RecyclerView
+     * Handles click events
      *
      * @param inflater The LayoutInflater
      * @param container The ViewGroup
      * @param savedInstanceState The saved Bundle
-     *
      */
 
     @Nullable
@@ -228,11 +219,9 @@ public class BottomDialogQuestion extends BottomSheetDialogFragment
 
     /**
      * <h2>Delete Answer</h2>
-     *
      * Deleting an answer with a verification prompt
      *
      * @param a The answer to be deleted
-     *
      */
 
     private void deleteAnswer (Answer a)
@@ -260,7 +249,6 @@ public class BottomDialogQuestion extends BottomSheetDialogFragment
     /**
      * <h2>Update Adapter</h2>
      * Refreshes the RecyclerView by refreshing its adapter
-     *
      */
 
     public void updateAdapter ()
@@ -274,7 +262,6 @@ public class BottomDialogQuestion extends BottomSheetDialogFragment
     /**
      * <h2>Open Answer</h2>
      * Opens the answer creator
-     *
      */
 
     private void openAnswer ()
@@ -289,9 +276,7 @@ public class BottomDialogQuestion extends BottomSheetDialogFragment
 
     /**
      * <h2>Save Question</h2>
-     *
      * Checks ans saves the current question
-     *
      */
 
     private void saveQuestion ()

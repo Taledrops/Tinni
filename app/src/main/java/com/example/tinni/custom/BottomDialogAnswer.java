@@ -30,11 +30,9 @@ import java.util.Objects;
  * BottomSheetDialogFragment for the answer ui
  *
  * Variables:
- * BottomDialogQuestion dialog: The instance of the current dialog
- * ProgramViewModel viewModel: The corresponding ProgramViewModel
- * Session session: The current session
- * FragmentManager fragmentManager: The current FragmentManager
- * List<Question> questions: The list of questions
+ * AddAnswersAdapter addAnswersAdapter: Instance of the AddAnswersAdapter
+ * BottomDialogQuestion bottomDialogQuestion: The instance of the current dialog
+ * AddProgramViewModel viewModel: The corresponding AddProgramViewModel
  *
  * Source 1: https://androidwave.com/bottom-sheet-dialog-fragment-in-android/
  * Source 2: https://stackoverflow.com/a/9598729/2700965
@@ -54,7 +52,7 @@ public class BottomDialogAnswer extends BottomSheetDialogFragment
      * <h2>New instance</h2>
      * Creates a new instance of the BottomDialogQuestion class
      *
-     * @param _viewModel The corresponding ProgramViewModel
+     * @param _viewModel The corresponding AddProgramViewModel
      *
      */
 
@@ -115,7 +113,7 @@ public class BottomDialogAnswer extends BottomSheetDialogFragment
         {
             View parent = (View) getView().getParent();
             BottomSheetBehavior<?> bottomSheetBehavior = BottomSheetBehavior.from(parent);
-            bottomSheetBehavior.setPeekHeight((int)(getResources().getDisplayMetrics().heightPixels));
+            bottomSheetBehavior.setPeekHeight(getResources().getDisplayMetrics().heightPixels);
         }
     }
 
@@ -124,7 +122,7 @@ public class BottomDialogAnswer extends BottomSheetDialogFragment
      * Override
      * Called when the View gets created
      * Connects the ViewModel to the layout
-     * Fill the RecylerView with questions
+     * Handles click on the save button
      *
      * @param inflater The LayoutInflater
      * @param container The ViewGroup
