@@ -1,17 +1,5 @@
 package com.example.tinni.models;
 
-import android.view.View;
-
-import androidx.databinding.BindingAdapter;
-import androidx.databinding.ObservableArrayList;
-import androidx.databinding.ObservableBoolean;
-import androidx.databinding.ObservableField;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.tinni.adapters.AnswerAdapter;
-import com.example.tinni.helpers.ItemClickSupport;
-
 /**
  * <h1>Questionnaire Model</h1></h1>
  * Model for a Questionnaire object
@@ -33,6 +21,11 @@ public class Questionnaire
     private String question;
     private String before;
     private String after;
+
+    /**
+     * <h2>Constructor</h2>
+     * Constructor for object
+     */
 
     public Questionnaire(int id, String question, String before, String after)
     {

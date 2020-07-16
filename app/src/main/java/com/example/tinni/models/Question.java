@@ -1,7 +1,6 @@
 package com.example.tinni.models;
 
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.ObservableArrayList;
@@ -11,13 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tinni.adapters.AnswerAdapter;
-import com.example.tinni.adapters.QuestionAdapter;
-import com.example.tinni.helpers.CircleTransform;
-import com.example.tinni.helpers.Constants;
 import com.example.tinni.helpers.ItemClickSupport;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <h1>Question Model</h1></h1>
@@ -62,7 +55,6 @@ public class Question
         this.text = q.text;
         for (Answer a : q.answers)
         {
-            System.out.println("### ADDE ANSWER -> " + a.text.get());
             this.answers.add(new Answer(a));
         }
         this.multiple = q.multiple;

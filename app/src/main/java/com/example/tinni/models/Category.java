@@ -28,8 +28,8 @@ public class Category
     public ObservableBoolean active = new ObservableBoolean(false);
 
     /**
-     * <h2>Constructors</h2>
-     * Constructors for object
+     * <h2>Constructor</h2>
+     * Constructor for object
      */
 
     public Category(int id, String title, boolean fav, boolean reset, boolean mine, boolean active)
@@ -41,6 +41,11 @@ public class Category
         this.mine = mine;
         this.active.set(active);
     }
+
+    /**
+     * <h2>Copy Constructor</h2>
+     * Copy Constructor for object
+     */
 
     public Category(Category c)
     {
@@ -92,13 +97,4 @@ public class Category
         this.fav = fav;
     }
 
-    public void setReset(boolean reset)
-    {
-        this.reset = reset;
-    }
-
-    public void setMine(boolean mine)
-    {
-        this.mine = mine;
-    }
 }

@@ -23,6 +23,7 @@ import java.util.Locale;
  * Sound sound: The sound file
  * int time: The duration of the session
  * int rating: The rating for this session
+ * long date: The date of this session
  * Functions func: Static instance of the Functions class
  *
  * @author Nassim Amar
@@ -54,6 +55,11 @@ public class Session
         this.time = time;
         this.done.set(done);
     }
+
+    /**
+     * <h2>Copy Constructor</h2>
+     * Copy Constructor for object
+     */
 
     public Session(Session s)
     {

@@ -1,39 +1,24 @@
 package com.example.tinni.models;
 
-import android.animation.ValueAnimator;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.ObservableBoolean;
-import androidx.databinding.ObservableInt;
 
 import com.example.tinni.R;
-import com.example.tinni.custom.AnimatedImageView;
-import com.example.tinni.custom.ExpandableTextView;
-import com.example.tinni.custom.Placeholder;
 import com.example.tinni.helpers.Constants;
 import com.example.tinni.helpers.Functions;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import me.tankery.lib.circularseekbar.CircularSeekBar;
 
 /**
  * <h1>Program Model</h1></h1>
@@ -94,6 +79,11 @@ public class Program
         this.done = done;
         this.imgUri = imgUri;
     }
+
+    /**
+     * <h2>Copy Constructor</h2>
+     * Copy Constructor for object
+     */
 
     public Program (Program p)
     {
@@ -201,16 +191,6 @@ public class Program
         this.done = done;
     }
 
-    public void setImg(int img)
-    {
-        this.img = img;
-    }
-
-    public void setInterval(int interval)
-    {
-        this.interval = interval;
-    }
-
     public void setSessions(List<Session> sessions)
     {
         this.sessions = sessions;
@@ -219,11 +199,6 @@ public class Program
     public void setQuestions(List<Question> questions)
     {
         this.questions = questions;
-    }
-
-    public void setImgUri(String imgUri)
-    {
-        this.imgUri = imgUri;
     }
 
     public void setBitmap(Bitmap bitmap)
@@ -268,7 +243,6 @@ public class Program
     {
         if (program != null)
         {
-            System.out.println("###### PROGRAM BINDADAPTER START : " + program.getSessions().size());
             String sessionCount = String.format(tv.getContext().getString(R.string.sessions_count_no_brackets), program.sessions.size());
             String daily = tv.getContext().getString(R.string.daily);
             if (program.getInterval() > 1)
@@ -279,7 +253,6 @@ public class Program
             long timeSum = program.getSessions().stream().mapToLong(Session::getTime).sum();
             String totalTime = String.format(tv.getContext().getString(R.string.total_time), func.getTotalTime(tv.getContext(), timeSum));
             tv.setText(String.format(tv.getContext().getString(R.string.program_text), sessionCount, daily, totalTime));
-            System.out.println("###### PROGRAM BINDADAPTER END : " + program.getSessions().size());
         }
     }
 
@@ -312,29 +285,6 @@ public class Program
             String totalText = String.format(textView.getResources().getString(R.string.total_completed), total);
 
             textView.setText(String.format(textView.getResources().getString(R.string.past_program_text), date, totalText));
-        }
-    }
-
-    /**
-     * <h3>Current Program</h3>
-     * Checks if program is current program
-     *
-     * @param id ID of the program
-     */
-
-    @BindingAdapter("android:currentProgram")
-    public static void setCurrentProgram(TextView textView, int id)
-    {
-        if (Constants.getInstance().selectedProgram != null && Constants.getInstance().selectedProgram.getProgram() != null)
-        {
-            if (id == Constants.getInstance().selectedProgram.getProgram().getId())
-            {
-                textView.setVisibility(View.VISIBLE);
-            }
-            else
-            {
-                textView.setVisibility(View.GONE);
-            }
         }
     }
 

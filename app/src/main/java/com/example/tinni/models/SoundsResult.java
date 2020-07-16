@@ -24,6 +24,11 @@ public class SoundsResult
     public List<Sound> sounds;
     public List<Category> categories;
 
+    /**
+     * <h2>Constructor</h2>
+     * Constructor for object
+     */
+
     public SoundsResult(List<Sound> sounds, List<Category> categories)
     {
         this.sounds = sounds;

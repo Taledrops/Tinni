@@ -35,6 +35,11 @@ public class Answer
         this.active.set(active);
     }
 
+    /**
+     * <h2>Copy Constructor</h2>
+     * Copy Constructor for object
+     */
+
     public Answer(Answer a)
     {
         this.id = a.getId();

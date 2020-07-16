@@ -4,8 +4,6 @@ import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.ObservableArrayList;
-import androidx.databinding.ObservableInt;
-import androidx.databinding.ObservableList;
 
 import com.example.tinni.R;
 
@@ -20,8 +18,9 @@ import java.util.Locale;
  * Model for the currently selected program
  *
  * Fields:
+ * int id: Unique id of this program
  * Program program: The selected Program object
- * int current: The index of the current Session
+ * ObservableArrayList<Session> sessions: List of the sessions of this program
  * long start: The start date
  * long end: The end date
  * List<Question> startQuestions: The start questionnaire
@@ -99,19 +98,9 @@ public class SelectedProgram
         return startQuestions;
     }
 
-    public void setStartQuestions(List<Question> startQuestions)
-    {
-        this.startQuestions = startQuestions;
-    }
-
     public List<Question> getEndQuestions()
     {
         return endQuestions;
-    }
-
-    public void setEndQuestions(List<Question> endQuestions)
-    {
-        this.endQuestions = endQuestions;
     }
 
     /**

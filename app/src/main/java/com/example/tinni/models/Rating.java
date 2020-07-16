@@ -1,19 +1,13 @@
 package com.example.tinni.models;
 
 import android.graphics.Color;
-import android.media.Image;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tinni.R;
-import com.example.tinni.adapters.AnswerAdapter;
-import com.example.tinni.helpers.ItemClickSupport;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,6 +20,7 @@ import java.util.Locale;
  * Fields:
  * int rating: The rating from 1 (miserable) to 5 (very good)
  * int date: The date of the rating
+ * String text: The text of the rating
  *
  * @author Nassim Amar
  * @version 1.0
@@ -131,9 +126,6 @@ public class Rating
             case 4:
                 textView.setText(textView.getContext().getResources().getString(R.string.good));
                 textView.setTextColor(Color.GREEN);
-                break;
-            case 3:
-                textView.setText(textView.getContext().getResources().getString(R.string.neutral));
                 break;
             case 2:
                 textView.setText(textView.getContext().getResources().getString(R.string.bad));
