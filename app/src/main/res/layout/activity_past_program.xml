@@ -99,32 +99,6 @@
                     android:background="@android:color/transparent"
                     app:layout_collapseMode="pin"
                     android:theme="@style/ToolbarTheme">
-                    <ImageView
-                        android:id="@+id/more"
-                        android:layout_width="@dimen/iconSizeToolbar"
-                        android:layout_height="@dimen/iconSizeToolbar"
-                        android:adjustViewBounds="true"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:contentDescription="@string/actions"
-                        android:background="@drawable/circle_light_ripple"
-                        android:padding="@dimen/iconPadding"
-                        android:scaleType="fitCenter"
-                        android:layout_marginEnd="@dimen/smallMargin"
-                        android:layout_marginStart="@dimen/smallMargin"
-                        android:src="@drawable/dots"
-                        android:layout_gravity="top|end"
-                        android:tint="@color/colorLight" />
-                    <ProgressBar
-                        android:id="@+id/moreLoading"
-                        android:visibility="gone"
-                        android:layout_width="@dimen/iconSizeToolbar"
-                        android:padding="@dimen/iconPadding"
-                        android:indeterminateTint="@color/colorLight"
-                        android:layout_gravity="top|end"
-                        android:layout_marginEnd="@dimen/smallMargin"
-                        android:layout_marginStart="@dimen/smallMargin"
-                        android:layout_height="@dimen/iconSizeToolbar"/>
                 </androidx.appcompat.widget.Toolbar>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>

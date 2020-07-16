@@ -13,7 +13,7 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="add"
+            name="model"
             type="com.example.tinni.ui.add.AddProgramViewModel" />
     </data>
 

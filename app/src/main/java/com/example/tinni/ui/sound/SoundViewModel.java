@@ -14,10 +14,6 @@ import com.example.tinni.models.Program;
 import com.example.tinni.models.Session;
 import com.example.tinni.models.Sound;
 
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Objects;
-
 /**
  * <h1>Sound ViewModel</h1>
  * ViewModel for the sound ui
@@ -37,8 +33,8 @@ public class SoundViewModel extends ViewModel
     public MutableLiveData<Sound> current = new MutableLiveData<>();
     public ObservableBoolean liked = new ObservableBoolean();
     public ObservableBoolean repeat = new ObservableBoolean(false);
-    public ObservableField<Session> session = new ObservableField<>(null);
-    public ObservableField<Program> program = new ObservableField<>(null);
+    public ObservableField<Session> session = new ObservableField<>();
+    public ObservableField<Program> program = new ObservableField<>();
     public ObservableField<String> note = new ObservableField<>();
     public ObservableInt length = new ObservableInt(0);
     private Note noteObject = null;
@@ -95,7 +91,7 @@ public class SoundViewModel extends ViewModel
         com.example.tinni.ui.sound.Sound.onLikeSoundResult delegate;
         Sound sound;
         ObservableBoolean liked;
-        boolean likedBefore = false;
+        boolean likedBefore;
 
         public likeSoundAsyncTask(Sound _sound, ObservableBoolean _liked, com.example.tinni.ui.sound.Sound.onLikeSoundResult _onLikeSoundResult)
         {
@@ -186,7 +182,5 @@ public class SoundViewModel extends ViewModel
     public void changeRepeat ()
     {
         repeat.set(!repeat.get());
-
-        System.out.println("### REPEAT IST: " + repeat.get());
     }
 }

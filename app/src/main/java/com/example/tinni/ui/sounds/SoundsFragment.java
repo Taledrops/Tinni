@@ -30,7 +30,6 @@ import com.example.tinni.helpers.MarginDecorator;
 import com.example.tinni.models.Category;
 import com.example.tinni.models.Sound;
 import com.example.tinni.ui.add.Add;
-import com.example.tinni.ui.home.HomeFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

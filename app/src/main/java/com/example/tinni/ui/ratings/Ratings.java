@@ -1,59 +1,34 @@
 package com.example.tinni.ui.ratings;
 
 import android.content.ActivityNotFoundException;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.transition.Transition;
-import android.view.Menu;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ContextThemeWrapper;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.tinni.BuildConfig;
 import com.example.tinni.R;
-import com.example.tinni.adapters.RatingAdapter;
 import com.example.tinni.adapters.RatingsAdapter;
-import com.example.tinni.adapters.SessionAdapter;
-import com.example.tinni.custom.BottomDialogQuestions;
-import com.example.tinni.custom.BottomDialogRating;
-import com.example.tinni.databinding.ActivityProgramBinding;
 import com.example.tinni.databinding.ActivityRatingsBinding;
 import com.example.tinni.helpers.Constants;
 import com.example.tinni.helpers.Functions;
-import com.example.tinni.helpers.ItemClickSupport;
 import com.example.tinni.helpers.MarginDecorator;
 import com.example.tinni.models.Rating;
-import com.example.tinni.models.Session;
-import com.example.tinni.models.SoundStat;
-import com.example.tinni.models.Stat;
-import com.example.tinni.ui.program.ProgramViewModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,8 +39,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <h1>Program Activity</h1>
@@ -155,130 +128,129 @@ public class Ratings extends AppCompatActivity
             PdfDocument document = new PdfDocument();
 
             final File sharedFolder = new File(getFilesDir(), "ratings");
-            if (!sharedFolder.exists())
+            boolean isCreated = sharedFolder.exists() || sharedFolder.mkdirs();
+
+            if (isCreated)
             {
-                sharedFolder.mkdirs();
-            }
-
-            try
-            {
-                int pageWidth = 595;
-                int pageHeight = 842;
-                int pageNumber = 1;
-                int y = 100;
-                final File file = File.createTempFile("ratings" + (int) (System.currentTimeMillis()) / 1000, ".pdf", sharedFolder);
-                file.createNewFile();
-                FileOutputStream fOut = new FileOutputStream(file);
-                PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
-                PdfDocument.Page page = document.startPage(pageInfo);
-                Canvas canvas = page.getCanvas();
-                Paint paint = new Paint();
-                Paint titlePaint = new Paint();
-                Paint greenPaint = new Paint();
-                Paint redPaint = new Paint();
-                greenPaint.setColor(Color.GREEN);
-                redPaint.setColor(Color.RED);
-                titlePaint.setColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-
-                canvas.drawText(getResources().getString(R.string.daily_tinnitus_progress), 10, 20, paint);
-                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
-                String date = formatter.format(new Date(System.currentTimeMillis()));
-
-                canvas.drawText(date, 10, 40, paint);
-
-                canvas.drawText(getResources().getString(R.string.summary), 10, 70, titlePaint);
-
-                for (Rating r : list)
+                try
                 {
-                    if (y > pageHeight)
+                    int pageWidth = 595;
+                    int pageHeight = 842;
+                    int pageNumber = 1;
+                    int y = 100;
+                    final File file = File.createTempFile("ratings" + (int) (System.currentTimeMillis()) / 1000, ".pdf", sharedFolder);
+                    FileOutputStream fOut = new FileOutputStream(file);
+                    PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
+                    PdfDocument.Page page = document.startPage(pageInfo);
+                    Canvas canvas = page.getCanvas();
+                    Paint paint = new Paint();
+                    Paint titlePaint = new Paint();
+                    Paint greenPaint = new Paint();
+                    Paint redPaint = new Paint();
+                    greenPaint.setColor(Color.GREEN);
+                    redPaint.setColor(Color.RED);
+                    titlePaint.setColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+
+                    canvas.drawText(getResources().getString(R.string.daily_tinnitus_progress), 10, 20, paint);
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.YYYY", Locale.getDefault());
+                    String date = formatter.format(new Date(System.currentTimeMillis()));
+
+                    canvas.drawText(date, 10, 40, paint);
+
+                    canvas.drawText(getResources().getString(R.string.summary), 10, 70, titlePaint);
+
+                    for (Rating r : list)
                     {
-                        pageNumber ++;
-                        document.finishPage(page);
-                        pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
-                        page = document.startPage(pageInfo);
-                        canvas = page.getCanvas();
+                        if (y > pageHeight)
+                        {
+                            pageNumber ++;
+                            document.finishPage(page);
+                            pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
+                            page = document.startPage(pageInfo);
+                            canvas = page.getCanvas();
 
-                        canvas.drawText(String.format(getResources().getString(R.string.daily_tinnitus_progress_page), pageNumber), 10, 20, paint);
-                        canvas.drawText(date, 10, 40, paint);
+                            canvas.drawText(String.format(getResources().getString(R.string.daily_tinnitus_progress_page), pageNumber), 10, 20, paint);
+                            canvas.drawText(date, 10, 40, paint);
 
-                        canvas.drawText(getResources().getString(R.string.summary), 10, 70, titlePaint);
-                        y = 100;
-                    }
+                            canvas.drawText(getResources().getString(R.string.summary), 10, 70, titlePaint);
+                            y = 100;
+                        }
 
-                    canvas.drawText(formatter.format(new Date(r.getDate())), 20, y, titlePaint);
-                    canvas.drawLine(20f, (float)y + 5 , 575f, (float)y + 5, titlePaint);
-                    y += 30;
-                    String ratingText;
-                    Paint ratingPaint;
-                    switch (r.getRating())
-                    {
-                        case 5:
-                            ratingText = getResources().getString(R.string.very_good);
-                            ratingPaint = greenPaint;
-                            break;
-                        case 4:
-                            ratingText = getResources().getString(R.string.good);
-                            ratingPaint = greenPaint;
-                            break;
-                        case 3:
-                            ratingText = getResources().getString(R.string.neutral);
-                            ratingPaint = paint;
-                            break;
-                        case 2:
-                            ratingText = getResources().getString(R.string.bad);
-                            ratingPaint = redPaint;
-                            break;
-                        case 1:
-                            ratingText = getResources().getString(R.string.miserable);
-                            ratingPaint = redPaint;
-                            break;
-                        default:
-                            ratingText = getResources().getString(R.string.neutral);
-                            ratingPaint = paint;
-                            break;
-                    }
-                    canvas.drawText(ratingText, 20, y, ratingPaint);
-                    y += 30;
-                    if (r.getText() != null && r.getText().length() > 0)
-                    {
-                        y -= 15;
-                        TextPaint textPaint = new TextPaint();
-                        textPaint.setAntiAlias(true);
-                        textPaint.setColor(Color.BLACK);
-
-                        StaticLayout staticLayout = StaticLayout.Builder.obtain(r.getText(), 0, r.getText().length(), textPaint, 575).build();
-                        canvas.save();
-                        canvas.translate(20, y);
-                        staticLayout.draw(canvas);
-                        canvas.restore();
-                        y += staticLayout.getHeight();
+                        canvas.drawText(formatter.format(new Date(r.getDate())), 20, y, titlePaint);
+                        canvas.drawLine(20f, (float)y + 5 , 575f, (float)y + 5, titlePaint);
                         y += 30;
+                        String ratingText;
+                        Paint ratingPaint;
+                        switch (r.getRating())
+                        {
+                            case 5:
+                                ratingText = getResources().getString(R.string.very_good);
+                                ratingPaint = greenPaint;
+                                break;
+                            case 4:
+                                ratingText = getResources().getString(R.string.good);
+                                ratingPaint = greenPaint;
+                                break;
+                            case 2:
+                                ratingText = getResources().getString(R.string.bad);
+                                ratingPaint = redPaint;
+                                break;
+                            case 1:
+                                ratingText = getResources().getString(R.string.miserable);
+                                ratingPaint = redPaint;
+                                break;
+                            default:
+                                ratingText = getResources().getString(R.string.neutral);
+                                ratingPaint = paint;
+                                break;
+                        }
+                        canvas.drawText(ratingText, 20, y, ratingPaint);
+                        y += 30;
+                        if (r.getText() != null && r.getText().length() > 0)
+                        {
+                            y -= 15;
+                            TextPaint textPaint = new TextPaint();
+                            textPaint.setAntiAlias(true);
+                            textPaint.setColor(Color.BLACK);
+
+                            StaticLayout staticLayout = StaticLayout.Builder.obtain(r.getText(), 0, r.getText().length(), textPaint, 575).build();
+                            canvas.save();
+                            canvas.translate(20, y);
+                            staticLayout.draw(canvas);
+                            canvas.restore();
+                            y += staticLayout.getHeight();
+                            y += 30;
+                        }
+                    }
+
+                    document.finishPage(page);
+                    document.writeTo(fOut);
+                    document.close();
+
+                    if (file.exists())
+                    {
+                        Uri path = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file);
+
+                        try
+                        {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(path, "application/pdf");
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            startActivity(intent);
+                        } catch (ActivityNotFoundException e)
+                        {
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_pdf), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
-
-                document.finishPage(page);
-                document.writeTo(fOut);
-                document.close();
-
-                if (file.exists())
+                catch (IOException e)
                 {
-                    Uri path = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file);
-                    System.out.println("create pdf uri path==>" + path);
-
-                    try
-                    {
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(path, "application/pdf");
-                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        startActivity(intent);
-                    } catch (ActivityNotFoundException e)
-                    {
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_pdf), Toast.LENGTH_SHORT).show();
-                    }
+                    e.printStackTrace();
+                    Toast.makeText(this, getResources().getString(R.string.error_simple), Toast.LENGTH_LONG).show();
                 }
-            } catch (IOException e)
+            }
+            else
             {
-                e.printStackTrace();
                 Toast.makeText(this, getResources().getString(R.string.error_simple), Toast.LENGTH_LONG).show();
             }
         }

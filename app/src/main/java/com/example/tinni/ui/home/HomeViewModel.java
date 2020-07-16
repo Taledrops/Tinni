@@ -33,7 +33,7 @@ import java.util.List;
 
 public class HomeViewModel extends ViewModel
 {
-    public ObservableField<Program> currentProgram = new ObservableField<>(null);
+    public ObservableField<Program> currentProgram = new ObservableField<>();
     public ObservableBoolean loading = new ObservableBoolean(true);
     public MutableLiveData<List<Sound>> last = new MutableLiveData<>();
     public MutableLiveData<List<Sound>> favorites = new MutableLiveData<>();

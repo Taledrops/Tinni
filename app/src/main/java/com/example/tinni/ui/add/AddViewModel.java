@@ -1,7 +1,5 @@
 package com.example.tinni.ui.add;
 
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
 
 import androidx.databinding.ObservableBoolean;

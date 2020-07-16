@@ -4,13 +4,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -36,7 +33,6 @@ import com.example.tinni.helpers.Functions;
 import com.example.tinni.helpers.ItemClickSupport;
 import com.example.tinni.helpers.ItemMoveCallback;
 import com.example.tinni.helpers.MarginDecorator;
-import com.example.tinni.models.Answer;
 import com.example.tinni.models.Question;
 
 import java.io.IOException;
@@ -61,27 +57,13 @@ public class AddProgram extends AppCompatActivity
     private static final int PICK_IMAGE_REQUEST = 1;
     private AddProgramViewModel viewModel;
     private ActivityAddProgramBinding binding;
-    private MediaPlayer mediaPlayer;
-    private Handler handler = new Handler();
-    private Runnable runnable;
     private boolean isUploading = false;
-    private boolean isPlaying = false;
     private static Animation tap;
     private static FragmentManager fragmentManager;
     private boolean setup = false;
     private SelectedSessionAdapter selectedSessionAdapter;
     private AddQuestionsAdapter addQuestionsAdapter;
     private static final Functions func = new Functions();
-
-    /**
-     * <h2>On Submit result</h2>
-     * Interface to get the submit result
-     */
-
-    public interface onSubmitResult
-    {
-        void result(boolean success);
-    }
 
     /**
      * <h2>On Create</h2>

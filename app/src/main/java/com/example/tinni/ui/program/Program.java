@@ -27,11 +27,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.tinni.R;
 import com.example.tinni.adapters.SessionAdapter;
-import com.example.tinni.adapters.SoundAdapter;
 import com.example.tinni.custom.BottomDialogQuestions;
 import com.example.tinni.custom.BottomDialogRating;
 import com.example.tinni.databinding.ActivityProgramBinding;
@@ -41,12 +39,8 @@ import com.example.tinni.helpers.ItemClickSupport;
 import com.example.tinni.helpers.MarginDecorator;
 import com.example.tinni.models.SelectedProgram;
 import com.example.tinni.models.Session;
-import com.example.tinni.models.SoundStat;
-import com.example.tinni.ui.sound.SoundViewModel;
 
-import java.lang.ref.WeakReference;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -77,7 +71,6 @@ public class Program extends AppCompatActivity
     private static Animation moveIn;
     private boolean closing = false;
     private SessionAdapter sessionAdapter;
-    private boolean sessionsLoaded = false;
     private Session currentSession = null;
     private boolean isDeleting = false;
     private static FragmentManager fragmentManager;
@@ -390,7 +383,6 @@ public class Program extends AppCompatActivity
                    openSound(s);
                }
             }
-            Toast.makeText(this, "Size: " + Objects.requireNonNull(viewModel.active.get()).sessions.size(), Toast.LENGTH_SHORT).show();
         }
     }
 

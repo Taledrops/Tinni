@@ -13,19 +13,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.tinni.R;
-import com.example.tinni.adapters.ProgramAdapter;
 import com.example.tinni.adapters.ProgramListAdapter;
-import com.example.tinni.adapters.ProgramSmallAdapter;
-import com.example.tinni.adapters.RatingsAdapter;
 import com.example.tinni.databinding.ActivityCompletedBinding;
-import com.example.tinni.databinding.ActivityRatingsBinding;
 import com.example.tinni.helpers.Constants;
 import com.example.tinni.helpers.Functions;
 import com.example.tinni.helpers.ItemClickSupport;
 import com.example.tinni.helpers.MarginDecorator;
 import com.example.tinni.models.Program;
 import com.example.tinni.models.SelectedProgram;
-import com.example.tinni.ui.ratings.RatingsViewModel;
 
 /**
  * <h1>Completed Activity</h1>

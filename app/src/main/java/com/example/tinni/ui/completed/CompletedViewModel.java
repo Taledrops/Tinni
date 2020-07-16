@@ -5,14 +5,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.tinni.helpers.Constants;
-import com.example.tinni.models.Program;
-import com.example.tinni.models.Rating;
 import com.example.tinni.models.SelectedProgram;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <h1>Completed ViewModel</h1>

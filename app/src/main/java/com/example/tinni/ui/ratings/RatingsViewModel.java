@@ -1,23 +1,15 @@
 package com.example.tinni.ui.ratings;
 
-import android.os.AsyncTask;
-
 import androidx.databinding.ObservableBoolean;
-import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.tinni.helpers.Constants;
-import com.example.tinni.models.Program;
 import com.example.tinni.models.Rating;
-import com.example.tinni.models.SelectedProgram;
-import com.example.tinni.models.Session;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <h1>Ratings ViewModel</h1>

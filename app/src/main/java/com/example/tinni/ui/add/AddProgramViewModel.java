@@ -6,12 +6,10 @@ import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.tinni.helpers.Constants;
 import com.example.tinni.models.Answer;
-import com.example.tinni.models.Category;
 import com.example.tinni.models.Program;
 import com.example.tinni.models.Question;
 import com.example.tinni.models.Session;
@@ -19,7 +17,6 @@ import com.example.tinni.models.Sound;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <h1>AddProgram ViewModel</h1>

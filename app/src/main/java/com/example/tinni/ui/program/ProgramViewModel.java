@@ -2,21 +2,15 @@ package com.example.tinni.ui.program;
 
 import android.os.AsyncTask;
 
-import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.tinni.helpers.Constants;
-import com.example.tinni.models.Answer;
-import com.example.tinni.models.Category;
 import com.example.tinni.models.Program;
-import com.example.tinni.models.Question;
 import com.example.tinni.models.SelectedProgram;
 import com.example.tinni.models.Session;
-import com.example.tinni.models.Sound;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -36,7 +30,7 @@ import java.util.Objects;
 public class ProgramViewModel extends ViewModel
 {
     public MutableLiveData<Program> current = new MutableLiveData<>();
-    public ObservableField<SelectedProgram> active = new ObservableField<>(null);
+    public ObservableField<SelectedProgram> active = new ObservableField<>();
     public Session nextSession = null;
     public SelectedProgram finished = null;
 
