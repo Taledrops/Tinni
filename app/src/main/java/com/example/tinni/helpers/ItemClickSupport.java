@@ -2,6 +2,7 @@ package com.example.tinni.helpers;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tinni.R;
@@ -51,7 +52,7 @@ public class ItemClickSupport
             = new RecyclerView.OnChildAttachStateChangeListener()
     {
         @Override
-        public void onChildViewAttachedToWindow(View view)
+        public void onChildViewAttachedToWindow(@NonNull View view)
         {
             if (mOnItemClickListener != null)
             {
@@ -64,7 +65,7 @@ public class ItemClickSupport
         }
 
         @Override
-        public void onChildViewDetachedFromWindow(View view)
+        public void onChildViewDetachedFromWindow(@NonNull View view)
         {
 
         }
@@ -87,6 +88,7 @@ public class ItemClickSupport
         return support;
     }
 
+    @SuppressWarnings("unused")
     public static ItemClickSupport removeFrom(RecyclerView view)
     {
         ItemClickSupport support = (ItemClickSupport) view.getTag(R.id.item_click_support);
@@ -103,6 +105,7 @@ public class ItemClickSupport
         return this;
     }
 
+    @SuppressWarnings("unused")
     public ItemClickSupport setOnItemLongClickListener(OnItemLongClickListener listener)
     {
         mOnItemLongClickListener = listener;

@@ -4,8 +4,6 @@ package com.example.tinni.helpers;
 import android.graphics.RectF;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.example.tinni.custom.AnimatedImageView;
-
 import java.util.Random;
 
 /**
@@ -36,7 +34,6 @@ import java.util.Random;
 public class ImageTransition implements TransitionGenerator
 {
     private static final int DEFAULT_TRANSITION_DURATION = 10000;
-    private static final android.view.animation.Interpolator DEFAULT_TRANSITION_INTERPOLATOR = new AccelerateDecelerateInterpolator();
     private static final Functions func = new Functions();
     private final Random mRandom = new Random(System.currentTimeMillis());
     private long mTransitionDuration;
@@ -45,7 +42,7 @@ public class ImageTransition implements TransitionGenerator
     private RectF mLastDrawableBounds;
     private RectF init;
 
-    public ImageTransition(AnimatedImageView animatedImageView)
+    public ImageTransition()
     {
         this(DEFAULT_TRANSITION_DURATION, new AccelerateDecelerateInterpolator());
     }

@@ -59,7 +59,7 @@ public class AnimatedImageView extends ImageView
     /** Matrix used to perform all the necessary transition transformations. */
     private final Matrix mMatrix = new Matrix();
 
-    private TransitionGenerator mTransGen = new ImageTransition(this);
+    private TransitionGenerator mTransGen = new ImageTransition();
 
     private TransitionListener mTransitionListener;
 

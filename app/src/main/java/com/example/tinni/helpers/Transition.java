@@ -33,7 +33,6 @@ import android.view.animation.Interpolator;
 public class Transition
 {
 
-    private static final Functions func = new Functions();
     /** The rect the transition will start from. */
     private RectF mSrcRect;
 
@@ -73,15 +72,6 @@ public class Transition
         mHeightDiff = dstRect.height() - srcRect.height();
         mCenterXDiff = dstRect.centerX() - srcRect.centerX();
         mCenterYDiff = dstRect.centerY() - srcRect.centerY();
-    }
-
-
-    /**
-     * Gets the rect that will take the scene when a Ken Burns transition starts.
-     * @return the rect that starts the transition.
-     */
-    public RectF getSourceRect() {
-        return mSrcRect;
     }
 
 

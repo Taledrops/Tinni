@@ -17,6 +17,7 @@ import java.util.Objects;
  * Variables:
  * int space: the space between items
  * String type: custom String to determine on which side the margin should be
+ * Functions func: Instance of the helper class "Functions"
  *
  * Source:
  * https://stackoverflow.com/a/27664023/2700965

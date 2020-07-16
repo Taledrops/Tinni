@@ -62,8 +62,8 @@ public class ItemMoveCallback extends ItemTouchHelper.Callback
     }
 
     @Override
-    public boolean onMove(@NonNull RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
-                          RecyclerView.ViewHolder target)
+    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder,
+                          @NonNull RecyclerView.ViewHolder target)
     {
         switch (mType)
         {
@@ -154,16 +154,19 @@ public class ItemMoveCallback extends ItemTouchHelper.Callback
 
     public interface ItemTouchHelperContract
     {
+        @SuppressWarnings("unused")
         void onBindViewHolderSession(SelectedSessionAdapter.SessionViewHolder holder, int position);
         void onRowMovedSession(int fromPosition, int toPosition);
         void onRowSelectedSession(SelectedSessionAdapter.SessionViewHolder myViewHolder);
         void onRowClearSession(SelectedSessionAdapter.SessionViewHolder myViewHolder);
 
+        @SuppressWarnings("unused")
         void onBindViewHolderQuestions(AddQuestionsAdapter.QuestionViewHolder holder, int position);
         void onRowMovedQuestions(int fromPosition, int toPosition);
         void onRowSelectedQuestions(AddQuestionsAdapter.QuestionViewHolder myViewHolder);
         void onRowClearQuestions(AddQuestionsAdapter.QuestionViewHolder myViewHolder);
 
+        @SuppressWarnings("unused")
         void onBindViewHolderAnswers(AddAnswersAdapter.AnswerViewHolder holder, int position);
         void onRowMovedAnswers(int fromPosition, int toPosition);
         void onRowSelectedAnswers(AddAnswersAdapter.AnswerViewHolder myViewHolder);

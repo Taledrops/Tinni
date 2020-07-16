@@ -3,23 +3,20 @@ package com.example.tinni.helpers;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.widget.ImageView;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.exifinterface.media.ExifInterface;
 
 import com.example.tinni.R;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -36,25 +33,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Functions
 {
-    /**
-     * <h2>Wait</h2>
-     * Generating a thread.sleep
-     *
-     * @param ms time to wait in milliseconds
-     */
-
-    public void wait(int ms)
-    {
-        try
-        {
-            Thread.sleep(ms);
-        }
-        catch (InterruptedException ex)
-        {
-            Thread.currentThread().interrupt();
-        }
-    }
-
     /**
      * <h2>PX from DP</h2>
      * Get the PX value for a given DP value
@@ -207,31 +185,6 @@ public class Functions
         {
             return context.getResources().getString(R.string.short_time);
         }
-    }
-
-    public String saveToInternalStorage(Context context, Bitmap bitmapImage, int id){
-        ContextWrapper cw = new ContextWrapper(context);
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        File mypath=new File(directory,id + ".jpg");
-
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(mypath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                assert fos != null;
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return directory.getAbsolutePath();
     }
 
     /**

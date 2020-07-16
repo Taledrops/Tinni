@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.text.format.DateUtils;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.databinding.ObservableArrayList;
 
@@ -26,15 +24,13 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 /**
  * <h1>Constants</h1>
- * Constant variables to use through the whole app
+ * Constant variables to use throughout the whole app
  *
  * Variables:
  * List<Integer> favorites: A list of all favorited sound IDs
