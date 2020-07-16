@@ -1,7 +1,6 @@
 package com.example.tinni.ui.stats;
 
 import android.content.Context;
-import android.os.Handler;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.MutableLiveData;
