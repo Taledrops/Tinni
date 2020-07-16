@@ -12,6 +12,7 @@ import com.example.tinni.helpers.Constants;
 import com.example.tinni.models.Category;
 import com.example.tinni.models.Sound;
 import com.example.tinni.models.SoundsResult;
+import com.example.tinni.ui.home.HomeFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -49,9 +50,9 @@ public class SoundsViewModel extends ViewModel
      * Call populateSoundsAsyncTask to populate the categories and sounds triggered on SoundsFragment
      */
 
-    public void fill (WeakReference<Context> context)
+    public void fill (WeakReference<Context> context, HomeFragment.OnFillResult delegate)
     {
-        new populateSoundsAsyncTask(context, allSounds, sounds, categories, loading, categoriesLoading).execute();
+        new populateSoundsAsyncTask(context, allSounds, sounds, categories, loading, categoriesLoading, delegate).execute();
     }
 
     /**
@@ -87,6 +88,7 @@ public class SoundsViewModel extends ViewModel
 
     private static class populateSoundsAsyncTask extends AsyncTask<Void, Void, SoundsResult>
     {
+        HomeFragment.OnFillResult delegate;
         WeakReference<Context> context;
         MutableLiveData<List<Category>> categories;
         MutableLiveData<List<Sound>> allSounds;
@@ -106,8 +108,9 @@ public class SoundsViewModel extends ViewModel
          *
          */
 
-        private populateSoundsAsyncTask(WeakReference<Context> _context, MutableLiveData<List<Sound>> _allSounds, MutableLiveData<List<Sound>> _sounds, MutableLiveData<List<Category>> _categories, ObservableBoolean _loading, ObservableBoolean _categoriesLoading)
+        private populateSoundsAsyncTask(WeakReference<Context> _context, MutableLiveData<List<Sound>> _allSounds, MutableLiveData<List<Sound>> _sounds, MutableLiveData<List<Category>> _categories, ObservableBoolean _loading, ObservableBoolean _categoriesLoading, HomeFragment.OnFillResult _delegate)
         {
+            delegate = _delegate;
             allSounds = _allSounds;
             sounds = _sounds;
             categories = _categories;
@@ -156,11 +159,12 @@ public class SoundsViewModel extends ViewModel
 
             if (Constants.getInstance().selectedCategories.size() > 0)
             {
-                new filterSoundsAsyncTask(allSounds, sounds, loading).execute();
+                new filterSoundsAsyncTask(allSounds, sounds, loading, delegate).execute();
             }
             else
             {
                 loading.set(false);
+                delegate.result(true);
             }
         }
     }
@@ -213,9 +217,9 @@ public class SoundsViewModel extends ViewModel
      *
      */
 
-    public void filterList ()
+    public void filterList (HomeFragment.OnFillResult delegate)
     {
-        new filterSoundsAsyncTask(allSounds, sounds, loading).execute();
+        new filterSoundsAsyncTask(allSounds, sounds, loading, delegate).execute();
     }
 
     /**
@@ -231,12 +235,14 @@ public class SoundsViewModel extends ViewModel
 
     private static class filterSoundsAsyncTask extends AsyncTask<Void, Void, List<Sound>>
     {
+        HomeFragment.OnFillResult delegate;
         MutableLiveData<List<Sound>> allSounds;
         MutableLiveData<List<Sound>> sounds;
         ObservableBoolean loading;
 
-        private filterSoundsAsyncTask(MutableLiveData<List<Sound>> _allSounds, MutableLiveData<List<Sound>> _sounds, ObservableBoolean _loading)
+        private filterSoundsAsyncTask(MutableLiveData<List<Sound>> _allSounds, MutableLiveData<List<Sound>> _sounds, ObservableBoolean _loading, HomeFragment.OnFillResult _delegate)
         {
+            delegate = _delegate;
             allSounds = _allSounds;
             sounds = _sounds;
             loading = _loading;
@@ -276,6 +282,7 @@ public class SoundsViewModel extends ViewModel
         {
             sounds.setValue(newList);
             loading.set(false);
+            delegate.result(true);
         }
     }
 }

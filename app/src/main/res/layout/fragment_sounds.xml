@@ -100,15 +100,20 @@
 
         </com.example.tinni.custom.Placeholder>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sounds"
-            android:layout_marginStart="@dimen/defaultMargin"
-            android:layout_marginEnd="@dimen/defaultMargin"
-            android:visibility="@{vm.sounds != null &amp;&amp; vm.sounds.size() > 0 &amp;&amp; !vm.loading ? View.VISIBLE : View.GONE, default=gone}"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
+            android:layout_marginStart="@dimen/defaultMargin"
+            android:layout_marginEnd="@dimen/defaultMargin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sounds"
+                android:visibility="@{vm.sounds != null &amp;&amp; vm.sounds.size() > 0 &amp;&amp; !vm.loading ? View.VISIBLE : View.GONE, default=gone}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

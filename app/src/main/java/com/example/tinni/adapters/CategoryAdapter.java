@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tinni.databinding.CategoryItemBinding;
 import com.example.tinni.models.Category;
+import com.example.tinni.models.Sound;
 
 import java.util.List;
 
@@ -87,6 +88,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             binding.setModel(category);
             binding.executePendingBindings();
         }
+    }
+
+    /**
+     * <h2>Reload List</h2>
+     * Reload the list and update the ui
+     */
+
+    public void reloadList(List<Category> newlist)
+    {
+        categoryList.clear();
+        categoryList.addAll(newlist);
+        this.notifyDataSetChanged();
     }
 
     /**

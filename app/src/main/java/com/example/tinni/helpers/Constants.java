@@ -99,8 +99,6 @@ public class Constants
     public int changedProgram = 0;
     public int limit = 10;
     public int ratingsLimit = 14;
-    public boolean updateSounds = false;
-    public boolean updateStats = false;
     public long installed = System.currentTimeMillis();
     public final Gson gson = new Gson();
     public float volume;
@@ -525,7 +523,6 @@ public class Constants
         String json = gson.toJson(ratings);
         editor.putString("ratings", json);
         editor.apply();
-        Constants.getInstance().updateStats = true;
     }
 
     /**
@@ -602,7 +599,6 @@ public class Constants
         String json = gson.toJson(customSounds);
         editor.putString("custom", json);
         editor.apply();
-        updateStats = true;
     }
 
     /**
@@ -680,8 +676,6 @@ public class Constants
         json = gson.toJson(pastPrograms);
         editor.putString("pastprograms", json);
         editor.apply();
-
-        updateStats = true;
     }
 
     /**
@@ -705,8 +699,6 @@ public class Constants
         String json = gson.toJson(customPrograms);
         editor.putString("customprograms", json);
         editor.apply();
-
-        updateStats = true;
     }
 
     /**
@@ -757,8 +749,6 @@ public class Constants
             {
                 preferences.edit().remove("pastprograms").apply();
             }
-
-            updateStats = true;
         }
 
         programs.stream().filter(x -> x.getId() == program.getId()).findFirst().ifPresent(p -> programs.remove(p));

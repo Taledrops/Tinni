@@ -287,7 +287,7 @@ public class HomeFragment extends Fragment
 
     /**
      * <h2>On Resume</h2>
-     * Sets the current program in the viewModel
+     * Calls the fill() method in the viewModel if it hasn't already done so
      * Using a handler to give it room to breathe on startup
      */
 

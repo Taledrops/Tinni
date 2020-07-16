@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -29,6 +30,7 @@ import com.example.tinni.helpers.MarginDecorator;
 import com.example.tinni.models.Category;
 import com.example.tinni.models.Sound;
 import com.example.tinni.ui.add.Add;
+import com.example.tinni.ui.home.HomeFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -56,16 +58,16 @@ public class SoundsFragment extends Fragment
     private FragmentSoundsBinding binding = null;
     private SoundsViewModel viewModel;
     private static boolean loaded = false;
-
     private CategoryAdapter categoryAdapter;
     private SoundAdapter soundAdapter;
-
     private static final Functions func = new Functions();
 
     /**
      * <h2>On Create View</h2>
      * Connecting the Fragment with the ViewModel and inflating its layout view
      * Observing category and sound items on SoundsViewModel and update ui
+     * Handling click events
+     * Handling swipe refreshes
      */
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -75,19 +77,31 @@ public class SoundsFragment extends Fragment
         binding.setLifecycleOwner(this);
         binding.setVm(viewModel);
 
+        if (getActivity() != null)
+        {
+            binding.swipeRefresh.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.colorPrimary), ContextCompat.getColor(getActivity(), R.color.colorPrimary), ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+        }
+
         viewModel.getCategories().observe(getViewLifecycleOwner(), result ->
         {
             if (getContext() != null && result != null)
             {
-                binding.categories.setItemViewCacheSize(getResources().getInteger(R.integer.item_view_cache_size));
-                binding.categories.setDrawingCacheEnabled(true);
-                binding.categories.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-                binding.categories.addItemDecoration(new MarginDecorator("LeftLastRight", func.pxFromDp(getContext(), getResources().getInteger(R.integer.default_margin))));
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                binding.categories.setLayoutManager(layoutManager);
+                if (categoryAdapter == null)
+                {
+                    binding.categories.setItemViewCacheSize(getResources().getInteger(R.integer.item_view_cache_size));
+                    binding.categories.setDrawingCacheEnabled(true);
+                    binding.categories.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+                    binding.categories.addItemDecoration(new MarginDecorator("LeftLastRight", func.pxFromDp(getContext(), getResources().getInteger(R.integer.default_margin))));
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                    binding.categories.setLayoutManager(layoutManager);
 
-                categoryAdapter = new CategoryAdapter(result);
-                binding.categories.setAdapter(categoryAdapter);
+                    categoryAdapter = new CategoryAdapter(result);
+                    binding.categories.setAdapter(categoryAdapter);
+                }
+                else
+                {
+                    categoryAdapter.reloadList(result);
+                }
             }
         });
 
@@ -112,6 +126,18 @@ public class SoundsFragment extends Fragment
                 {
                     soundAdapter.reloadList(result);
                 }
+            }
+        });
+
+        binding.swipeRefresh.setOnRefreshListener(() ->
+        {
+            if (!viewModel.loading.get())
+            {
+                viewModel.fill(new WeakReference<>(getContext()), success -> binding.swipeRefresh.setRefreshing(false));
+            }
+            else
+            {
+                binding.swipeRefresh.setRefreshing(false);
             }
         });
 
@@ -256,7 +282,7 @@ public class SoundsFragment extends Fragment
             }
         }
 
-        viewModel.filterList();
+        viewModel.filterList(success -> {});
 
         Constants.getInstance().handleSelectedCategories();
     }
@@ -286,14 +312,13 @@ public class SoundsFragment extends Fragment
     public void onResume()
     {
         super.onResume();
-        if (!loaded || viewModel.getSounds().getValue() == null || Constants.getInstance().updateSounds)
+        if (!loaded || viewModel.getSounds().getValue() == null)
         {
             loaded = true;
-            Constants.getInstance().updateSounds = false;
             Handler handler = new Handler();
             handler.postDelayed(() ->
             {
-                viewModel.fill(new WeakReference<>(getContext()));
+                viewModel.fill(new WeakReference<>(getContext()), success -> {});
                 handler.removeCallbacksAndMessages(null);
             }, getResources().getInteger(R.integer.start_delay));
         }

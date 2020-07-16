@@ -25,6 +25,7 @@
     <dimen name="tinySmallMargin">3dp</dimen>
     <dimen name="tinyMargin">2dp</dimen>
     <dimen name="itemMargin">45dp</dimen>
+    <dimen name="ratingMargin">15dp</dimen>
     <dimen name="iconMargin">13dp</dimen>
     <dimen name="lineHeight">7dp</dimen>
     <dimen name="lineHeightSmall">2dp</dimen>
