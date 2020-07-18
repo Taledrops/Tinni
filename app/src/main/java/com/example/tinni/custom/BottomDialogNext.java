@@ -151,20 +151,21 @@ public class BottomDialogNext extends BottomSheetDialogFragment
 
                 binding.calendar.setOnClickListener(v ->
                 {
-                    Intent intent = new Intent(Intent.ACTION_EDIT);
-                    intent.setType("vnd.android.cursor.sound_item_horizontal/event");
-                    String title = viewModel.nextSession.getSound().getTitle();
-                    if (viewModel.active.get() != null)
+                    if (getActivity() != null)
                     {
-                        title = String.format(getResources().getString(R.string.session_x_of_y), Objects.requireNonNull(viewModel.active.get()).sessions.size(), viewModel.current.getValue().getTitle());
+                        Intent intent = new Intent(Intent.ACTION_EDIT);
+                        intent.setType("vnd.android.cursor.item/event");
+                        String title = viewModel.nextSession.getSound().getTitle();
+                        if (viewModel.active.get() != null)
+                        {
+                            title = String.format(getResources().getString(R.string.session_x_of_y), Objects.requireNonNull(viewModel.active.get()).sessions.size(), viewModel.current.getValue().getTitle());
+                        }
+                        intent.putExtra(CalendarContract.Events.TITLE, title);
+                        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, calendar.getTimeInMillis());
+                        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, calendar.getTimeInMillis() + (viewModel.nextSession.getTime() * 1000));
+                        intent.putExtra(CalendarContract.Events.ALL_DAY, false);
+                        getActivity().startActivity(intent);
                     }
-                    intent.putExtra(CalendarContract.Events.TITLE, title);
-                    intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,
-                            calendar.getTimeInMillis());
-                    intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,
-                            calendar.getTimeInMillis() + (viewModel.nextSession.getTime() * 1000));
-                    intent.putExtra(CalendarContract.Events.ALL_DAY, false);
-                    startActivity(intent);
                 });
             }
             else
